@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+   
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    
+    
+    <link href="~/Content/DataTables/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    
+    
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Nombre de aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Oferta","Index","Ventas")</li>
+                    <li>@Html.ActionLink("Producto", "Producto", "Ventas")</li>
+                    <li>@Html.ActionLink("Ver Oferta", "VerOferta", "Ventas")</li>
+                    <li>@Html.ActionLink("Ofertas Publicadas", "OfertasPublicadas", "Ventas")</li>
+                    <li>@Html.ActionLink("Registrar", "RegistrarUsuario", "Login")</li>
+                    <li>@Html.ActionLink("Cerrar session", "cerrarSession", "Login")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/DataTables/media/js/jquery.dataTables.min.js"></script>
+    @RenderSection("scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            $("#mytabla").DataTable(
+                {
+
+                    "language": {
+
+                        "emptyTable": "No hay datos disponibles en la tabla.",
+
+                        "info": "Del _START_ al _END_ de _TOTAL_ ",
+
+                        "infoEmpty": "Mostrando 0 registros de un total de 0.",
+
+                        "infoFiltered": "(filtrados de un total de _MAX_ registros)",
+
+                        "infoPostFix": "(actualizados)",
+
+                        "lengthMenu": "Mostrar _MENU_ registros",
+
+                        "loadingRecords": "Cargando...",
+
+                        "processing": "Procesando...",
+
+                        "search": "Buscar:",
+
+                        "searchPlaceholder": "Dato para buscar",
+
+                        "zeroRecords": "No se han encontrado coincidencias.",
+
+                        "paginate": {
+
+                            "first": "Primera",
+
+                            "last": "Última",
+
+                            "next": "Siguiente",
+
+                            "previous": "Anterior"
+
+                        },
+
+                        "aria": {
+
+                            "sortAscending": "Ordenación ascendente",
+
+                            "sortDescending": "Ordenación descendente"
+
+                        }
+
+                    },
+
+                    "lengthMenu": [[5, 10, 20, 25, 50, -1], [5, 10, 20, 25, 50, "Todos"]],
+
+                    "iDisplayLength": 5,
+
+                    "bJQueryUI": false,
+                });
+        });
+    </script>
+
+    <script>
+          var buscador = $("#table").DataTable();
+
+          $("#input-search").keyup(function () {
+
+              buscador.search($(this).val()).draw();
+
+              if ($("#input-search").val() == "") {
+                  $(".content-search").fadeOut(300);
+              } else {
+                  $(".content-search").fadeIn(300);
+              }
+          })
+    </script>
+</body>
+</html>

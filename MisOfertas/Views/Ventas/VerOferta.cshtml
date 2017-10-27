@@ -1,0 +1,128 @@
+﻿@model IEnumerable<CapaDTO.Oferta>
+
+@{
+    ViewBag.Title = "VerOferta";
+}
+
+
+
+<h2>VerOferta</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table id="mytabla" class="display nowrap" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Id")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayName("Precio")
+            </th>
+            <th>
+                @Html.DisplayName("$ Oferta")
+            </th>
+            <th>
+                @Html.DisplayName("Cantidad Min")
+            </th>
+            <th>
+                @Html.DisplayName("Cantidad Max")
+            </th>            
+            <th>
+                @Html.DisplayName("Imagen")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+                @Html.DisplayName("Publicado")
+            </th>            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdOferta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrecioNormal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrecioOfeta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CantidadMin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CantidadMax)
+                </td>                
+                <td>
+                    <img width="40" height="30" src="@Url.Action("convertirImagen", "Ventas", new { id = item.IdOferta })" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td>
+                    @if (item.Estado == "Publicado")
+                {
+                        <input type="checkbox" name="publicar" id="publicar" checked="checked" class="form-check-input" onclick="on('@item.Estado','@item.IdOferta')">
+                    }
+                    else
+                    {
+                        <input type="checkbox" name="publicar" id="publicar" class="form-check-input" onclick="on('@item.Estado','@item.IdOferta')">
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |                                       
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+
+            </tr>
+
+        }
+    </tbody>
+    
+</table>
+
+
+<script>    
+    
+    function on(estado1,id)
+    {
+        $.ajax({
+        url: "@Url.Action("VerOferta", "Ventas")",
+        type: "POST",          
+        data: {
+            estado: estado1,
+            id: id
+            
+        },
+
+        success: function(data) {
+            //If you have a response, it will be in the 'data' object
+        }
+        });        
+        
+        location.reload(true);
+    }
+
+
+
+
+</script>
