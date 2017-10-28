@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    #viewContent {
+        border-top: solid 2px #CCC;
+    }
+
+        #viewContent h3 {
+            border-bottom: none;
+        }
+</style>
+<div id="viewContent">
+    <h2>CREADOR PDF</h2>
+</div>
+
+<div id="viewContent">
+    <!--Boton que llama al controlador CREATEPDFCONTROLLER desde el index-->
+    @using (Html.BeginForm("Index", "Pdf"))
+            {
+        <button id="submitButton" type="submit">Create Pdf</button>
+    }
+</div>

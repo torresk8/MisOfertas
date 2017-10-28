@@ -46,6 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="itextsharp, Version=5.5.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.12\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
     </Reference>
@@ -148,6 +151,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PdfController.cs" />
     <Compile Include="Controllers\VentasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -458,13 +462,11 @@
     <Content Include="Content\DataTables\media\images\sort_both.png" />
     <Content Include="Content\DataTables\media\images\sort_desc.png" />
     <Content Include="Content\DataTables\media\images\sort_desc_disabled.png" />
-    <Content Include="Content\estilo.css" />
-    <Content Include="Content\jquery.dataTables.min.js" />
-    <Content Include="Content\jquery.js" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\Upload\codigoQR.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -628,6 +630,7 @@
     <Content Include="Views\Ventas\OfertasPublicadas.cshtml" />
     <Content Include="Views\Ventas\valoracion.cshtml" />
     <Content Include="Views\Ventas\actualizarOferta.cshtml" />
+    <Content Include="Views\Pdf\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
