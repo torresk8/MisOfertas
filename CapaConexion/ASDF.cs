@@ -8,5 +8,6 @@ namespace CapaConexion
 {
     class ASDF
     {
+        private String nombre;
     }
 }
