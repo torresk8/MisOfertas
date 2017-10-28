@@ -627,6 +627,7 @@
     <Content Include="Views\Ventas\VerOferta.cshtml" />
     <Content Include="Views\Ventas\OfertasPublicadas.cshtml" />
     <Content Include="Views\Ventas\valoracion.cshtml" />
+    <Content Include="Views\Ventas\actualizarOferta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

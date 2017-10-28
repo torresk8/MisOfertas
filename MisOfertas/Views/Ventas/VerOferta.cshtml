@@ -89,8 +89,9 @@
                     }
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |                                       
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    <a href="@Url.Action("actualizarOferta", "Ventas", new { id = item.IdOferta })">Editar</a> 
+                    <!--Eliminacion mediante ajax esta dentro del scripts el metodo-->
+                    <a href="" onclick="eliminar('@item.IdOferta')">Eliminar</a>
                 </td>
 
             </tr>
@@ -101,27 +102,43 @@
 </table>
 
 
-<script>    
-    
-    function on(estado1,id)
-    {
+<script>
+
+    function on(estado1, id) {
         $.ajax({
-        url: "@Url.Action("VerOferta", "Ventas")",
-        type: "POST",          
+            url: "@Url.Action("VerOferta", "Ventas")",
+        type: "POST",
         data: {
             estado: estado1,
             id: id
-            
+
         },
 
         success: function(data) {
             //If you have a response, it will be in the 'data' object
         }
-        });        
-        
+        });
+
         location.reload(true);
     }
 
+    function eliminar(id)
+    {
+        $.ajax({
+        url: "@Url.Action("eliminarOferta", "Ventas")",
+        type: "POST",
+        data: {            
+            id: id
+
+        },
+
+        success: function(data) {
+            //If you have a response, it will be in the 'data' object
+        }
+        });
+
+        location.reload(true);
+    }
 
 
 

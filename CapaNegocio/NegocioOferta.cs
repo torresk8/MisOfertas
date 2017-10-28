@@ -137,14 +137,14 @@ namespace CapaNegocio
         }
 
 
-        public bool eliminarOferta(Oferta oferta)
+        public bool eliminarOferta(int id)
         {
             bool resultado = false;
 
             conn.Open();
-            OracleCommand cmd = new OracleCommand("DELETE from oferta where oferta =:idOferta", conn);
+            OracleCommand cmd = new OracleCommand("DELETE from oferta where idOferta =:idOferta", conn);
 
-            cmd.Parameters.Add(new OracleParameter(":idOferta", oferta.IdOferta));
+            cmd.Parameters.Add(new OracleParameter(":idOferta", id));
 
             int a = cmd.ExecuteNonQuery();
             conn.Close();
@@ -197,7 +197,7 @@ namespace CapaNegocio
             return list;
         }
 
-        public bool actualizarOferta(string estado,int id)
+        public bool actualizarOfertaEstado(string estado,int id)
         {
             bool resultado = false;
 
@@ -214,6 +214,39 @@ namespace CapaNegocio
             cmd.Parameters.Add(new OracleParameter(":idProducto", idProducto));
             cmd.Parameters.Add(new OracleParameter(":productImage", productImage));*/
             cmd.Parameters.Add(new OracleParameter(":estado", estado));
+            int a = cmd.ExecuteNonQuery();
+            conn.Close();
+            if (a > 0)
+            {
+                resultado = true;
+            }
+
+            return resultado;
+
+        }
+
+        public bool actualizarOferta(Oferta oferta)
+        {
+            bool resultado = false;
+
+            conn.Open();
+            //Arreglar consulta para actualizar con los campos
+            OracleCommand cmd = new OracleCommand("UPDATE oferta SET  estado = :estado WHERE idOferta =:idOferta", conn);
+
+
+            cmd.Parameters.Add(new OracleParameter(":nombre", oferta.Nombre));
+            cmd.Parameters.Add(new OracleParameter(":descripcion", oferta.Descripcion));
+            cmd.Parameters.Add(new OracleParameter(":precioNormal", oferta.PrecioNormal));
+            cmd.Parameters.Add(new OracleParameter(":precioOferta", oferta.PrecioOfeta));
+            cmd.Parameters.Add(new OracleParameter(":cantidadMin", oferta.CantidadMin));
+            cmd.Parameters.Add(new OracleParameter(":cantidadMax", oferta.CantidadMax));
+            cmd.Parameters.Add(new OracleParameter(":idProducto", oferta.Producto.IdProducto));
+
+            // estado y imagen nose si se deberia actualizar pero queda a criterio tuyo 
+
+            //cmd.Parameters.Add(new OracleParameter(":productImage", productImage));
+            //cmd.Parameters.Add(new OracleParameter(":estado", oferta.Estado));
+
             int a = cmd.ExecuteNonQuery();
             conn.Close();
             if (a > 0)

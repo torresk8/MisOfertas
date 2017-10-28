@@ -188,12 +188,14 @@ namespace MisOfertas.Controllers
 
             if (estado == "Publicado")
             {
-                auxnegocioOferta.actualizarOferta("No publicado", id);
+                auxnegocioOferta.actualizarOfertaEstado("No publicado", id);
             }
             else
             {
-                auxnegocioOferta.actualizarOferta("Publicado", id);
+                auxnegocioOferta.actualizarOfertaEstado("Publicado", id);
             }
+
+          
 
             List<Oferta> listOferta = auxnegocioOferta.retornaOfertaList();
 
@@ -254,6 +256,39 @@ namespace MisOfertas.Controllers
                 // 
             }
             return View();
+        }
+
+        public ActionResult actualizarOferta(int id)
+        {
+            
+            NegocioOferta auxNegocioOferta = new NegocioOferta();
+            Oferta oferta = auxNegocioOferta.retornaOferta(id);
+            Oferta auxOferta = new Oferta();
+
+            auxOferta.Nombre = oferta.Nombre;
+            return View(auxOferta);
+        }
+
+        [HttpPost]
+        public ActionResult actualizarOferta(Oferta oferta)
+        {
+
+            NegocioOferta auxNegocioOferta = new NegocioOferta();
+            bool resultado = auxNegocioOferta.actualizarOferta(oferta);
+            Oferta auxOferta = new Oferta();
+
+            auxOferta.Nombre = oferta.Nombre;
+            return View(auxOferta);
+        }
+
+        public ActionResult eliminarOferta(int id)
+        {
+            NegocioOferta negocioOferta = new NegocioOferta();
+            bool resultado = negocioOferta.eliminarOferta(id);
+
+            List<Oferta> listOferta = negocioOferta.retornaOfertaList();
+
+            return View("VerOferta",listOferta);
         }
     }
 }
