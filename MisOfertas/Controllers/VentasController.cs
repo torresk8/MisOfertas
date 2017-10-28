@@ -206,6 +206,54 @@ namespace MisOfertas.Controllers
             List<Oferta> listOferta = auxOferta.retornaOfertaPuublicadaList();
             return View(listOferta);
         }
-   
+
+        public ActionResult valoracion(int id)
+        {
+            NegocioOferta aux = new NegocioOferta();
+            Oferta oferta =aux.retornaOferta(id);
+            Session["idOferta"] = oferta.IdOferta;
+
+            Valoracion valoracion = new Valoracion();
+            valoracion.oferta.IdOferta = oferta.IdOferta;
+            valoracion.oferta.Nombre = oferta.Nombre;
+            valoracion.usuario.IdUsuario = Convert.ToInt32(Session["idUsuario"]);
+            valoracion.usuario.NombreUsuario = Session["nombreUuario"].ToString();
+
+            return View(valoracion);
+        }
+    
+        [HttpPost]
+        public ActionResult valoracion(Valoracion valoracion, HttpPostedFileBase file )
+        {
+            if (ModelState.IsValid)
+            {
+                NegocioValoracion auxValoacion = new NegocioValoracion();                              
+
+                if (file != null && file.ContentLength > 0)
+                {
+                    byte[] imagenData = null;
+                    using (var binaryImagen = new BinaryReader(file.InputStream))
+                    {
+                        imagenData = binaryImagen.ReadBytes(file.ContentLength);
+                    }
+                    valoracion.Boleta = imagenData;
+                }
+                valoracion.oferta.IdOferta = Convert.ToInt32(Session["idOferta"]);
+                valoracion.usuario.IdUsuario = Convert.ToInt32(Session["idUsuario"]);
+
+                bool resultado = auxValoacion.insertarValoracion(valoracion);
+
+                if (resultado == true)
+                {
+                    ModelState.AddModelError("", "Datos Correctos");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Error datos invalidos");
+                }
+                // 
+            }
+            return View();
+        }
     }
 }

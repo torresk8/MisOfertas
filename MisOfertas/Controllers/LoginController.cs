@@ -25,6 +25,11 @@ namespace MisOfertas.Controllers
             if (Membership.ValidateUser(usuario.NombreUsuario, usuario.Password))
             {
                 FormsAuthentication.RedirectFromLoginPage(usuario.NombreUsuario, false);
+                NegocioUsuario auxNegocio = new NegocioUsuario();
+                Usuario u = auxNegocio.login(usuario);
+                Session["idUsuario"] = u.IdUsuario;
+                Session["usuario"] = u.Nombre;
+                Session["nombreUuario"] = u.NombreUsuario;
                 return null;
             }
             else

@@ -12,8 +12,8 @@ namespace CapaDTO
         public string Calificacion { get; set; }
         public byte[] Boleta { get; set; }
         public string fecha { get; set; }
-        public Oferta Oferta { get; set; }  
-        public Usuario Usuario { get; set; }
+        public Oferta oferta = new Oferta();
+        public Usuario usuario = new Usuario();
 
         
 

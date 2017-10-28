@@ -53,8 +53,8 @@ namespace CapaNegocio
                 valoracion.Boleta = Buffer;
 
                 valoracion.fecha = String.Format("{0}", dr[3]);
-                valoracion.Oferta.IdOferta = dr.GetInt32(4);
-                valoracion.Usuario.IdUsuario = dr.GetInt32(5);
+                valoracion.oferta.IdOferta = dr.GetInt32(4);
+                valoracion.usuario.IdUsuario = dr.GetInt32(5);
 
 
             }
@@ -69,19 +69,18 @@ namespace CapaNegocio
         public bool insertarValoracion(Valoracion valoracion)
         {
             bool resultado = false;
-
+            
             conn.Open();
 
-            OracleCommand cmd = new OracleCommand("INSERT INTO valoracion (idValoraion, calificacion, boleta, " +
+            OracleCommand cmd = new OracleCommand("INSERT INTO valoracion(idValoracion, calificacion, boleta, " +
                 "fecha, idOferta, idUsuario)" +
-                     "VALUES(1, :calificacion, :boleta, :fecha," +
+                     "VALUES(sucuence_valoracion.NEXTVAL, :calificacion, :boleta, sysdate," +
                      ":idOferta, :idUsuario)", conn);
 
             cmd.Parameters.Add(new OracleParameter(":calificacion", valoracion.Calificacion));
-            cmd.Parameters.Add(new OracleParameter(":boleta ", valoracion.Boleta));
-            cmd.Parameters.Add(new OracleParameter(":fecha", valoracion.fecha));
-            cmd.Parameters.Add(new OracleParameter(":idOferta", valoracion.Oferta.IdOferta));
-            cmd.Parameters.Add(new OracleParameter(":idUsuario", valoracion.Usuario.IdUsuario));
+            cmd.Parameters.Add(new OracleParameter(":boleta ", valoracion.Boleta));            
+            cmd.Parameters.Add(new OracleParameter(":idOferta", valoracion.oferta.IdOferta));
+            cmd.Parameters.Add(new OracleParameter(":idUsuario", valoracion.usuario.IdUsuario));
 
             int a = cmd.ExecuteNonQuery();
             conn.Close();
@@ -143,8 +142,8 @@ namespace CapaNegocio
                 valoracion.Boleta = Buffer;
 
                 valoracion.fecha = String.Format("{0}", dr[2]);
-                valoracion.Oferta.IdOferta = dr.GetInt32(3);
-                valoracion.Usuario.IdUsuario = dr.GetInt32(4);
+                valoracion.oferta.IdOferta = dr.GetInt32(3);
+                valoracion.usuario.IdUsuario = dr.GetInt32(4);
 
                 list.Add(valoracion);
             }
