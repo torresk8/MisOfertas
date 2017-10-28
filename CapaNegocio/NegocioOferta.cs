@@ -202,11 +202,18 @@ namespace CapaNegocio
             bool resultado = false;
 
             conn.Open();
-            OracleCommand cmd = new OracleCommand("UPDATE oferta SET estado = :estado WHERE idOferta =:idOferta", conn);
+            OracleCommand cmd = new OracleCommand("UPDATE oferta SET  estado = :estado WHERE idOferta =:idOferta", conn);
 
+
+            /*cmd.Parameters.Add(new OracleParameter(":nombre", nombre));
+            cmd.Parameters.Add(new OracleParameter(":descripcion", descripcion));
+            cmd.Parameters.Add(new OracleParameter(":precioNormal", precioNormal));
+            cmd.Parameters.Add(new OracleParameter(":precioOferta", precioOferta));
+            cmd.Parameters.Add(new OracleParameter(":cantidadMin", cantidadMin));
+            cmd.Parameters.Add(new OracleParameter(":cantidadMax", cantidadMax));
+            cmd.Parameters.Add(new OracleParameter(":idProducto", idProducto));
+            cmd.Parameters.Add(new OracleParameter(":productImage", productImage));*/
             cmd.Parameters.Add(new OracleParameter(":estado", estado));
-            cmd.Parameters.Add(new OracleParameter(":idOferta", id));
-
             int a = cmd.ExecuteNonQuery();
             conn.Close();
             if (a > 0)
