@@ -6,16 +6,17 @@
 
 
 
-<h2>VerOferta</h2>
+<h2>Lista Ofertas</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table id="mytabla" class="display nowrap" cellspacing="0" width="100%">
     <thead>
         <tr>
             <th>
                 @Html.DisplayName("Id")
+            </th>
+            <th>
+                @Html.DisplayName("Rubro")
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
@@ -53,6 +54,9 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.IdOferta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.rubro.Nombre)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Nombre)

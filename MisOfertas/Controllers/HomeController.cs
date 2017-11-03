@@ -20,24 +20,30 @@ namespace MisOfertas.Controllers
         
         public ActionResult Index()
         {
-            
-           /* var rol = new SiteRole();
 
-            var roles = rol.IsUserInRole("43", "4");
-            if(roles == true)
-            {
-                ViewBag.Message = "Tiene permiso";
-                
-            }
-            else
-            {
-                ViewBag.Message = "No tiene permiso";
-            }
-            return null;*/
+            NegocioOferta auxOferta = new NegocioOferta();
+            Rubro auxRubro = auxOferta.retornaRubro(Convert.ToInt32(1));
 
-            return View();
+            Session["idRubro"] = auxRubro.IdRubro;
+            Session["nombreRubro"] = auxRubro.Nombre;
+            List<Oferta> listOferta = auxOferta.retornaOfertaPuublicadaList(Convert.ToInt32(1));
+            return View(listOferta);
 
-        }        
+        }    
+        
+        [HttpPost]
+        public ActionResult Index(string idRubro)
+        {
+
+            NegocioOferta auxOferta = new NegocioOferta();
+            Rubro auxRubro = auxOferta.retornaRubro(Convert.ToInt32(idRubro));
+
+            Session["idRubro"] = auxRubro.IdRubro;
+            Session["nombreRubro"] = auxRubro.Nombre;
+            List<Oferta> listOferta = auxOferta.retornaOfertaPuublicadaList(Convert.ToInt32(idRubro));
+            return View(listOferta);
+
+        }
         public ActionResult About()
         {
             
@@ -60,8 +66,9 @@ namespace MisOfertas.Controllers
 
             return View(auxPuntaje);
         }
-        [HttpPost]
-        public ActionResult Cupon(Puntaje puntaje)
+
+  
+        public ActionResult GenerarCupon(Puntaje puntaje)
         {
             Document pdfDoc = new Document(PageSize.A4, 25, 25, 25, 15);
             PdfWriter pdfWriter = PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
@@ -119,18 +126,39 @@ namespace MisOfertas.Controllers
 
 
             NegocioCupon negocioCupon = new NegocioCupon();
-            Puntaje auxPuntaje = negocioCupon.retornaPuntaje(Convert.ToInt32(Session["idUsuario"]));
+            negocioCupon.limpiarPuntaje(Convert.ToInt32(Session["idUsuario"]));
+            puntaje = negocioCupon.retornaPuntaje(Convert.ToInt32(Session["idUsuario"]));
 
 
-            return View(auxPuntaje);
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult OfertasPublicadas()
-        {
+        {                     
             NegocioOferta auxOferta = new NegocioOferta();
-            List<Oferta> listOferta = auxOferta.retornaOfertaPuublicadaList();
+            Rubro auxRubro = auxOferta.retornaRubro(Convert.ToInt32(1));
+
+            Session["idRubro"] = auxRubro.IdRubro;
+            Session["nombreRubro"] = auxRubro.Nombre;
+            List<Oferta> listOferta = auxOferta.retornaOfertaPuublicadaList(Convert.ToInt32(1));
             return View(listOferta);
         }
+        [HttpPost]
+        public ActionResult OfertasPublicadas(string idRubro)
+        {
+
+            
+            NegocioOferta auxOferta = new NegocioOferta();
+            Rubro auxRubro = auxOferta.retornaRubro(Convert.ToInt32(idRubro));
+
+            Session["idRubro"] = auxRubro.IdRubro;
+            Session["nombreRubro"] = auxRubro.Nombre;
+
+            List<Oferta> listOferta = auxOferta.retornaOfertaPuublicadaList(Convert.ToInt32(idRubro));
+            return View(listOferta);
+        }
+
+       
 
         public ActionResult convertirImagen(string id)
         {
@@ -180,14 +208,32 @@ namespace MisOfertas.Controllers
                 {
                     ModelState.AddModelError("", "Datos Correctos");
                     negocioCupon.insertarPuntaje(valoracion.usuario.IdUsuario);
+                    ModelState.Clear();
                 }
                 else
                 {
                     ModelState.AddModelError("", "Error datos invalidos");
                 }
                 // 
-            }
+                
+            }            
             return View();
+        }
+
+        public ActionResult VerValoracion(string id)
+        {           
+            NegocioValoracion auxValoracion = new NegocioValoracion();
+            List<Valoracion> listaValoracion = auxValoracion.retornaValoracionList(Convert.ToInt32(id));
+            
+            return View(listaValoracion);            
+        }
+
+        public ActionResult convertirBoleta(string id)
+        {
+            NegocioValoracion negocioValoracion = new NegocioValoracion();
+            var imagen= negocioValoracion.retornaValoracion(Convert.ToInt32(id));
+
+            return File(imagen.Boleta, "image/jpeg");
         }
     }
 }

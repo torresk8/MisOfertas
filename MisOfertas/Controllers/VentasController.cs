@@ -27,7 +27,7 @@ namespace MisOfertas.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(Oferta oferta, HttpPostedFileBase file,string idProducto)
+        public ActionResult Index(Oferta oferta, HttpPostedFileBase file,string idProducto,string idRubro)
         {
             if (ModelState.IsValid)
             {
@@ -43,12 +43,14 @@ namespace MisOfertas.Controllers
                     oferta.Imagen = imagenData;               
                 }
                 oferta.Producto.IdProducto = Convert.ToInt32(idProducto);
+                oferta.rubro.IdRubro = Convert.ToInt32(idRubro);
 
                 bool resultado = auxOferta.insertarOferta(oferta);
 
                 if (resultado == true)
                 {
                     ModelState.AddModelError("", "Datos Correctos");
+                    ModelState.Clear();
                 }
                 else
                 {
@@ -137,7 +139,7 @@ namespace MisOfertas.Controllers
                 if (resultado == true)
                 {
                     ModelState.AddModelError("", "Datos Correctos");
-                    Limpiar(producto);
+                    ModelState.Clear();
                 }
                 else
                 {
@@ -153,15 +155,7 @@ namespace MisOfertas.Controllers
             }
             return View();
         }
-
-        private void  Limpiar(Producto prod)
-        {
-            prod.Nombre = "";
-            prod.Descripcion = "";
-            prod.Precio = 0;
-            prod.TipoProducto.IdTipoProducto = 0;          
-
-        }
+  
         
         public ActionResult VerOferta()
         {
@@ -201,13 +195,7 @@ namespace MisOfertas.Controllers
 
             return View(listOferta);
         }
-
-        public ActionResult OfertasPublicadas()
-        {
-            NegocioOferta auxOferta = new NegocioOferta();
-            List<Oferta> listOferta = auxOferta.retornaOfertaPuublicadaList();
-            return View(listOferta);
-        }
+  
 
         
 

@@ -633,6 +633,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\OfertasPublicadas.cshtml" />
     <Content Include="Views\Home\Valoracion.cshtml" />
+    <Content Include="Views\Home\VerValoracion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

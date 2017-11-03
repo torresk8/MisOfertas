@@ -3,39 +3,95 @@
 @{
     ViewBag.Title = "OfertasPublicadas";
 }
-<script>
-       $(document).ready(function () {
-           $("#mostrarmodal").modal("show");
-       });
-</script>
-
-<h2>OfertasPublicadas</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 
 
-<div class="container col">
-    @foreach (var item in Model)
-    {
 
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-                <a href="@Url.Action("Valoracion", "Home", new { id = item.IdOferta })"><img class="card-img-top" src="@Url.Action("convertirImagen", "Home", new { id = item.IdOferta })" style="width:200px; height:150px"></a>
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a href="#">@Html.DisplayFor(modelItem => item.Nombre)</a>
-                    </h4>
-                    <h4 class="card-text">Precio oferta</h4>
-                    <h5>$@Html.DisplayFor(modelItem => item.PrecioOfeta)</h5>
-                    <p class="card-text">@Html.DisplayFor(modelItem => item.Descripcion)</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                </div>
+@{    
+    var lista = new List<SelectListItem>(){       
+        new SelectListItem()
+        {
+            Text = "Alimentos",
+            Value = "1"
+        },
+        new SelectListItem()
+        {
+            Text = "Electronica",
+            Value = "2"
+        },
+        new SelectListItem()
+        {
+            Text = "Linea blanca",
+            Value = "3"
+        },
+        new SelectListItem()
+        {
+            Text = "Ropa",
+            Value = "4"
+        }
+    };
+
+}
+<div id="asdf">
+<h2>Ofertas </h2>
+    <div class="container col">
+        <div class="form-group">
+            @Html.Label("Rubro", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select id="idRubro" class="form-control" onmousedown="this.value='';" onchange="jsFunction(this.value);">                                        
+                    <option value="@Session["idRubro"]">@Session["NombreRubro"]</option>
+                    @foreach (var item in lista)
+                    {                        
+                        <option value="@item.Value">@item.Text</option>
+                    }
+
+                </select>
             </div>
         </div>
+    </div>
 
+    <br />
+    <br />
+
+    <div class="container col">
+        @foreach (var item in Model)
+        {
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <a href="@Url.Action("Valoracion", "Home", new { id = item.IdOferta })"><img class="card-img-top" src="@Url.Action("convertirImagen", "Home", new { id = item.IdOferta })" style="width:200px; height:150px"></a>
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <a href="#">@Html.DisplayFor(modelItem => item.Nombre)</a>
+                        </h4>
+                        <h4 class="card-text">Precio oferta</h4>
+                        <h5>$@Html.DisplayFor(modelItem => item.PrecioOfeta)</h5>
+                        <p class="card-text">@Html.DisplayFor(modelItem => item.Descripcion)</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="@Url.Action("VerValoracion", "Home", new { id = item.IdOferta })"><small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small></a>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+    
+    <script>
+
+    function jsFunction(value) {
+        
+        $.ajax({
+            url: "@Url.Action("OfertasPublicadas", "Home")",
+        type: "POST",
+        data: {
+            idRubro: value
+        },
+        success: function(data) {
+            //If you have a response, it will be in the 'data' object
+            $('#asdf').html(data);
+        }
+        });
     }
-</div>
+
+
+    </script>

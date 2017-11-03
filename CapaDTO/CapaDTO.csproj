@@ -51,6 +51,7 @@
     <Compile Include="Provincia.cs" />
     <Compile Include="Puntaje.cs" />
     <Compile Include="Region.cs" />
+    <Compile Include="Rubro.cs" />
     <Compile Include="Sucursal.cs" />
     <Compile Include="TipoProducto.cs" />
     <Compile Include="Usuario.cs" />

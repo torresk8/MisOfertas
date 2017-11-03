@@ -18,6 +18,7 @@ namespace CapaDTO
         public Producto Producto = new Producto();
         private byte[] imagen;        
         private string estado;
+        public Rubro rubro = new Rubro();
 
         public Oferta()
         {
