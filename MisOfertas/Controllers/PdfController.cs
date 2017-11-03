@@ -1,4 +1,5 @@
-﻿using iTextSharp.text;
+﻿using CapaNegocio;
+using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
@@ -47,8 +48,7 @@ namespace MisOfertas.Controllers
             Image image = Image.GetInstance(Server.MapPath("~/Content/Upload/CodigoQR.png"));
             image.ScaleAbsolute(200, 150);
             cell.AddElement(image);
-            table.AddCell(cell);
-
+            table.AddCell(cell);            
             //Cell no 2
             chunk = new Chunk("Nombre: ,\nEmail: , \nProducto: , \nFecha: ", FontFactory.GetFont("Arial", 15, Font.NORMAL, BaseColor.BLACK));
             cell = new PdfPCell();

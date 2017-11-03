@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using CapaNegocio.Roles;
 
 namespace MisOfertas.Controllers
 {
@@ -30,7 +31,7 @@ namespace MisOfertas.Controllers
                 Session["idUsuario"] = u.IdUsuario;
                 Session["usuario"] = u.Nombre;
                 Session["nombreUuario"] = u.NombreUsuario;
-                return null;
+                Session["nombre"] = u.Nombre;                                              
             }
             else
             {

@@ -1,0 +1,47 @@
+﻿@{ 
+    string rol = "2";
+}
+
+
+
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav">          
+                
+                @if(Roles.IsUserInRole("crearOferta"))
+                {
+                <li>@Html.ActionLink("Crear Oferta", "Index", "Ventas")</li>
+                <li>@Html.ActionLink("Producto", "Producto", "Ventas")</li>
+                <li>@Html.ActionLink("Ver Oferta", "VerOferta", "Ventas")</li>
+                }
+                else
+                {
+                    <li>@Html.ActionLink("Ofertas", "OfertasPublicadas", "Home")</li>
+                    <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Cupon", "Cupon", "Home")</li>
+                }
+
+
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("Hola "+Session["nombre"]+ "!", "Index", "Home")
+            </li>
+            <li>@Html.ActionLink("Cerrar session", "cerrarSession", "Login")</li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Registrar", "RegistrarUsuario", "Login")</li>
+        <li>@Html.ActionLink("Iniciar sesión", "Index", "Login")</li>
+    </ul>
+}

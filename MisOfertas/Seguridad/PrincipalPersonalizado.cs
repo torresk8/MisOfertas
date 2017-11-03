@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CapaNegocio.Roles;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
@@ -11,7 +12,8 @@ namespace MisOfertas.Seguridad
 
         public bool IsInRole(string role)
         {
-            throw new NotImplementedException();
+            NegocioRol auxRol = new NegocioRol();
+            return auxRol.IsUserRole(role);
         }
 
         public IIdentity Identity { get; private set; }

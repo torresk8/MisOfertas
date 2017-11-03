@@ -1,0 +1,41 @@
+﻿@model CapaDTO.Puntaje
+
+@{
+    ViewBag.Title = "Cupon";
+}
+
+<h2>Cupon</h2>
+@using (Html.BeginForm("Cupon", "Home"))
+{
+@Html.Label("Puntos acumulados: "+Model.Cantidad)
+
+<div id="viewContent">
+    <!--Boton que llama al controlador CREATEPDFCONTROLLER desde el index-->
+        <button id="submitButton" type="submit">Create Pdf</button>
+        <a href="@Url.Action("Cupon", "Home")">Generar Cupon</a>
+    
+</div>
+}
+<script>
+
+    function on() {
+        $.ajax({
+            url: "@Url.Action("GenerarCupon", "Home")",
+        type: "POST",       
+
+        success: function(data) {
+            //If you have a response, it will be in the 'data' object
+
+            
+        }
+        });
+        //location.reload(true);
+        
+    }
+    function refesh()
+    {
+        location.reload(true);
+         //window.location.href='@Url.Action("Index", "Home")';
+    }
+
+</script>
