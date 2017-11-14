@@ -14,9 +14,33 @@ namespace MisOfertas.Controllers
     public class VentasController : Controller
     {
         // GET: Ventas
-        public ActionResult Index()
+        public ActionResult Index(string id, string nom, string precio)
         {
+            string a = ""; 
+            ViewBag.listaSucursal = obtenerSucursal();
+            ViewBag.listaDescuento = obtenerDescuento(0);
+
+            NegocioProducto auxProducto = new NegocioProducto();
+            List<Producto> listProducto = auxProducto.retornaProductoList();
+
+            ViewBag.lista = listProducto;
+            Session["nomProducto"] = nom;
+            Session["idProducto"] = id;
+            Session["precio"] = precio;
+            if(nom !="")
+            {
+                 a = Convert.ToString(Session["nomProducto"]);
+            }
+            
             return View();
+        }
+
+        public void idProducto(string id)
+        {
+            if (id != "")
+            {
+                Session["idProducto"] = id;
+            }
         }
 
         public ActionResult convertirImagen(string id)
@@ -27,47 +51,95 @@ namespace MisOfertas.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(Oferta oferta, HttpPostedFileBase file,string idProducto,string idRubro)
+        public ActionResult Index(Oferta oferta, HttpPostedFileBase file,string idProducto,string idRubro, string idSucursal, string idDescuento)
         {
-            if (ModelState.IsValid)
+
+            if(idSucursal != null)
             {
-                NegocioOferta auxOferta = new NegocioOferta();
-
-                if (file !=  null && file.ContentLength > 0)
+                if (ModelState.IsValid)
                 {
-                    byte[] imagenData = null;
-                    using (var binaryImagen = new BinaryReader(file.InputStream)) 
+                    NegocioOferta auxOferta = new NegocioOferta();
+
+                    if (file != null && file.ContentLength > 0)
                     {
-                        imagenData = binaryImagen.ReadBytes(file.ContentLength);
+                        byte[] imagenData = null;
+                        using (var binaryImagen = new BinaryReader(file.InputStream))
+                        {
+                            imagenData = binaryImagen.ReadBytes(file.ContentLength);
+                        }
+                        oferta.Imagen = imagenData;
                     }
-                    oferta.Imagen = imagenData;               
-                }
-                oferta.Producto.IdProducto = Convert.ToInt32(idProducto);
-                oferta.rubro.IdRubro = Convert.ToInt32(idRubro);
+                    oferta.Producto.IdProducto = Convert.ToInt32(idProducto);
+                    oferta.rubro.IdRubro = Convert.ToInt32(idRubro);
+                    oferta.sucursal.IdSucursal = Convert.ToInt32(idSucursal);
+                    oferta.PrecioNormal = Convert.ToInt32(Session["precio"]);
+                    oferta.Producto.IdProducto = Convert.ToInt32(Session["idProducto"]);
 
-                bool resultado = auxOferta.insertarOferta(oferta);
+                    NegocioDescuento negocioDescuento = new NegocioDescuento();
+                    Descuento descuento = negocioDescuento.retornaDescuento(Convert.ToInt32(idRubro),Convert.ToInt32(idDescuento));
+                    oferta.descuento.cantidad = descuento.cantidad;
 
-                if (resultado == true)
-                {
-                    ModelState.AddModelError("", "Datos Correctos");
-                    ModelState.Clear();
+                    oferta.PrecioOfeta = (oferta.PrecioNormal-((oferta.PrecioNormal * oferta.descuento.cantidad)/100));
+
+                    bool resultado = auxOferta.insertarOferta(oferta);
+
+                    if (resultado == true)
+                    {
+                        ModelState.AddModelError("", "Datos Correctos");
+                        ModelState.Clear();
+                        Session["idProducto"] = "";
+                        Session["precio"] = "";
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Error datos invalidos");
+                    }
+                    // 
+                    }
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Error datos invalidos");
-                }
-                // 
-            }
-            return View();
+
+                ViewBag.listaSucursal = obtenerSucursal();
+                ViewBag.listaDescuento = obtenerDescuento(Convert.ToInt32(idRubro));
+
+                NegocioProducto auxProducto = new NegocioProducto();
+                List<Producto> listProducto = auxProducto.retornaProductoList();
+
+                ViewBag.lista = listProducto;
+
+                return View();
+        }
+
+
+        public ActionResult OfertasPublicadas()
+        {
+            NegocioOferta auxOferta = new NegocioOferta();
+            Rubro auxRubro = auxOferta.retornaRubro(Convert.ToInt32(1));
+
+            Session["idRubro"] = auxRubro.IdRubro;
+            Session["nombreRubro"] = auxRubro.Nombre;
+            List<Oferta> listOferta = auxOferta.retornaOfertaPuublicadaList(Convert.ToInt32(1));
+            return View(listOferta);
+        }
+        [HttpPost]
+        public ActionResult OfertasPublicadas(string idRubro)
+        {
+
+
+            NegocioOferta auxOferta = new NegocioOferta();
+            Rubro auxRubro = auxOferta.retornaRubro(Convert.ToInt32(idRubro));
+
+            Session["idRubro"] = auxRubro.IdRubro;
+            Session["nombreRubro"] = auxRubro.Nombre;
+
+            List<Oferta> listOferta = auxOferta.retornaOfertaPuublicadaList(Convert.ToInt32(idRubro));
+            return View(listOferta);
         }
 
         public ActionResult Producto()
         {
 
-
-
             ViewBag.listaTipoProducto = obtenerTipoProducto();            
-            ViewBag.listaSucursal = obtenerSucursal();     
+              
 
 
             return View();
@@ -90,6 +162,30 @@ namespace MisOfertas.Controllers
                     Text = li.Nombre,
                     Value = li.IdTipoProducto.ToString()
                     
+
+                });
+            }
+
+            return list;
+        }
+
+        public List<SelectListItem> obtenerDescuento(int id)
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+
+            List<Descuento> listDescuento = new List<Descuento>();
+            NegocioDescuento auxNegocio = new NegocioDescuento();
+
+            listDescuento = auxNegocio.retornaDescuentoListId(id);
+
+
+            foreach (var li in listDescuento)
+            {
+                list.Add(new SelectListItem()
+                {
+                    Text = li.cantidad.ToString()+"%",
+                    Value = li.idDescuento.ToString()
+
 
                 });
             }
@@ -120,6 +216,30 @@ namespace MisOfertas.Controllers
             return list;
         }
 
+        public List<SelectListItem> obtenerRubro()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+
+            List<Rubro> listRubro;
+            NegocioOferta negocioOferta = new NegocioOferta();
+
+            listRubro = negocioOferta.retornaRubroList();
+
+            foreach (var li in listRubro)
+            {
+                list.Add(new SelectListItem()
+                {
+                    Text = li.Nombre,
+                    Value = li.IdRubro.ToString()
+
+
+                });
+            }
+
+            return list;
+        }
+
+
         [HttpPost]
         public ActionResult Producto(Producto producto,string idTipoProducto, string idSucursal)
         {
@@ -130,8 +250,7 @@ namespace MisOfertas.Controllers
                 int idSucur = Convert.ToInt32(idSucursal);
                 bool resultado = false;
                
-                  producto.TipoProducto.IdTipoProducto = idTipoProduc;
-                  producto.Sucursal.IdSucursal = idSucur;
+                  producto.TipoProducto.IdTipoProducto = idTipoProduc;                  
 
 
                      resultado = auxProducto.insertarProducto(producto);                                
@@ -149,7 +268,6 @@ namespace MisOfertas.Controllers
                 }
 
                 ViewBag.listaTipoProducto = obtenerTipoProducto();
-                ViewBag.listaSucursal = obtenerSucursal();
 
                 // 
             }
@@ -231,5 +349,46 @@ namespace MisOfertas.Controllers
 
             return View("VerOferta",listOferta);
         }
+
+        [Authorize(Roles = "administrador")]
+        public ActionResult crearDescuento()
+        {
+            ViewBag.listaRubro = obtenerRubro();
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult crearDescuento(Descuento descuento, string idRubro)
+        {
+
+            if (ModelState.IsValid)
+            {
+                NegocioDescuento negocioDescuento = new NegocioDescuento();
+                                
+                bool resultado = false;
+
+                descuento.rubro.IdRubro = Convert.ToInt32(idRubro);
+
+                resultado = negocioDescuento.insertarDescuento(descuento);
+
+                if (resultado == true)
+                {
+                    ModelState.AddModelError("", "Datos Correctos");
+                    ModelState.Clear();
+                }
+                else
+                {
+
+                    ModelState.AddModelError("", "Error datos invalidos");
+
+                }
+                ViewBag.listaRubro = obtenerRubro();
+                // 
+            }
+
+            return View();
+        }
+
     }
 }

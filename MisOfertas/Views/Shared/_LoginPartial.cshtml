@@ -9,24 +9,37 @@
 {
     using (Html.BeginForm())
     {
-        
+
 
         <ul class="nav navbar-nav">          
                 
-                @if(Roles.IsUserInRole("crearOferta"))
-                {
-                <li>@Html.ActionLink("Crear Oferta", "Index", "Ventas")</li>
-                <li>@Html.ActionLink("Producto", "Producto", "Ventas")</li>
-                <li>@Html.ActionLink("Ver Oferta", "VerOferta", "Ventas")</li>
-                <li>@Html.ActionLink("Ofertas Publicadas", "Index", "Home")</li>
-                }
-                else
-                {
-                    <li>@Html.ActionLink("Inicio", "Index", "Home")</li>                    
-                    <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Cupon", "Cupon", "Home")</li>
-                }
+                
+                 @if (Roles.IsUserInRole("administrador"))
+                 {
+                    <li>@Html.ActionLink("Crear Oferta", "Index", "Ventas")</li>
+                    <li>@Html.ActionLink("Producto", "Producto", "Ventas")</li>
+                    <li>@Html.ActionLink("Ver Oferta", "VerOferta", "Ventas")</li>
+                    <li>@Html.ActionLink("Ofertas Publicadas", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Crear Descuento", "crearDescuento", "Ventas")</li>
+                 }
+                 else
+                 {
+                     if (Roles.IsUserInRole("crearOferta"))
+                     {
+                    <li>@Html.ActionLink("Crear Oferta", "Index", "Ventas")</li>
+                    <li>@Html.ActionLink("Producto", "Producto", "Ventas")</li>
+                    <li>@Html.ActionLink("Ver Oferta", "VerOferta", "Ventas")</li>
+                    <li>@Html.ActionLink("Ofertas Publicadas", "Index", "Home")</li>
+                     }
+                     else
+                     {
+                        <li>@Html.ActionLink("Inicio", "Index", "Home")</li>                    
+                        <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                        <li>@Html.ActionLink("Cupon", "Cupon", "Home")</li>
+                     }
+                 }
+
 
 
         </ul>

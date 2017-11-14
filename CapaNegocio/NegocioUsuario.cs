@@ -70,9 +70,9 @@ namespace CapaNegocio
             cmd.Parameters.Add(new OracleParameter(":nombre", usuario.Nombre));            
             cmd.Parameters.Add(new OracleParameter(":usuario", usuario.NombreUsuario));
             cmd.Parameters.Add(new OracleParameter(":pass", pass));
-            cmd.Parameters.Add(new OracleParameter(":rut", pass));
-            cmd.Parameters.Add(new OracleParameter(":direccion", pass));
-            cmd.Parameters.Add(new OracleParameter(":telefono", pass));
+            cmd.Parameters.Add(new OracleParameter(":rut", usuario.Rut));
+            cmd.Parameters.Add(new OracleParameter(":direccion", usuario.Direccion));
+            cmd.Parameters.Add(new OracleParameter(":telefono", usuario.Telefono));
 
             int a= cmd.ExecuteNonQuery();
             conn.Close();

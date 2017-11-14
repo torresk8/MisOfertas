@@ -99,10 +99,12 @@ namespace MisOfertas.Controllers
 
                 if (resultado == true)
                 {
+                    ModelState.AddModelError("", "Datos Correctos");
                     Session["idUsuario"] = usuario.IdUsuario;
                     Session["usuario"] = usuario.Nombre;
                     Session["password"] = usuario.Password;
-                    ModelState.AddModelError("", "Bienvendio" + usuario.Nombre);
+
+                    ModelState.Clear();
                 }                 
             }
             else

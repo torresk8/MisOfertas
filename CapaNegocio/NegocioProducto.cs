@@ -41,8 +41,7 @@ namespace CapaNegocio
                 producto.Nombre = String.Format("{0}", dr[1]);
                 producto.Descripcion = String.Format("{0}", dr[2]);
                 producto.Precio = dr.GetInt32(3);
-                producto.TipoProducto.IdTipoProducto = dr.GetInt32(4);
-                producto.Sucursal.IdSucursal = dr.GetInt32(5);
+                producto.TipoProducto.IdTipoProducto = dr.GetInt32(4);                
 
            }
 
@@ -72,6 +71,38 @@ namespace CapaNegocio
                 tipoProducto.IdTipoProducto = dr.GetInt32(0);
                 tipoProducto.Nombre = String.Format("{0}", dr[1]);                
                 list.Add(tipoProducto);
+            }
+
+            conn.Close();
+
+            return list;
+        }
+
+        public List<Producto> retornaProductoList()
+        {
+            List<Producto> list = new List<Producto>();
+            conn.Open();
+
+            DataSet ds = new DataSet();
+            OracleCommand cmd = new OracleCommand();
+            cmd = new OracleCommand("SELECT * FROM producto", conn);
+
+
+            OracleDataAdapter da = new OracleDataAdapter();
+            da.SelectCommand = cmd;
+            OracleDataReader dr = cmd.ExecuteReader();
+
+
+            while (dr.Read())
+            {
+                Producto Producto = new Producto();
+                Producto.IdProducto = dr.GetInt32(0);
+                Producto.Nombre = String.Format("{0}", dr[1]);
+                Producto.Descripcion = String.Format("{0}", dr[2]);
+                Producto.Precio = dr.GetInt32(3);
+                Producto.TipoProducto.IdTipoProducto = dr.GetInt32(4);
+
+                list.Add(Producto);
             }
 
             conn.Close();
@@ -119,14 +150,13 @@ namespace CapaNegocio
             conn.Open();
 
             OracleCommand cmd = new OracleCommand("INSERT INTO producto(idProducto,nombre," +
-                "descripcion,precio,idTipoProducto,idSucursal) VALUES (sucuence_producto.NEXTVAL," +
-                ":nombre,:descripcion,:precio,:idTipoP,:sucursal)", conn);
+                "descripcion,precio,idTipoProducto) VALUES (sucuence_producto.NEXTVAL," +
+                ":nombre,:descripcion,:precio,:idTipoP)", conn);
 
             cmd.Parameters.Add(new OracleParameter(":nombre", producto.Nombre));
             cmd.Parameters.Add(new OracleParameter(":descripcion", producto.Descripcion));
             cmd.Parameters.Add(new OracleParameter(":precio", producto.Precio));
-            cmd.Parameters.Add(new OracleParameter(":idTipoP", producto.TipoProducto.IdTipoProducto));
-            cmd.Parameters.Add(new OracleParameter(":sucursal", producto.Sucursal.IdSucursal));
+            cmd.Parameters.Add(new OracleParameter(":idTipoP", producto.TipoProducto.IdTipoProducto));            
 
             int a = cmd.ExecuteNonQuery();
             conn.Close();

@@ -57,6 +57,7 @@ namespace CapaNegocio
                 oferta.Imagen = Buffer;
                 oferta.Estado = String.Format("{0}", dr[9]);
                 oferta.rubro.IdRubro = dr.GetInt32(10);
+                oferta.sucursal.IdSucursal = dr.GetInt32(11);
             }
 
             conn.Close();
@@ -92,6 +93,37 @@ namespace CapaNegocio
             conn.Close();
 
             return rubro;
+        }
+
+        public List<Rubro> retornaRubroList()
+        {
+            List<Rubro> auxRubro = new List<Rubro>();
+            conn.Open();
+            
+            OracleCommand cmd = new OracleCommand();
+            cmd = new OracleCommand("SELECT * FROM rubro ", conn);
+            
+            OracleDataAdapter da = new OracleDataAdapter();
+            da.SelectCommand = cmd;
+            OracleDataReader dr = cmd.ExecuteReader();
+
+            //byte[] ima = (byte[])cmd.ExecuteScalar();          
+
+
+
+            while (dr.Read())
+            {
+                Rubro rubro = new Rubro();
+
+                rubro.IdRubro = dr.GetInt32(0);
+                rubro.Nombre = String.Format("{0}", dr[1]);
+
+                auxRubro.Add(rubro);
+            }
+
+            conn.Close();
+
+            return auxRubro;
         }
 
         public List<Oferta> retornaOfertaPuublicadaList(int idRubro)
@@ -130,6 +162,8 @@ namespace CapaNegocio
                 oferta.Imagen = Buffer;
                 oferta.Estado = String.Format("{0}", dr[9]);
                 oferta.rubro.IdRubro = dr.GetInt32(10);
+                oferta.sucursal.IdSucursal = dr.GetInt32(11);
+
                 list.Add(oferta);
             }
 
@@ -145,9 +179,9 @@ namespace CapaNegocio
             conn.Open();
 
             OracleCommand cmd = new OracleCommand("INSERT INTO oferta (idOferta, nombre, descripcion, " +
-                "precioNormal, precioOferta, cantidadMin, cantidadMax, idProducto, productImage,estado,idRubro)" +
+                "precioNormal, precioOferta, cantidadMin, cantidadMax, idProducto, productImage,estado,idRubro,idSucursal)" +
                      "VALUES(sucuence_oferta.NEXTVAL, :nombre, :descripcion, :precioNormal," +
-                     ":precioOferta, :cantidadMin, :cantidadMax, :idProducto, :productImage, :estado, :rubro)", conn);
+                     ":precioOferta, :cantidadMin, :cantidadMax, :idProducto, :productImage, :estado, :rubro, :idScursal)", conn);
 
             cmd.Parameters.Add(new OracleParameter(":nombre", oferta.Nombre));
             cmd.Parameters.Add(new OracleParameter(":descripcion", oferta.Descripcion));
@@ -159,6 +193,7 @@ namespace CapaNegocio
             cmd.Parameters.Add(new OracleParameter(":productImage", oferta.Imagen));
             cmd.Parameters.Add(new OracleParameter(":estado", oferta.Estado));
             cmd.Parameters.Add(new OracleParameter(":rubro", oferta.rubro.IdRubro));
+            cmd.Parameters.Add(new OracleParameter(":idScursal", oferta.sucursal.IdSucursal));
 
             int a = cmd.ExecuteNonQuery();
             conn.Close();
@@ -201,10 +236,12 @@ namespace CapaNegocio
             DataSet ds = new DataSet();
             OracleCommand cmd = new OracleCommand();
             cmd = new OracleCommand("SELECT o.idOferta,r.nombre,o.nombre,o.descripcion," +
-                "o.precioNormal,o.precioOferta,o.cantidadMin,o.cantidadMax, o.idProducto, o.productImage, o.estado "+
+                "o.precioNormal,o.precioOferta,o.cantidadMin,o.cantidadMax, o.idProducto, o.productImage" +
+                ", o.estado, s.nombre "+
                 "FROM OFERTA O "+
                 "INNER JOIN RUBRO r ON r.idRubro = o.IdRubro "+
-                "INNER JOIN PRODUCTO p ON p.idProducto = o.idProducto ", conn);
+                "INNER JOIN PRODUCTO p ON p.idProducto = o.idProducto " +
+                "INNER JOIN SUCURSAL s ON o.idSucursal = s.idSucursal", conn);
             
 
             OracleDataAdapter da = new OracleDataAdapter();
@@ -229,7 +266,8 @@ namespace CapaNegocio
                  Byte[] Buffer = (Byte[])(dr.GetOracleBlob(9)).Value;
                  oferta.Imagen = Buffer;
                  oferta.Estado = String.Format("{0}", dr[10]);   
-                
+                oferta.sucursal.Nombre = String.Format("{0}", dr[11]);
+
                 list.Add(oferta);
              }
 

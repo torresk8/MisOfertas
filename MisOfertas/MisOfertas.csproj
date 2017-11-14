@@ -634,6 +634,7 @@
     <Content Include="Views\Home\OfertasPublicadas.cshtml" />
     <Content Include="Views\Home\Valoracion.cshtml" />
     <Content Include="Views\Home\VerValoracion.cshtml" />
+    <Content Include="Views\Ventas\crearDescuento.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
