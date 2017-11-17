@@ -124,7 +124,7 @@ namespace CapaNegocio
 
             DataSet ds = new DataSet();
             OracleCommand cmd = new OracleCommand();
-            cmd = new OracleCommand("SELECT v.idValoracion,v.boleta,v.fecha,o.nombre,u.nombreUsuario,v.calificacion,v.comentario,v.idOferta "+
+            cmd = new OracleCommand("SELECT v.idValoracion,v.boleta,v.fecha,o.nombre,u.nombreUsuario,v.calificacion,v.comentario,v.idOferta, u.nombre "+
                                     "FROM valoracion v INNER JOIN oferta o ON v.idOferta = o.idOferta "+
                                     "INNER JOIN usuario u ON u.idUsuario = v.idUsuario " +
                                     "WHERE v.Idoferta = :idOferta", conn);
@@ -148,11 +148,12 @@ namespace CapaNegocio
                 valoracion.Boleta = Buffer;
 
                 valoracion.fecha = String.Format("{0}", dr[2]);                                                       
-                valoracion.oferta.Nombre = String.Format("{0}", dr[3]);
-                valoracion.oferta.IdOferta= dr.GetInt32(7);
+                valoracion.oferta.Nombre = String.Format("{0}", dr[3]);                
                 valoracion.usuario.NombreUsuario = String.Format("{0}", dr[4]);
                 valoracion.Calificacion = String.Format("{0}", dr[5]);
                 valoracion.Comentario = String.Format("{0}", dr[6]);
+                valoracion.oferta.IdOferta = dr.GetInt32(7);
+                valoracion.usuario.Nombre = String.Format("{0}", dr[8]);
 
                 list.Add(valoracion);
             }

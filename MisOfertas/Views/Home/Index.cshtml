@@ -31,10 +31,18 @@
     };
 
 }
+
+<style>
+    #map {
+        height: 400px;
+        width: 100%;
+    }
+</style>
+
 <div id="asdf">
     <h2>Ofertas </h2>
     <div class="container col">
-        <div class="form-group">
+       <!-- <div class="form-group">
             @Html.Label("Rubro", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <select id="idRubro" class="form-control" onmousedown="this.value='';" onchange="jsFunction(this.value);">
@@ -47,11 +55,34 @@
                 </select>
             </div>
         </div>
+           -->
+
+        <div class="form-group">
+            @Html.Label("Rubro", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("idRubro", lista, "Seleccione", new { @class = "form-control", onmousedown = "this.value='';", onchange = "jsFunction(this.value);", id = "idRubro", required = "" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Precio", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("precio", (List<SelectListItem>)ViewBag.listaRangoPrecio, "Seleccione", new { @class = "form-control", onmousedown = "this.value='';", onchange = "precio(this.value);", id = "precio", required = "" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Sucursal", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("sucursal", (List<SelectListItem>)ViewBag.listaSucursal, "Seleccione", new { @class = "form-control", onmousedown = "this.value='';", onchange = "sucursal(this.value);", id = "sucursal", required = "" })
+            </div>
+        </div>
     </div>
-
     <br />
     <br />
-
+    <br />
+    <br />
+    <br />
     <div class="container col">
         @foreach (var item in Model)
         {
@@ -60,28 +91,54 @@
                 <div class="card h-100">
                     <a href="@Url.Action("Valoracion", "Home", new { id = item.IdOferta })"><img class="card-img-top" src="@Url.Action("convertirImagen", "Home", new { id = item.IdOferta })" style="width:200px; height:150px"></a>
                     <div class="card-body">
-                        <h4 class="card-title">
+                        <h3 class="card-title">
                             <a href="#">@Html.DisplayFor(modelItem => item.Nombre)</a>
-                        </h4>
+                        </h3>
                         <h4 class="card-text">Precio oferta</h4>
                         <h5>$@Html.DisplayFor(modelItem => item.PrecioOfeta)</h5>
                         <p class="card-text">@Html.DisplayFor(modelItem => item.Descripcion)</p>
+                        <p>Sucursal: <a class="btn-link col-md-0" data-toggle="modal" data-target="#myModal">@Html.DisplayFor(modelItem => item.sucursal.Nombre)</a></p>
+
+
+                        <div class="modal fade" id="myModal" tabindex="-1"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="vertical-alignment-helper">
+                                <div class="modal-dialog vertical-align-center"  style="width:680px">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">
+                                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+
+                                            </button>
+                                            <h3 class="modal-title" id="myModalLabel">Ubicacion</h3>
+
+                                        </div>
+                                        <div class="modal-body">                                                                                   
+                                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d53261.50902683422!2d-70.71421293380529!3d-33.45336242779481!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662d0069af23abb%3A0x879d59f409ed4897!2sSantiago%2C+Regi%C3%B3n+Metropolitana!5e0!3m2!1ses!2scl!4v1510893438096" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="card-footer">
-                        <a href="@Url.Action("VerValoracion", "Home", new { id = item.IdOferta })"><small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small></a>
-                    </div>
-                </div>
-            </div>
+                                        <div class="card-footer">
+                                            <a href="@Url.Action("VerValoracion", "Home", new { id = item.IdOferta })"><small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small></a>
+                                        </div>
+                                    </div>
+                                </div>
 
-        }
-    </div>
+                                }
+                            </div>
 
-    <script>
+                            <script>
 
-    function jsFunction(value) {
+        function jsFunction(value) {
 
-        $.ajax({
-            url: "@Url.Action("OfertasPublicadas", "Home")",
+            $.ajax({
+                url: "@Url.Action("Index", "Home")",
         type: "POST",
         data: {
             idRubro: value
@@ -94,4 +151,33 @@
     }
 
 
-    </script>
+    function precio(precio) {
+
+        $.ajax({
+            url: "@Url.Action("Index", "Home")",
+        type: "POST",
+        data: {
+            precio: precio
+        },
+        success: function(data) {
+            //If you have a response, it will be in the 'data' object
+            $('#asdf').html(data);
+        }
+        });
+    }
+
+        function sucursal(sucursal) {
+
+        $.ajax({
+            url: "@Url.Action("Index", "Home")",
+        type: "POST",
+        data: {
+            sucursal: sucursal
+        },
+        success: function(data) {
+            //If you have a response, it will be in the 'data' object
+            $('#asdf').html(data);
+        }
+        });
+    }
+                            </script>

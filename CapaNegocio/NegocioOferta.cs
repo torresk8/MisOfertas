@@ -126,7 +126,7 @@ namespace CapaNegocio
             return auxRubro;
         }
 
-        public List<Oferta> retornaOfertaPuublicadaList(int idRubro)
+        public List<Oferta> retornaOfertaPuublicadaList(int idRubro, int idSucursal)
         {
             List<Oferta> list = new List<Oferta>();
 
@@ -134,10 +134,31 @@ namespace CapaNegocio
 
             DataSet ds = new DataSet();
             OracleCommand cmd = new OracleCommand();
-            cmd = new OracleCommand("SELECT * FROM oferta where estado = :estado AND idRubro = :idRubro", conn);
 
-            cmd.Parameters.Add(":estado", "Publicado");
-            cmd.Parameters.Add(":idRubro",idRubro);
+            if(idRubro>0)
+            {
+                cmd = new OracleCommand("SELECT o.idOferta, o.nombre, o.descripcion, o.precioNormal,o.precioOferta, o.cantidadMin, o.cantidadMax, " +
+                                    "o.idProducto, o.productImage, o.estado, o.idRubro, s.idSucursal, s.nombre FROM oferta o " +
+                                    " INNER JOIN sucursal s ON s.idSucursal = o.idSucursal " +
+                                    "where estado = :estado AND idRubro = :idRubro", conn);
+
+                cmd.Parameters.Add(":estado", "Publicado");
+                cmd.Parameters.Add(":idRubro", idRubro);
+            }
+            else
+            {
+                cmd = new OracleCommand("SELECT o.idOferta, o.nombre, o.descripcion, o.precioNormal,o.precioOferta, o.cantidadMin, o.cantidadMax, " +
+                                    "o.idProducto, o.productImage, o.estado, o.idRubro, s.idSucursal, s.nombre FROM oferta o " +
+                                    " INNER JOIN sucursal s ON s.idSucursal = o.idSucursal " +
+                                    "where estado = :estado AND s.idSucursal = :idSucursal", conn);
+
+                cmd.Parameters.Add(":estado", "Publicado");
+                cmd.Parameters.Add(":idSucursal", idSucursal);
+            }
+
+            
+            
+            
 
             OracleDataAdapter da = new OracleDataAdapter();
             da.SelectCommand = cmd;
@@ -163,6 +184,7 @@ namespace CapaNegocio
                 oferta.Estado = String.Format("{0}", dr[9]);
                 oferta.rubro.IdRubro = dr.GetInt32(10);
                 oferta.sucursal.IdSucursal = dr.GetInt32(11);
+                oferta.sucursal.Nombre = String.Format("{0}", dr[12]);
 
                 list.Add(oferta);
             }
@@ -171,6 +193,74 @@ namespace CapaNegocio
 
             return list;
         }
+
+
+        public List<Oferta> retornaOfertaPublicadaListPrecioMenor(int precioInicio, int precioFin, string order)
+        {
+            List<Oferta> list = new List<Oferta>();
+
+            conn.Open();
+
+            DataSet ds = new DataSet();
+            OracleCommand cmd = new OracleCommand();
+            if( order != "")
+            {
+                cmd = new OracleCommand("SELECT o.idOferta, o.nombre, o.descripcion, o.precioNormal,o.precioOferta, o.cantidadMin, o.cantidadMax, "+
+                                        "o.idProducto, o.productImage, o.estado, o.idRubro, s.idSucursal, s.nombre FROM oferta o "+
+                                        "INNER JOIN sucursal s ON s.idSucursal = o.idSucursal " +
+                                        "where estado = :estado ORDER BY precioOferta "+order+"", conn);
+
+                cmd.Parameters.Add(":estado", "Publicado");
+                //cmd.Parameters.Add(":order", order);
+            }
+            else
+            {
+                cmd = new OracleCommand("SELECT o.idOferta, o.nombre, o.descripcion, o.precioNormal, o.precioOferta, o.cantidadMin, o.cantidadMax, "+
+                                        " o.idProducto, o.productImage, o.estado, o.idRubro, s.idSucursal, s.nombre FROM oferta o " +
+                                        "INNER JOIN sucursal s ON s.idSucursal = o.idSucursal " +
+                                        "where estado = :estado AND precioOferta > :precioInicio AND precioOferta < :precioFin", conn);
+                cmd.Parameters.Add(":estado", "Publicado");
+                cmd.Parameters.Add(":precioInicio", precioInicio);
+                cmd.Parameters.Add(":precioFin", precioFin);
+            }
+
+            
+
+            OracleDataAdapter da = new OracleDataAdapter();
+            da.SelectCommand = cmd;
+            OracleDataReader dr = cmd.ExecuteReader();
+
+
+            while (dr.Read())
+            {
+
+                Oferta oferta = new Oferta();
+                oferta.IdOferta = dr.GetInt32(0);
+                oferta.Nombre = String.Format("{0}", dr[1]);
+                oferta.Descripcion = String.Format("{0}", dr[2]);
+                oferta.PrecioNormal = dr.GetInt32(3);
+                oferta.PrecioOfeta = dr.GetInt32(4);
+                oferta.CantidadMin = dr.GetInt32(5);
+                oferta.CantidadMax = dr.GetInt32(6);
+                oferta.Producto.IdProducto = dr.GetInt32(7);
+
+                OracleBlob blob = dr.GetOracleBlob(8);
+                Byte[] Buffer = (Byte[])(dr.GetOracleBlob(8)).Value;
+                oferta.Imagen = Buffer;
+                oferta.Estado = String.Format("{0}", dr[9]);
+                oferta.rubro.IdRubro = dr.GetInt32(10);
+                oferta.sucursal.IdSucursal = dr.GetInt32(11);
+                oferta.sucursal.Nombre = String.Format("{0}", dr[12]);
+
+                list.Add(oferta);
+            }
+
+            conn.Close();
+
+            return list;
+        }
+
+
         public bool insertarOferta(Oferta oferta)
         {
             bool resultado = false;
@@ -237,7 +327,7 @@ namespace CapaNegocio
             OracleCommand cmd = new OracleCommand();
             cmd = new OracleCommand("SELECT o.idOferta,r.nombre,o.nombre,o.descripcion," +
                 "o.precioNormal,o.precioOferta,o.cantidadMin,o.cantidadMax, o.idProducto, o.productImage" +
-                ", o.estado, s.nombre "+
+                ", o.estado, s.nombre as sucursal "+
                 "FROM OFERTA O "+
                 "INNER JOIN RUBRO r ON r.idRubro = o.IdRubro "+
                 "INNER JOIN PRODUCTO p ON p.idProducto = o.idProducto " +

@@ -18,7 +18,7 @@ namespace MisOfertas.Controllers
         {
             string a = ""; 
             ViewBag.listaSucursal = obtenerSucursal();
-            ViewBag.listaDescuento = obtenerDescuento(0);
+            ViewBag.listaDescuento = obtenerDescuento(0);            
 
             NegocioProducto auxProducto = new NegocioProducto();
             List<Producto> listProducto = auxProducto.retornaProductoList();
@@ -26,22 +26,11 @@ namespace MisOfertas.Controllers
             ViewBag.lista = listProducto;
             Session["nomProducto"] = nom;
             Session["idProducto"] = id;
-            Session["precio"] = precio;
-            if(nom !="")
-            {
-                 a = Convert.ToString(Session["nomProducto"]);
-            }
+            Session["precio"] = precio;  
             
             return View();
         }
 
-        public void idProducto(string id)
-        {
-            if (id != "")
-            {
-                Session["idProducto"] = id;
-            }
-        }
 
         public ActionResult convertirImagen(string id)
         {
@@ -110,7 +99,7 @@ namespace MisOfertas.Controllers
         }
 
 
-        public ActionResult OfertasPublicadas()
+       /* public ActionResult OfertasPublicadas()
         {
             NegocioOferta auxOferta = new NegocioOferta();
             Rubro auxRubro = auxOferta.retornaRubro(Convert.ToInt32(1));
@@ -121,7 +110,7 @@ namespace MisOfertas.Controllers
             return View(listOferta);
         }
         [HttpPost]
-        public ActionResult OfertasPublicadas(string idRubro)
+        public ActionResult OfertasPublicadas(string idRubro, string precio)
         {
 
 
@@ -131,9 +120,12 @@ namespace MisOfertas.Controllers
             Session["idRubro"] = auxRubro.IdRubro;
             Session["nombreRubro"] = auxRubro.Nombre;
 
-            List<Oferta> listOferta = auxOferta.retornaOfertaPuublicadaList(Convert.ToInt32(idRubro));
+       
+                List<Oferta> listOferta = auxOferta.retornaOfertaPuublicadaList(Convert.ToInt32(idRubro));            
+
+            
             return View(listOferta);
-        }
+        }*/
 
         public ActionResult Producto()
         {
@@ -215,6 +207,9 @@ namespace MisOfertas.Controllers
 
             return list;
         }
+
+
+       
 
         public List<SelectListItem> obtenerRubro()
         {

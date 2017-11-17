@@ -19,11 +19,12 @@
                         @Html.DisplayFor(modelItem => item.oferta.Nombre)
                     </h4>
                     <h4 >
-                        @Html.DisplayFor(modelItem => item.usuario.Nombre)
+                      Usuario: @Html.DisplayFor(modelItem => item.usuario.NombreUsuario)
                     </h4>
-                    <h5>Fecha: @Html.DisplayFor(modelItem => item.fecha)</h5>
-                    <h5>@Html.DisplayFor(modelItem => item.Comentario)</h5>
-                    <p class="card-text">@Html.DisplayFor(modelItem => item.Calificacion)</p>
+                    <h4>Fecha: @Html.DisplayFor(modelItem => item.fecha)</h4>
+                    <h4>@Html.DisplayFor(modelItem => item.Comentario)</h4>
+                    <h4></h4>
+                    <h4>@Html.DisplayFor(modelItem => item.Calificacion)</h4>
                 </div>
                 <div class="card-footer">
                     <br />

@@ -631,7 +631,6 @@
     <Content Include="Views\Pdf\Index.cshtml" />
     <Content Include="Views\Home\Cupon.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Home\OfertasPublicadas.cshtml" />
     <Content Include="Views\Home\Valoracion.cshtml" />
     <Content Include="Views\Home\VerValoracion.cshtml" />
     <Content Include="Views\Ventas\crearDescuento.cshtml" />

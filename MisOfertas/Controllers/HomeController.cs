@@ -26,13 +26,18 @@ namespace MisOfertas.Controllers
 
             Session["idRubro"] = auxRubro.IdRubro;
             Session["nombreRubro"] = auxRubro.Nombre;
-            List<Oferta> listOferta = auxOferta.retornaOfertaPuublicadaList(Convert.ToInt32(1));
+
+            List<Oferta> listOferta = auxOferta.retornaOfertaPuublicadaList(1,0);
+
+            ViewBag.listaRangoPrecio = obtenerRangoPrecio();
+            ViewBag.listaSucursal = obtenerSucursal();
+
             return View(listOferta);
 
         }    
         
         [HttpPost]
-        public ActionResult Index(string idRubro)
+        public ActionResult Index(string idRubro, string precio,string sucursal)
         {
 
             NegocioOferta auxOferta = new NegocioOferta();
@@ -40,10 +45,82 @@ namespace MisOfertas.Controllers
 
             Session["idRubro"] = auxRubro.IdRubro;
             Session["nombreRubro"] = auxRubro.Nombre;
-            List<Oferta> listOferta = auxOferta.retornaOfertaPuublicadaList(Convert.ToInt32(idRubro));
-            return View(listOferta);
 
+            List<Oferta> listOferta;
+
+            int precioInicio = 0;
+            int precioFin = 0;
+            bool menorPrecio = false;
+            bool mayorPrecio = false;
+            string order = "";
+            
+
+            if (Convert.ToInt32(precio) > 0)
+            {
+
+                switch (Convert.ToInt32(precio))
+                {
+                    case 1:
+
+                        menorPrecio = true;
+                        order = "ASC";
+                        break;
+                    case 2:
+
+                        mayorPrecio = true;
+                        order = "DESC";
+                        break;
+                    case 3:
+                        precioInicio = 0;
+                        precioFin = 10000;
+                        break;
+                    case 4:
+                        precioInicio = 10000;
+                        precioFin = 50000;
+                        break;
+                    case 5:
+                        precioInicio = 50000;
+                        precioFin = 100000;
+                        break;
+                    case 6:
+                        precioInicio = 100000;
+                        precioFin = 500000;
+                        break;                    
+                }
+
+                if (menorPrecio == true)
+                {
+                    listOferta = auxOferta.retornaOfertaPublicadaListPrecioMenor(Convert.ToInt32(precioInicio), Convert.ToInt32(precioFin),order);
+                }
+                else
+                {
+                    if(mayorPrecio == true)
+                    {
+                        listOferta = auxOferta.retornaOfertaPublicadaListPrecioMenor(Convert.ToInt32(precioInicio), Convert.ToInt32(precioFin), order);
+                    }
+                    else
+                    {
+                        // listOferta = auxOferta.retornaOfertaPublicadaListPrecio(Convert.ToInt32(precioInicio), Convert.ToInt32(precioFin));
+                        listOferta = auxOferta.retornaOfertaPublicadaListPrecioMenor(Convert.ToInt32(precioInicio), Convert.ToInt32(precioFin), order);
+                    }
+                }
+
+                
+            }
+            else
+            {
+                
+                listOferta = auxOferta.retornaOfertaPuublicadaList(Convert.ToInt32(idRubro), Convert.ToInt32(sucursal));
+
+            }
+
+
+            ViewBag.listaRangoPrecio = obtenerRangoPrecio();
+            ViewBag.listaSucursal = obtenerSucursal();
+
+            return View(listOferta);
         }
+
         public ActionResult About()
         {
             
@@ -133,32 +210,93 @@ namespace MisOfertas.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult OfertasPublicadas()
-        {                     
-            NegocioOferta auxOferta = new NegocioOferta();
-            Rubro auxRubro = auxOferta.retornaRubro(Convert.ToInt32(1));
-
-            Session["idRubro"] = auxRubro.IdRubro;
-            Session["nombreRubro"] = auxRubro.Nombre;
-            List<Oferta> listOferta = auxOferta.retornaOfertaPuublicadaList(Convert.ToInt32(1));
-            return View(listOferta);
-        }
-        [HttpPost]
-        public ActionResult OfertasPublicadas(string idRubro)
+        public List<SelectListItem> obtenerRangoPrecio()
         {
+            var lista = new List<SelectListItem>(){
 
-            
-            NegocioOferta auxOferta = new NegocioOferta();
-            Rubro auxRubro = auxOferta.retornaRubro(Convert.ToInt32(idRubro));
+                 new SelectListItem()
+                {
+                    Text = "Menor precio",
+                    Value = "1"
+                },
+                  new SelectListItem()
+                {
+                    Text = "Mayor precio",
+                    Value = "2"
+                },
 
-            Session["idRubro"] = auxRubro.IdRubro;
-            Session["nombreRubro"] = auxRubro.Nombre;
+                new SelectListItem()
+                {
+                    Text = "0 - 10000",
+                    Value = "3"
+                },
+                new SelectListItem()
+                {
+                    Text = "10000 - 50000",
+                    Value = "4"
+                },
+                new SelectListItem()
+                {
+                    Text = "50000 - 100000",
+                    Value = "5"
+                },
+                new SelectListItem()
+                {
+                    Text = "100000 - 500000",
+                    Value = "6"
+                }
+            };
 
-            List<Oferta> listOferta = auxOferta.retornaOfertaPuublicadaList(Convert.ToInt32(idRubro));
-            return View(listOferta);
+
+
+            return lista;
         }
 
-       
+        public List<SelectListItem> obtenerSucursal()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+
+            List<Sucursal> listSucursal;
+            NegocioProducto auxNegocio = new NegocioProducto();
+
+            listSucursal = auxNegocio.retornaSucursal();
+
+            foreach (var li in listSucursal)
+            {
+                list.Add(new SelectListItem()
+                {
+                    Text = li.Nombre,
+                    Value = li.IdSucursal.ToString()
+
+
+                });
+            }
+
+            return list;
+        }
+
+        public List<SelectListItem> obtenerCalificacion()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+
+            for (int i = 0; i < 11; i++)
+            {                
+
+                list.Add(new SelectListItem()
+                {
+                    Text = i.ToString(),
+                    Value = i.ToString()
+
+
+                });
+                
+            }
+           
+
+            return list;
+        }
+
+
 
         public ActionResult convertirImagen(string id)
         {
@@ -179,11 +317,12 @@ namespace MisOfertas.Controllers
             valoracion.usuario.IdUsuario = Convert.ToInt32(Session["idUsuario"]);
             valoracion.usuario.NombreUsuario = Session["nombreUuario"].ToString();
 
+            ViewBag.listaCalificacion = obtenerCalificacion();
             return View(valoracion);
         }
 
         [HttpPost]
-        public ActionResult Valoracion(Valoracion valoracion, HttpPostedFileBase file)
+        public ActionResult Valoracion(Valoracion valoracion, HttpPostedFileBase file, string calificacion)
         {
             if (ModelState.IsValid)
             {
@@ -201,6 +340,7 @@ namespace MisOfertas.Controllers
                 }
                 valoracion.oferta.IdOferta = Convert.ToInt32(Session["idOferta"]);
                 valoracion.usuario.IdUsuario = Convert.ToInt32(Session["idUsuario"]);
+                valoracion.Calificacion = calificacion;
 
                 bool resultado = auxValoacion.insertarValoracion(valoracion);
 
@@ -216,7 +356,8 @@ namespace MisOfertas.Controllers
                 }
                 // 
                 
-            }            
+            }
+            ViewBag.listaCalificacion = obtenerCalificacion();
             return View();
         }
 
