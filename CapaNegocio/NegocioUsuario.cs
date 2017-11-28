@@ -85,6 +85,35 @@ namespace CapaNegocio
 
         }
 
+        public List<Usuario> retornaUsuarioList()
+        {
+            List<Usuario> list = new List<Usuario>();
+            conn.Open();
+            
+            OracleCommand cmd = new OracleCommand();
+            cmd = new OracleCommand("SELECT * FROM usuario u "+
+                                    "WHERE u.IDUSUARIO <> ALL (SELECT p.IDUSUARIO FROM permiso p)", conn);
+
+
+            OracleDataAdapter da = new OracleDataAdapter();
+            da.SelectCommand = cmd;
+            OracleDataReader dr = cmd.ExecuteReader();
+
+
+            while (dr.Read())
+            {
+                Usuario usuario = new Usuario();
+
+                usuario.NombreUsuario = String.Format("{0}", dr[2]);
+
+                list.Add(usuario);
+            }
+
+            conn.Close();
+
+            return list;
+        }
+
 
         public bool eliminarUsuario(Usuario usuario)
         {

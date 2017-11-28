@@ -23,8 +23,8 @@ namespace MisOfertas.Controllers
             NegocioProducto auxProducto = new NegocioProducto();
             List<Producto> listProducto = auxProducto.retornaProductoList();
 
-            ViewBag.lista = listProducto;
-            Session["nomProducto"] = nom;
+
+            ViewBag.lista = listProducto;            
             Session["idProducto"] = id;
             Session["precio"] = precio;  
             
@@ -98,45 +98,88 @@ namespace MisOfertas.Controllers
                 return View();
         }
 
-
-       /* public ActionResult OfertasPublicadas()
+        public ActionResult Producto(string id)
         {
-            NegocioOferta auxOferta = new NegocioOferta();
-            Rubro auxRubro = auxOferta.retornaRubro(Convert.ToInt32(1));
-
-            Session["idRubro"] = auxRubro.IdRubro;
-            Session["nombreRubro"] = auxRubro.Nombre;
-            List<Oferta> listOferta = auxOferta.retornaOfertaPuublicadaList(Convert.ToInt32(1));
-            return View(listOferta);
-        }
-        [HttpPost]
-        public ActionResult OfertasPublicadas(string idRubro, string precio)
-        {
-
-
-            NegocioOferta auxOferta = new NegocioOferta();
-            Rubro auxRubro = auxOferta.retornaRubro(Convert.ToInt32(idRubro));
-
-            Session["idRubro"] = auxRubro.IdRubro;
-            Session["nombreRubro"] = auxRubro.Nombre;
-
-       
-                List<Oferta> listOferta = auxOferta.retornaOfertaPuublicadaList(Convert.ToInt32(idRubro));            
 
             
-            return View(listOferta);
-        }*/
 
-        public ActionResult Producto()
+            NegocioProducto auxProducto = new NegocioProducto();
+            List<Producto> listProducto = auxProducto.retornaProductoList();
+
+            Producto producto = new Producto();
+            Producto prod = auxProducto.retornaProducto(Convert.ToInt32(id));
+
+            ViewBag.lista = listProducto;
+            if(id==null)
+            {                
+                id = "0";
+                ViewBag.listaTipoProducto = obtenerTipoProducto();
+            }
+            else
+            {
+
+                producto.Nombre = prod.Nombre;
+                producto.Precio = prod.Precio;
+                producto.IdProducto = prod.IdProducto;
+                producto.Descripcion = prod.Descripcion;
+                producto.Stock = prod.Stock;
+                producto.TipoProducto.IdTipoProducto = prod.TipoProducto.IdTipoProducto;
+                ViewBag.listaTipoProducto = obtenerTipoProducto();
+            }
+                        
+            Session["idProducto"] = id;                                
+
+            return View(producto);
+        }
+
+
+        [HttpPost]
+        public ActionResult Producto(Producto producto, string idTipoProducto, string idProducto)
         {
+            if (ModelState.IsValid)
+            {
+                NegocioProducto auxProducto = new NegocioProducto();
+                int idTipoProduc = Convert.ToInt32(idTipoProducto);                
+                bool resultado = false;
 
-            ViewBag.listaTipoProducto = obtenerTipoProducto();            
-              
+                producto.TipoProducto.IdTipoProducto = idTipoProduc;
+                producto.IdProducto = Convert.ToInt32(idProducto);
+                
+                if(producto.IdProducto>0)
+                {
+                    resultado = auxProducto.actualizarProducto(producto);
+                }
+                else
+                {
+                    resultado = auxProducto.insertarProducto(producto);
+                }
 
 
+                
+
+                if (resultado == true)
+                {
+                    ModelState.AddModelError("", "Datos Correctos");
+                    ModelState.Clear();
+                }
+                else
+                {
+
+                    ModelState.AddModelError("", "Error datos invalidos");
+
+                }
+
+                ViewBag.listaTipoProducto = obtenerTipoProducto();
+                
+                List<Producto> listProducto = auxProducto.retornaProductoList();
+
+                ViewBag.lista = listProducto;
+
+                // 
+            }
             return View();
         }
-       
+
         public List<SelectListItem> obtenerTipoProducto()
         {
             List<SelectListItem> list = new List<SelectListItem>();
@@ -235,39 +278,7 @@ namespace MisOfertas.Controllers
         }
 
 
-        [HttpPost]
-        public ActionResult Producto(Producto producto,string idTipoProducto, string idSucursal)
-        {
-            if (ModelState.IsValid)
-            {
-                NegocioProducto auxProducto = new NegocioProducto();
-                int idTipoProduc = Convert.ToInt32(idTipoProducto);
-                int idSucur = Convert.ToInt32(idSucursal);
-                bool resultado = false;
-               
-                  producto.TipoProducto.IdTipoProducto = idTipoProduc;                  
-
-
-                     resultado = auxProducto.insertarProducto(producto);                                
-
-                if (resultado == true)
-                {
-                    ModelState.AddModelError("", "Datos Correctos");
-                    ModelState.Clear();
-                }
-                else
-                {
-                    
-                    ModelState.AddModelError("", "Error datos invalidos");
-                    
-                }
-
-                ViewBag.listaTipoProducto = obtenerTipoProducto();
-
-                // 
-            }
-            return View();
-        }
+        
   
         
         public ActionResult VerOferta()

@@ -150,13 +150,14 @@ namespace CapaNegocio
             conn.Open();
 
             OracleCommand cmd = new OracleCommand("INSERT INTO producto(idProducto,nombre," +
-                "descripcion,precio,idTipoProducto) VALUES (sucuence_producto.NEXTVAL," +
-                ":nombre,:descripcion,:precio,:idTipoP)", conn);
+                "descripcion,precio,idTipoProducto,stock) VALUES (sucuence_producto.NEXTVAL," +
+                ":nombre,:descripcion,:precio,:idTipoP,:stock)", conn);
 
             cmd.Parameters.Add(new OracleParameter(":nombre", producto.Nombre));
             cmd.Parameters.Add(new OracleParameter(":descripcion", producto.Descripcion));
             cmd.Parameters.Add(new OracleParameter(":precio", producto.Precio));
-            cmd.Parameters.Add(new OracleParameter(":idTipoP", producto.TipoProducto.IdTipoProducto));            
+            cmd.Parameters.Add(new OracleParameter(":idTipoP", producto.TipoProducto.IdTipoProducto));
+            cmd.Parameters.Add(new OracleParameter(":stock", producto.Stock));
 
             int a = cmd.ExecuteNonQuery();
             conn.Close();
@@ -178,6 +179,27 @@ namespace CapaNegocio
             OracleCommand cmd = new OracleCommand("DELETE from producto where oferta =:idProducto", conn);
 
             cmd.Parameters.Add(new OracleParameter(":idProducto", producto.IdProducto));
+
+            int a = cmd.ExecuteNonQuery();
+            conn.Close();
+            if (a > 0)
+            {
+                resultado = true;
+            }
+
+            return resultado;
+
+        }
+
+        public bool actualizarProducto(Producto producto)
+        {
+            bool resultado = false;
+
+            conn.Open();
+            OracleCommand cmd = new OracleCommand("UPDATE FROM producto SET stock = :stock where oferta =:idProducto", conn);
+
+            cmd.Parameters.Add(new OracleParameter(":idProducto", producto.IdProducto));
+            cmd.Parameters.Add(new OracleParameter(":stock", producto.Stock));
 
             int a = cmd.ExecuteNonQuery();
             conn.Close();

@@ -45,6 +45,7 @@
     <Compile Include="Correo.cs" />
     <Compile Include="Cupon.cs" />
     <Compile Include="Descuento.cs" />
+    <Compile Include="Mail.cs" />
     <Compile Include="Oferta.cs" />
     <Compile Include="Permiso.cs" />
     <Compile Include="Producto.cs" />
