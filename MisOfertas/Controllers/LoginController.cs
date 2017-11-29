@@ -160,5 +160,59 @@ namespace MisOfertas.Controllers
             FormsAuthentication.SignOut();
             return RedirectToAction("Index");
         }
+
+
+        public ActionResult actualizarUsuario(int id)
+        {
+
+            NegocioUsuario auxNegocioUsuario = new NegocioUsuario();
+            Usuario auxUSuario = new Usuario();
+            Usuario usuario = auxNegocioUsuario.retornaUsuario(id);
+
+
+            auxUSuario.IdUsuario = usuario.IdUsuario;
+            auxUSuario.Nombre = usuario.Nombre;
+            auxUSuario.NombreUsuario = usuario.NombreUsuario;
+            auxUSuario.Rut = usuario.Rut;
+            auxUSuario.Direccion = usuario.Direccion;
+            auxUSuario.Telefono = usuario.Telefono;
+            auxUSuario.Correo = usuario.Correo;
+            return View(auxUSuario);
+        }
+
+        [HttpPost]
+        public ActionResult actualizarUsuario(Usuario usuario)
+        {
+
+            NegocioUsuario auxNegocioUsuario = new NegocioUsuario();
+
+            Usuario auxUSuario = new Usuario();
+
+
+            bool resultado = auxNegocioUsuario.actualizarUsuario(usuario);
+
+
+
+            auxUSuario.IdUsuario = usuario.IdUsuario;
+            auxUSuario.Nombre = usuario.Nombre;
+            auxUSuario.NombreUsuario = usuario.NombreUsuario;
+            auxUSuario.Rut = usuario.Rut;
+            auxUSuario.Direccion = usuario.Direccion;
+            auxUSuario.Telefono = usuario.Telefono;
+            auxUSuario.Correo = usuario.Correo;
+
+            if (resultado == true)
+            {
+                ModelState.AddModelError("", "Datos Correctos");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Error datos invalidos");
+            }
+
+            return View(auxUSuario);
+        }
+
+
     }
 }

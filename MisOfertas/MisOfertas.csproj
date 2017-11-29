@@ -636,6 +636,7 @@
     <Content Include="Views\verProducto\actualizarProducto.cshtml" />
     <Content Include="Views\verProducto\eliminarProducto.cshtml" />
     <Content Include="Views\verProducto\VerProducto.cshtml" />
+    <Content Include="Views\Login\actualizarUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

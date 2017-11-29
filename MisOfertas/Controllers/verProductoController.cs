@@ -80,7 +80,7 @@ namespace MisOfertas.Controllers
             auxProducto.Precio = producto.Precio;
             auxProducto.Modelo = producto.Modelo; 
             auxProducto.Stock = producto.Stock;
-            return View(auxProducto);
+            return View(auxProducto);   
         }
 
         [HttpPost]
