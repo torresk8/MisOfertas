@@ -154,14 +154,41 @@ namespace CapaNegocio
 
             conn.Open();
 
-            OracleCommand cmd = new OracleCommand("UPDATE producto SET  marca ='" + usuario.Nombre + "', modelo='" + usuario.Modelo + "', descripcion='" + producto.Descripcion + "', " +
-                "precio='" + producto.Precio + "', stock='" + producto.Stock + "' WHERE idProducto ='" + producto.IdProducto + "'", conn);
+            OracleCommand cmd = new OracleCommand("UPDATE usuario SET  nombre ='" + usuario.Nombre + "', nombreUsuario='" + usuario.NombreUsuario + "', rut='" + usuario.Rut + "', " +
+                "direccion='" + usuario.Direccion + "', telefono='" + usuario.Telefono+ "', correo='" + usuario.Correo + "' WHERE idUsuario ='" + usuario.IdUsuario + "'", conn);
 
-            cmd.Parameters.Add(new OracleParameter(":marca", producto.Marca));
-            cmd.Parameters.Add(new OracleParameter(":modelo", producto.Modelo));
-            cmd.Parameters.Add(new OracleParameter(":descripcion", producto.Descripcion));
-            cmd.Parameters.Add(new OracleParameter(":precio", producto.Precio));
-            cmd.Parameters.Add(new OracleParameter(":stock", producto.Stock));
+            cmd.Parameters.Add(new OracleParameter(":nombre", usuario.Nombre));
+            cmd.Parameters.Add(new OracleParameter(":nombreUsuario", usuario.NombreUsuario));
+            cmd.Parameters.Add(new OracleParameter(":rut", usuario.Rut));
+            cmd.Parameters.Add(new OracleParameter(":direccion", usuario.Direccion));
+            cmd.Parameters.Add(new OracleParameter(":telefono", usuario.Telefono));
+            cmd.Parameters.Add(new OracleParameter(":correo", usuario.Correo));
+
+
+
+            int a = cmd.ExecuteNonQuery();
+            conn.Close();
+            if (a > 0)
+            {
+                resultado = true;
+            }
+
+            return resultado;
+
+        }
+
+
+        public bool actualizarPassword(Usuario usuario)
+        {
+            bool resultado = false;
+
+
+            conn.Open();
+
+            OracleCommand cmd = new OracleCommand("UPDATE usuario SET  password ='" + usuario.Password +  "' WHERE idUsuario ='" + usuario.IdUsuario + "'", conn);
+
+            cmd.Parameters.Add(new OracleParameter(":nombre", usuario.Password));
+        
 
 
 

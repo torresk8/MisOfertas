@@ -25,10 +25,16 @@
                 @Html.DisplayNameFor(model => model.Marca)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Modelo)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Descripcion)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stock)
             </th>
             <th></th>
         </tr>
@@ -50,21 +56,25 @@
                     @Html.DisplayFor(modelItem => item.Marca)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Modelo)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Descripcion)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Precio)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Stock)
+                </td>
+                <td>
                     <a href="@Url.Action("actualizarProducto", "verProducto", new { id = item.IdProducto })">editar</a>
                     <a href="@Url.Action("eliminarProducto", "verProducto", new { id = item.IdProducto })">eliminar</a>
                 </td>
             </tr>
-
         }
     </tbody>
 </table>
-
 
 <script>
 
@@ -72,19 +82,19 @@
     {
         $.ajax({
         url: "@Url.Action("eliminarProducto", "VerProducto")",
-        type: "POST",
-        data: {
-            id: id
+                                type: "POST",
+                                data: {
+                                    id: id
 
-        },
+                                },
 
-        success: function(data) {
-            //If you have a response, it will be in the 'data' object
-        }
-        });
+                                success: function (data) {
+                                    //If you have a response, it will be in the 'data' object
+                                }
+                            });
 
-        location.reload(true);
-    }
+                            location.reload(true);
+                        }
 
 
 

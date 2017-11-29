@@ -78,7 +78,7 @@ namespace MisOfertas.Controllers
             auxProducto.Marca = producto.Marca;
             auxProducto.Descripcion = producto.Descripcion;
             auxProducto.Precio = producto.Precio;
-            auxProducto.Modelo = producto.Modelo;
+            auxProducto.Modelo = producto.Modelo; 
             auxProducto.Stock = producto.Stock;
             return View(auxProducto);
         }
