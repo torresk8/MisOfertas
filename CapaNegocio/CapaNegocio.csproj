@@ -41,10 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NegocioCupon.cs" />
-    <Compile Include="NegocioDescuento.cs" />
+    <Compile Include="conn\DataSet.cs" />
     <Compile Include="NegocioOferta.cs" />
     <Compile Include="NegocioProducto.cs" />
+    <Compile Include="NegocioPuntaje.cs" />
     <Compile Include="NegocioUsuario.cs" />
     <Compile Include="NegocioValoracion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

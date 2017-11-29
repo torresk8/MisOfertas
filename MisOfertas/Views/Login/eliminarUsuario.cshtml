@@ -4,13 +4,14 @@
     ViewBag.Title = "eliminarUsuario";
 }
 
-<h2>Eliminar Usuario</h2>
+<h2>eliminarUsuario</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">        
+    <div class="form-horizontal">
+        <h4>Usuario</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 

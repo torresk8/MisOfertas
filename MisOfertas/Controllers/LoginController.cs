@@ -7,7 +7,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using CapaNegocio.Roles;
 
 namespace MisOfertas.Controllers
 {
@@ -31,7 +30,9 @@ namespace MisOfertas.Controllers
                 Session["idUsuario"] = u.IdUsuario;
                 Session["usuario"] = u.Nombre;
                 Session["nombreUuario"] = u.NombreUsuario;
-                Session["nombre"] = u.Nombre;                                              
+                //guarda los datos del usuario que entra al CC
+                Session["loginUsuario"] = u;    
+                return null;
             }
             else
             {
@@ -99,12 +100,10 @@ namespace MisOfertas.Controllers
 
                 if (resultado == true)
                 {
-                    ModelState.AddModelError("", "Datos Correctos");
                     Session["idUsuario"] = usuario.IdUsuario;
                     Session["usuario"] = usuario.Nombre;
                     Session["password"] = usuario.Password;
-
-                    ModelState.Clear();
+                    ModelState.AddModelError("", "Bienvendio" + usuario.Nombre);
                 }                 
             }
             else

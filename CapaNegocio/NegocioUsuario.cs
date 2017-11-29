@@ -15,6 +15,8 @@ namespace CapaNegocio
     {
         private Conexion conexion = new Conexion();
         OracleConnection conn;
+
+
         public NegocioUsuario()
         {
             conn = conexion.conectar();
@@ -23,7 +25,7 @@ namespace CapaNegocio
         public Usuario login(Usuario usuario)
         {
             conn.Open();
-                    
+
             DataSet ds = new DataSet();
             OracleCommand cmd = new OracleCommand();
 
@@ -67,51 +69,22 @@ namespace CapaNegocio
                 "                                  password,rut,direccion,telefono)" +
                      "VALUES(sucuence_usu.NEXTVAL,:nombre,:usuario,:pass,:rut,:direccion,:telefono)", conn);
 
-            cmd.Parameters.Add(new OracleParameter(":nombre", usuario.Nombre));            
+            cmd.Parameters.Add(new OracleParameter(":nombre", usuario.Nombre));
             cmd.Parameters.Add(new OracleParameter(":usuario", usuario.NombreUsuario));
             cmd.Parameters.Add(new OracleParameter(":pass", pass));
-            cmd.Parameters.Add(new OracleParameter(":rut", usuario.Rut));
-            cmd.Parameters.Add(new OracleParameter(":direccion", usuario.Direccion));
-            cmd.Parameters.Add(new OracleParameter(":telefono", usuario.Telefono));
+            cmd.Parameters.Add(new OracleParameter(":rut", pass));
+            cmd.Parameters.Add(new OracleParameter(":direccion", pass));
+            cmd.Parameters.Add(new OracleParameter(":telefono", pass));
 
-            int a= cmd.ExecuteNonQuery();
+            int a = cmd.ExecuteNonQuery();
             conn.Close();
             if (a > 0)
             {
-                 resultado = true;
+                resultado = true;
             }
 
             return resultado;
 
-        }
-
-        public List<Usuario> retornaUsuarioList()
-        {
-            List<Usuario> list = new List<Usuario>();
-            conn.Open();
-            
-            OracleCommand cmd = new OracleCommand();
-            cmd = new OracleCommand("SELECT * FROM usuario u "+
-                                    "WHERE u.IDUSUARIO <> ALL (SELECT p.IDUSUARIO FROM permiso p)", conn);
-
-
-            OracleDataAdapter da = new OracleDataAdapter();
-            da.SelectCommand = cmd;
-            OracleDataReader dr = cmd.ExecuteReader();
-
-
-            while (dr.Read())
-            {
-                Usuario usuario = new Usuario();
-
-                usuario.NombreUsuario = String.Format("{0}", dr[2]);
-
-                list.Add(usuario);
-            }
-
-            conn.Close();
-
-            return list;
         }
 
 
@@ -134,5 +107,78 @@ namespace CapaNegocio
             return resultado;
 
         }
+
+
+        public Usuario retornaUsuario(int id)
+        {
+            Usuario usuario = new Usuario();
+
+            conn.Open();
+            DataSet ds = new DataSet();
+            OracleCommand cmd = new OracleCommand();
+            cmd = new OracleCommand("SELECT * FROM usuario where idUsuario=:id", conn);
+            cmd.Parameters.Add(new OracleParameter(":id", id));
+
+            OracleDataAdapter da = new OracleDataAdapter();
+            da.SelectCommand = cmd;
+            OracleDataReader dr = cmd.ExecuteReader();
+
+            //byte[] ima = (byte[])cmd.ExecuteScalar();          
+
+
+
+            while (dr.Read())
+            {
+
+                usuario.IdUsuario = dr.GetInt32(0);
+                usuario.Nombre = String.Format("{0}", dr[1]);
+                usuario.NombreUsuario = String.Format("{0}", dr[2]);
+                usuario.Password = String.Format("{0}", dr[3]);
+                usuario.Rut = String.Format("{0}", dr[4]);
+                usuario.Direccion = String.Format("{0}", dr[5]);
+                usuario.Telefono = dr.GetInt32(6);
+
+            }
+
+            conn.Close();
+
+            return usuario;
+        }
+
+
+
+        public bool actualizarUsuario(Usuario usuario)
+        {
+            bool resultado = false;
+
+
+            conn.Open();
+
+            OracleCommand cmd = new OracleCommand("UPDATE producto SET  marca ='" + usuario.Nombre + "', modelo='" + usuario.Modelo + "', descripcion='" + producto.Descripcion + "', " +
+                "precio='" + producto.Precio + "', stock='" + producto.Stock + "' WHERE idProducto ='" + producto.IdProducto + "'", conn);
+
+            cmd.Parameters.Add(new OracleParameter(":marca", producto.Marca));
+            cmd.Parameters.Add(new OracleParameter(":modelo", producto.Modelo));
+            cmd.Parameters.Add(new OracleParameter(":descripcion", producto.Descripcion));
+            cmd.Parameters.Add(new OracleParameter(":precio", producto.Precio));
+            cmd.Parameters.Add(new OracleParameter(":stock", producto.Stock));
+
+
+
+            int a = cmd.ExecuteNonQuery();
+            conn.Close();
+            if (a > 0)
+            {
+                resultado = true;
+            }
+
+            return resultado;
+
+        }
+
+
     }
+
+
+
 }

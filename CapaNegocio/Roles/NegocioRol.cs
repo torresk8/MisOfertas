@@ -19,7 +19,6 @@ namespace CapaNegocio.Roles
         }
         private int numRecs;
         public int NumRecs { get => numRecs; set => numRecs = value; }
-
         public bool IsUserInRole(string idUsuario, string idRol)
         {
             bool userIsInRole = false;
@@ -54,37 +53,6 @@ namespace CapaNegocio.Roles
             return userIsInRole;
         }
 
-
-        public bool IsUserRole(string role)
-        {
-            bool userIsInRole = false;           
-            conn.Open();
-
-            OracleCommand cmd = new OracleCommand();
-            cmd = new OracleCommand("SELECT nombre FROM rol " +
-                "where nombre= :rol", conn);
-            cmd.Parameters.Add(new OracleParameter(":rol", role));            
-
-            OracleDataAdapter da = new OracleDataAdapter();
-            da.SelectCommand = cmd;
-            OracleDataReader dr = cmd.ExecuteReader();
-
-            while (dr.Read())
-            {
-                NumRecs = dr.GetInt32(0);
-            }
-
-
-            if (NumRecs > 0)
-            {
-                userIsInRole = true;
-            }
-
-
-            conn.Close();
-
-            return userIsInRole;
-        }
 
         public string[] GetRolesForUser(string userName)
         {            

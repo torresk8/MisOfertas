@@ -14,23 +14,10 @@ namespace MisOfertas.Controllers
     public class VentasController : Controller
     {
         // GET: Ventas
-        public ActionResult Index(string id, string nom, string precio)
+        public ActionResult Index()
         {
-            string a = ""; 
-            ViewBag.listaSucursal = obtenerSucursal();
-            ViewBag.listaDescuento = obtenerDescuento(0);            
-
-            NegocioProducto auxProducto = new NegocioProducto();
-            List<Producto> listProducto = auxProducto.retornaProductoList();
-
-
-            ViewBag.lista = listProducto;            
-            Session["idProducto"] = id;
-            Session["precio"] = precio;  
-            
             return View();
         }
-
 
         public ActionResult convertirImagen(string id)
         {
@@ -40,146 +27,50 @@ namespace MisOfertas.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(Oferta oferta, HttpPostedFileBase file,string idProducto,string idRubro, string idSucursal, string idDescuento)
-        {
-
-            if(idSucursal != null)
-            {
-                if (ModelState.IsValid)
-                {
-                    NegocioOferta auxOferta = new NegocioOferta();
-
-                    if (file != null && file.ContentLength > 0)
-                    {
-                        byte[] imagenData = null;
-                        using (var binaryImagen = new BinaryReader(file.InputStream))
-                        {
-                            imagenData = binaryImagen.ReadBytes(file.ContentLength);
-                        }
-                        oferta.Imagen = imagenData;
-                    }
-                    oferta.Producto.IdProducto = Convert.ToInt32(idProducto);
-                    oferta.rubro.IdRubro = Convert.ToInt32(idRubro);
-                    oferta.sucursal.IdSucursal = Convert.ToInt32(idSucursal);
-                    oferta.PrecioNormal = Convert.ToInt32(Session["precio"]);
-                    oferta.Producto.IdProducto = Convert.ToInt32(Session["idProducto"]);
-
-                    NegocioDescuento negocioDescuento = new NegocioDescuento();
-                    Descuento descuento = negocioDescuento.retornaDescuento(Convert.ToInt32(idRubro),Convert.ToInt32(idDescuento));
-                    oferta.descuento.cantidad = descuento.cantidad;
-
-                    oferta.PrecioOfeta = (oferta.PrecioNormal-((oferta.PrecioNormal * oferta.descuento.cantidad)/100));
-
-                    bool resultado = auxOferta.insertarOferta(oferta);
-
-                    if (resultado == true)
-                    {
-                        ModelState.AddModelError("", "Datos Correctos");
-                        ModelState.Clear();
-                        Session["idProducto"] = "";
-                        Session["precio"] = "";
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Error datos invalidos");
-                    }
-                    // 
-                    }
-                }
-
-                ViewBag.listaSucursal = obtenerSucursal();
-                ViewBag.listaDescuento = obtenerDescuento(Convert.ToInt32(idRubro));
-
-                NegocioProducto auxProducto = new NegocioProducto();
-                List<Producto> listProducto = auxProducto.retornaProductoList();
-
-                ViewBag.lista = listProducto;
-
-                return View();
-        }
-
-        public ActionResult Producto(string id)
-        {
-
-            
-
-            NegocioProducto auxProducto = new NegocioProducto();
-            List<Producto> listProducto = auxProducto.retornaProductoList();
-
-            Producto producto = new Producto();
-            Producto prod = auxProducto.retornaProducto(Convert.ToInt32(id));
-
-            ViewBag.lista = listProducto;
-            if(id==null)
-            {                
-                id = "0";
-                ViewBag.listaTipoProducto = obtenerTipoProducto();
-            }
-            else
-            {
-
-                producto.Nombre = prod.Nombre;
-                producto.Precio = prod.Precio;
-                producto.IdProducto = prod.IdProducto;
-                producto.Descripcion = prod.Descripcion;
-                producto.Stock = prod.Stock;
-                producto.TipoProducto.IdTipoProducto = prod.TipoProducto.IdTipoProducto;
-                ViewBag.listaTipoProducto = obtenerTipoProducto();
-            }
-                        
-            Session["idProducto"] = id;                                
-
-            return View(producto);
-        }
-
-
-        [HttpPost]
-        public ActionResult Producto(Producto producto, string idTipoProducto, string idProducto)
+        public ActionResult Index(Oferta oferta, HttpPostedFileBase file,string idProducto)
         {
             if (ModelState.IsValid)
             {
-                NegocioProducto auxProducto = new NegocioProducto();
-                int idTipoProduc = Convert.ToInt32(idTipoProducto);                
-                bool resultado = false;
+                NegocioOferta auxOferta = new NegocioOferta();
 
-                producto.TipoProducto.IdTipoProducto = idTipoProduc;
-                producto.IdProducto = Convert.ToInt32(idProducto);
-                
-                if(producto.IdProducto>0)
+                if (file !=  null && file.ContentLength > 0)
                 {
-                    resultado = auxProducto.actualizarProducto(producto);
+                    byte[] imagenData = null;
+                    using (var binaryImagen = new BinaryReader(file.InputStream)) 
+                    {
+                        imagenData = binaryImagen.ReadBytes(file.ContentLength);
+                    }
+                    oferta.Imagen = imagenData;               
                 }
-                else
-                {
-                    resultado = auxProducto.insertarProducto(producto);
-                }
+                oferta.Producto.IdProducto = Convert.ToInt32(idProducto);
 
-
-                
+                bool resultado = auxOferta.insertarOferta(oferta);
 
                 if (resultado == true)
                 {
                     ModelState.AddModelError("", "Datos Correctos");
-                    ModelState.Clear();
                 }
                 else
                 {
-
                     ModelState.AddModelError("", "Error datos invalidos");
-
                 }
-
-                ViewBag.listaTipoProducto = obtenerTipoProducto();
-                
-                List<Producto> listProducto = auxProducto.retornaProductoList();
-
-                ViewBag.lista = listProducto;
-
                 // 
             }
             return View();
         }
 
+        public ActionResult Producto()
+        {
+
+
+
+            ViewBag.listaTipoProducto = obtenerTipoProducto();            
+            ViewBag.listaSucursal = obtenerSucursal();     
+
+
+            return View();
+        }
+       
         public List<SelectListItem> obtenerTipoProducto()
         {
             List<SelectListItem> list = new List<SelectListItem>();
@@ -197,30 +88,6 @@ namespace MisOfertas.Controllers
                     Text = li.Nombre,
                     Value = li.IdTipoProducto.ToString()
                     
-
-                });
-            }
-
-            return list;
-        }
-
-        public List<SelectListItem> obtenerDescuento(int id)
-        {
-            List<SelectListItem> list = new List<SelectListItem>();
-
-            List<Descuento> listDescuento = new List<Descuento>();
-            NegocioDescuento auxNegocio = new NegocioDescuento();
-
-            listDescuento = auxNegocio.retornaDescuentoListId(id);
-
-
-            foreach (var li in listDescuento)
-            {
-                list.Add(new SelectListItem()
-                {
-                    Text = li.cantidad.ToString()+"%",
-                    Value = li.idDescuento.ToString()
-
 
                 });
             }
@@ -251,36 +118,60 @@ namespace MisOfertas.Controllers
             return list;
         }
 
-
-       
-
-        public List<SelectListItem> obtenerRubro()
+        [HttpPost]
+        public ActionResult Producto(Producto producto,string idTipoProducto, string idSucursal)
         {
-            List<SelectListItem> list = new List<SelectListItem>();
-
-            List<Rubro> listRubro;
-            NegocioOferta negocioOferta = new NegocioOferta();
-
-            listRubro = negocioOferta.retornaRubroList();
-
-            foreach (var li in listRubro)
+            if (ModelState.IsValid)
             {
-                list.Add(new SelectListItem()
+                NegocioProducto auxProducto = new NegocioProducto();
+                int idTipoProduc = Convert.ToInt32(idTipoProducto);
+                int idSucur = Convert.ToInt32(idSucursal);
+                bool resultado = false;
+               
+                  producto.TipoProducto.IdTipoProducto = idTipoProduc;
+                  producto.Sucursal.IdSucursal = idSucur;
+                
+
+                     resultado = auxProducto.insertarProducto(producto);                                
+
+                if (resultado == true)
                 {
-                    Text = li.Nombre,
-                    Value = li.IdRubro.ToString()
+                    ModelState.AddModelError("", "Datos Correctos");
+                    
+                    
+                }
+                else
+                {
+                    
+                    ModelState.AddModelError("", "Error datos invalidos");
+                    
+                }
+               
 
 
-                });
+                ViewBag.listaTipoProducto = obtenerTipoProducto();
+                ViewBag.listaSucursal = obtenerSucursal();
+                //ModelState.Clear();
+
+
+                // 
             }
+            ModelState.Clear();
+            return View();
+           
+        }
 
-            return list;
+        private void  Limpiar(Producto producto)
+        {
+
+            ModelState.Clear();
+
         }
 
 
-        
-  
-        
+
+
+
         public ActionResult VerOferta()
         {
             
@@ -289,6 +180,7 @@ namespace MisOfertas.Controllers
             
             return View(listOferta);
         }
+
         public Object retornaTabla()
         {
             NegocioOferta auxOferta = new NegocioOferta();
@@ -297,13 +189,14 @@ namespace MisOfertas.Controllers
             return Json;
         }
 
+
+        //muestra el estado de las ofertas
         [HttpPost]
         public ActionResult VerOferta(string estado, int id)
         {
             NegocioOferta auxnegocioOferta = new NegocioOferta();            
             
-
-
+            
             if (estado == "Publicado")
             {
                 auxnegocioOferta.actualizarOfertaEstado("No publicado", id);
@@ -312,16 +205,75 @@ namespace MisOfertas.Controllers
             {
                 auxnegocioOferta.actualizarOfertaEstado("Publicado", id);
             }
-
-          
+                    
 
             List<Oferta> listOferta = auxnegocioOferta.retornaOfertaList();
 
             return View(listOferta);
         }
-  
+            
+
+        public ActionResult OfertasPublicadas()
+        {
+            NegocioOferta auxOferta = new NegocioOferta();
+            List<Oferta> listOferta = auxOferta.retornaOfertaPuublicadaList();
+            return View(listOferta);
+        }
 
         
+
+
+        public ActionResult valoracion(int id)
+        {
+            NegocioOferta aux = new NegocioOferta();
+            Oferta oferta =aux.retornaOferta(id);
+            Session["idOferta"] = oferta.IdOferta;
+
+            Valoracion valoracion = new Valoracion();
+            valoracion.oferta.IdOferta = oferta.IdOferta;
+            valoracion.oferta.Nombre = oferta.Nombre;
+            valoracion.usuario.IdUsuario = Convert.ToInt32(Session["idUsuario"]);
+            valoracion.usuario.NombreUsuario = Session["nombreUsuario"].ToString();
+
+            return View(valoracion);
+        }
+
+
+
+    
+        [HttpPost]
+        public ActionResult valoracion(Valoracion valoracion, HttpPostedFileBase file )
+        {
+            if (ModelState.IsValid)
+            {
+                NegocioValoracion auxValoacion = new NegocioValoracion();                              
+
+                if (file != null && file.ContentLength > 0)
+                {
+                    byte[] imagenData = null;
+                    using (var binaryImagen = new BinaryReader(file.InputStream))
+                    {
+                        imagenData = binaryImagen.ReadBytes(file.ContentLength);
+                    }
+                    valoracion.Boleta = imagenData;
+                }
+                valoracion.oferta.IdOferta = Convert.ToInt32(Session["idOferta"]);
+                valoracion.usuario.IdUsuario = Convert.ToInt32(Session["idUsuario"]);
+
+                bool resultado = auxValoacion.insertarValoracion(valoracion);
+
+                if (resultado == true)
+                {
+                    ModelState.AddModelError("", "Datos Correctos");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Error datos invalidos");
+                }
+                // 
+            }
+            return View();
+        }
 
         public ActionResult actualizarOferta(int id)
         {
@@ -331,6 +283,12 @@ namespace MisOfertas.Controllers
             Oferta auxOferta = new Oferta();
 
             auxOferta.Nombre = oferta.Nombre;
+            auxOferta.Descripcion = oferta.Descripcion;
+            auxOferta.PrecioNormal = oferta.PrecioNormal;
+            auxOferta.PrecioOfeta = oferta.PrecioOfeta;
+            auxOferta.CantidadMax = oferta.CantidadMax;
+            auxOferta.CantidadMax = oferta.CantidadMin;
+            ViewBag.Prueba = oferta;
             return View(auxOferta);
         }
 
@@ -342,9 +300,29 @@ namespace MisOfertas.Controllers
             bool resultado = auxNegocioOferta.actualizarOferta(oferta);
             Oferta auxOferta = new Oferta();
 
+
             auxOferta.Nombre = oferta.Nombre;
+            auxOferta.Descripcion = oferta.Descripcion;
+            auxOferta.PrecioNormal = oferta.PrecioNormal;
+            auxOferta.PrecioOfeta = oferta.PrecioOfeta;
+            auxOferta.CantidadMax = oferta.CantidadMax;
+            auxOferta.CantidadMax = oferta.CantidadMin;
+           
+    
+
+            if (resultado == true)
+            {
+                ModelState.AddModelError("", "Datos Correctos");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Error datos invalidos");
+            }
+
             return View(auxOferta);
         }
+
+
 
         public ActionResult eliminarOferta(int id)
         {
@@ -356,45 +334,20 @@ namespace MisOfertas.Controllers
             return View("VerOferta",listOferta);
         }
 
-        [Authorize(Roles = "administrador")]
-        public ActionResult crearDescuento()
-        {
-            ViewBag.listaRubro = obtenerRubro();
-
-            return View();
-        }
 
         [HttpPost]
-        public ActionResult crearDescuento(Descuento descuento, string idRubro)
+        public ActionResult eliminarOferta(Oferta oferta)
         {
+            NegocioOferta negocioOferta = new NegocioOferta();
+            
+            Oferta auxOferta = new Oferta();
 
-            if (ModelState.IsValid)
-            {
-                NegocioDescuento negocioDescuento = new NegocioDescuento();
-                                
-                bool resultado = false;
+            auxOferta.IdOferta = oferta.IdOferta;
+            bool resultado = negocioOferta.eliminarOferta(oferta.IdOferta);
 
-                descuento.rubro.IdRubro = Convert.ToInt32(idRubro);
+            List<Oferta> listOferta = negocioOferta.retornaOfertaList();
 
-                resultado = negocioDescuento.insertarDescuento(descuento);
-
-                if (resultado == true)
-                {
-                    ModelState.AddModelError("", "Datos Correctos");
-                    ModelState.Clear();
-                }
-                else
-                {
-
-                    ModelState.AddModelError("", "Error datos invalidos");
-
-                }
-                ViewBag.listaRubro = obtenerRubro();
-                // 
-            }
-
-            return View();
+            return View("VerOferta", listOferta);
         }
-
     }
 }

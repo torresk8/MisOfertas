@@ -151,8 +151,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\PdfController.cs" />
+    <Compile Include="Controllers\verProductoController.cs" />
     <Compile Include="Controllers\VentasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -628,14 +628,15 @@
     <Content Include="Views\Login\RegistrarUsuario.cshtml" />
     <Content Include="Views\Ventas\Producto.cshtml" />
     <Content Include="Views\Ventas\VerOferta.cshtml" />
+    <Content Include="Views\Ventas\OfertasPublicadas.cshtml" />
+    <Content Include="Views\Ventas\valoracion.cshtml" />
     <Content Include="Views\Ventas\actualizarOferta.cshtml" />
     <Content Include="Views\Pdf\Index.cshtml" />
-    <Content Include="Views\Home\Cupon.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Home\Valoracion.cshtml" />
-    <Content Include="Views\Home\VerValoracion.cshtml" />
-    <Content Include="Views\Ventas\crearDescuento.cshtml" />
-    <Content Include="Views\Mail\Index.cshtml" />
+    <Content Include="Views\Ventas\eliminarOferta.cshtml" />
+    <Content Include="Views\verProducto\VerProducto.cshtml" />
+    <Content Include="Views\verProducto\eliminarProducto.cshtml" />
+    <Content Include="Views\verProducto\actualizarProducto.cshtml" />
+    <Content Include="Views\verProducto\_VerProducto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

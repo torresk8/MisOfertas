@@ -1,258 +1,93 @@
 ﻿@model CapaDTO.Oferta
 
-
 @{
-    ViewBag.Title = "Ofertas";
+    ViewBag.Title = "Index";
 }
 
-@{
-    var lista = new List<SelectListItem>(){
-        new SelectListItem()
-        {
-            Text = "Alimentos",
-            Value = "1"
-        },
-        new SelectListItem()
-        {
-            Text = "Electronica",
-            Value = "2"
-        },
-        new SelectListItem()
-        {
-            Text = "Linea blanca",
-            Value = "3"
-        },
-        new SelectListItem()
-        {
-            Text = "Ropa",
-            Value = "4"
-        }
-    };
+<h2>Index</h2>
 
-}
-
-
-
-@using (Html.BeginForm(Html.BeginForm("Index", "Ventas", FormMethod.Post, new { enctype = "multipart/form-data" })))
-{ 
+@using (Html.BeginForm(Html.BeginForm("Index", "Ventas", FormMethod.Post, new { enctype = "multipart/form-data" }))) 
+{
                 @Html.AntiForgeryToken()
 
-    <style>
-        #mdialTamanio {
-            width: 80% !important;
-        }
-    </style>
-    <div id="asdf">
-        <div class="form-horizontal">
-            <h4>Oferta</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-horizontal">
+        <h4>Oferta</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-
-            <div class="form-group">
-                @Html.Label("Id Producto", htmlAttributes: new { @class = "control-label col-md-2" })
-                
-              <!--  <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-                    Launch demo modal
-                </button>-->
-                <div class="col-md-4">                    
-                    
-                        @Html.Editor("idProducto", new { htmlAttributes = new { @class = "form-control", required = "", id = "idProducto" , disabled = "true"} })
-                    
-                    @Html.ValidationMessageFor(model => model.Producto.IdProducto, "", new { @class = "text-danger" })
-                </div>
-                <a class="btn-link col-md-0" data-toggle="modal" data-target="#myModal">Ver producto</a>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", required="" } })
+                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
             </div>
+        </div>
 
-
-            <!-- Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="vertical-alignment-helper">
-                    <div class="modal-dialog vertical-align-center">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">
-                                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-
-                                </button>
-                                <h4 class="modal-title" id="myModalLabel">Producto</h4>
-
-                            </div>
-                            <div class="modal-body">
-
-                                <table id="mytabla" class="display hover order-column" cellspacing="0" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                @Html.DisplayName("Id")
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.Nombre)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.Descripcion)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayName("Precio")
-                                            </th>
-                                            <th>
-                                                @Html.DisplayName("Tipo Producto")
-                                            </th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in (List<CapaDTO.Producto>)ViewBag.lista)
-                                        {
-                                            <tr>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.IdProducto)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Nombre)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Descripcion)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Precio)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.TipoProducto.IdTipoProducto)
-                                                </td>
-                                                <td>
-                                                    <a href="@Url.Action("Index", "Ventas", new { id = item.IdProducto, nom = item.Nombre, precio = item.Precio})">Seleccionar</a>
-
-                                                </td>
-
-                                            </tr>
-
-                                        }
-                                    </tbody>
-
-                                </table>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", required = "" } })
+                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
             </div>
+        </div>
 
-
-
-            <div class="form-group">
-                @Html.Label("Rubro", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("idRubro", lista, "Seleccione", new { @class = "form-control", onmousedown = "this.value='';", onchange = "jsFunction(this.value);", id ="idRubro" , required=""})
-                    @Html.ValidationMessageFor(model => model.rubro.Nombre, "", new { @class = "text-danger" })
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.PrecioNormal, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PrecioNormal, new { htmlAttributes = new { @class = "form-control", required = "" } })
+                @Html.ValidationMessageFor(model => model.PrecioNormal, "", new { @class = "text-danger" })
             </div>
+        </div>
 
-            <div class="form-group">
-                @Html.Label("Descuento", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("idDescuento", (List<SelectListItem>)ViewBag.listaDescuento, "Seleccione", new { @class = "form-control" , required="" })
-                    @Html.ValidationMessageFor(model => model.descuento.cantidad, "", new { @class = "text-danger" })
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.PrecioOfeta, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PrecioOfeta, new { htmlAttributes = new { @class = "form-control", required = "" } })
+                @Html.ValidationMessageFor(model => model.PrecioOfeta, "", new { @class = "text-danger" })
             </div>
+        </div>
 
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", required = "" } })
-                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CantidadMin, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CantidadMin, new { htmlAttributes = new { @class = "form-control", required = "" } })
+                @Html.ValidationMessageFor(model => model.CantidadMin, "", new { @class = "text-danger" })
             </div>
+        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", required="" } })                    
-                    @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CantidadMax, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CantidadMax, new { htmlAttributes = new { @class = "form-control", required = "" } })
+                @Html.ValidationMessageFor(model => model.CantidadMax, "", new { @class = "text-danger" })
             </div>
-              
-               
-
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PrecioNormal, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.PrecioNormal, new { htmlAttributes = new { @class = "form-control", required = "", id="precio", disabled="true" } })
-                        @Html.ValidationMessageFor(model => model.PrecioNormal, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CantidadMin, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.CantidadMin, new { htmlAttributes = new { @class = "form-control", required = "" } })
-                        @Html.ValidationMessageFor(model => model.CantidadMin, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CantidadMax, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.CantidadMax, new { htmlAttributes = new { @class = "form-control", required = "" } })
-                        @Html.ValidationMessageFor(model => model.CantidadMax, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-
-
-                <div class="form-group">
-                    @Html.Label("Sucursal", new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("idSucursal", (List<SelectListItem>)ViewBag.listaSucursal, "Seleccione", new { @class = "form-control", required = "" })
-                        @Html.ValidationMessageFor(model => model.sucursal.IdSucursal, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Imagen, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        <input type="file" name="file" class="form-control" required="" />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Crear Oferta" class="btn btn-primary" />
-                    </div>
-                </div>
+        </div>
+        
+        <div class="form-group">
+             @Html.Label("Producto", htmlAttributes: new { @class = "control-label col-md-2" })
+             <div class="col-md-10">
+                  @Html.Editor("idProducto", new { htmlAttributes = new { @class = "form-control", required = "" } })
+                  @Html.ValidationMessageFor(model => model.Producto.IdProducto, "", new { @class = "text-danger" })
+             </div>
+         </div>
+            
+        <div class="form-group">
+            @Html.LabelFor(model => model.Imagen, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">                                         
+                    <input type="file" name="file" class="form-control" required="" />              
             </div>
+        </div>
 
-</div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Crear Oferta" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    
+  
 }
 
-<script>
-
-    $("#idProducto").val(@Session["idProducto"]);
-
-    $("#precio").val(@Session["precio"]);
-
-    function jsFunction(value) {
-
-        $.ajax({
-            url: "@Url.Action("Index", "Ventas")",
-                type: "POST",
-                data: {
-                    idRubro: value
-                },
-                success: function (data) {
-                    //If you have a response, it will be in the 'data' object
-                    $('#asdf').html(data);
-                }
-            });
-        }
-
-
-</script>
 
 
 
