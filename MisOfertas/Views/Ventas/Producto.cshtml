@@ -36,30 +36,119 @@
     {
         @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
-            <h4>Producto</h4>
+        <div class="form-horizontal">            
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Marca, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Marca, new { htmlAttributes = new { @class = "form-control", required = "" } })
-                    @Html.ValidationMessageFor(model => model.Marca, "", new { @class = "text-danger" })
+                @Html.Label("Id Producto", htmlAttributes: new { @class = "control-label col-md-2" })
+
+                <!--  <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+              Launch demo modal
+          </button>-->
+                <div class="col-md-4">
+
+                    @Html.Editor("idProducto", new { htmlAttributes = new { @class = "form-control", required = "", id = "idProducto", disabled = "true" } })
+
+                    @Html.ValidationMessageFor(model => model.IdProducto, "", new { @class = "text-danger" })
+                </div>
+                <a class="btn-link col-md-0" data-toggle="modal" data-target="#myModal">Ver producto</a>
+            </div>
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="vertical-alignment-helper">
+                    <div class="modal-dialog vertical-align-center">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">Producto</h4>
+
+                            </div>
+                            <div class="modal-body">
+
+
+                                <table id="mytabla" class="display hover order-column" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayName("Id")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Nombre)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Descripcion)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Precio")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Tipo Producto")
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in (List<CapaDTO.Producto>)ViewBag.lista)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.IdProducto)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Nombre)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Descripcion)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Precio)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.TipoProducto.IdTipoProducto)
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.Action("Producto", "Ventas", new { id = item.IdProducto, nom = item.Nombre, precio = item.Precio })">Seleccionar</a>
+
+                                                </td>
+
+                                            </tr>
+
+                                        }
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            @{string estado = "";
+            }
+            @if (Convert.ToInt32(Session["idProducto"]) != 0) { estado = "disabled"; } else { estado = ""; }
+
             <div class="form-group">
-                @Html.LabelFor(model => model.Modelo, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Modelo, new { htmlAttributes = new { @class = "form-control", required = "" } })
-                    @Html.ValidationMessageFor(model => model.Modelo, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", required = "", estado } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", required = "" } })
+                    @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", required = "", estado } })
                     @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -67,7 +156,9 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Precio, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Precio, new { htmlAttributes = new { @class = "form-control", required = "" } })
+                    
+                   
+                    @Html.EditorFor(model => model.Precio, new { htmlAttributes = new { @class = "form-control", required = "", estado } })                    
                     @Html.ValidationMessageFor(model => model.Precio, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -76,7 +167,7 @@
                 @Html.LabelFor(model => model.Stock, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Stock, new { htmlAttributes = new { @class = "form-control", required = "" } })
-                    @Html.ValidationMessageFor(model => model.Stock, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.Precio, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -84,21 +175,13 @@
                 @Html.Label("Tipo Producto", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
 
-                    @Html.DropDownList("idTipoProducto", (List<SelectListItem>)ViewBag.listaTipoProducto, "Seleccione", new { @class = "form-control"})
+                    @Html.DropDownListFor(model => model.TipoProducto.IdTipoProducto, (List<SelectListItem>)ViewBag.listaTipoProducto,"Seleccione", new { @class = "form-control", required = "", estado })
                     @Html.ValidationMessageFor(model => model.TipoProducto.IdTipoProducto, "", new { @class = "text-danger" })
                 </div>
             </div>
 
 
-            <div class="form-group">
-                @Html.Label("Sucursal", new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("idSucursal", (List<SelectListItem>)ViewBag.listaSucursal, "Seleccione", new { @class = "form-control", required = "" })
-                    @Html.ValidationMessageFor(model => model.Sucursal.IdSucursal, "", new { @class = "text-danger" })
-                </div>
-            </div>
 
-                     
 
             <br />
             <div class="form-group">
@@ -107,8 +190,6 @@
                 </div>
             </div>
         </div>
+        
     }
 
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<CapaDTO.Valoracion>
+
+@{
+    ViewBag.Title = "VerValoracion";
+}
+
+<h2>VerValoracion</h2>
+
+
+<div class="container col">
+    @foreach (var item in Model)
+    {
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+               <img class="card-img-top" src="@Url.Action("convertirBoleta", "Home", new { id = item.oferta.IdOferta})" style="width:200px; height:150px">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        @Html.DisplayFor(modelItem => item.oferta.Nombre)
+                    </h4>
+                    <h4 >
+                      Usuario: @Html.DisplayFor(modelItem => item.usuario.NombreUsuario)
+                    </h4>
+                    <h4>Fecha: @Html.DisplayFor(modelItem => item.fecha)</h4>
+                    <h4>@Html.DisplayFor(modelItem => item.Comentario)</h4>
+                    <h4></h4>
+                    <h4>@Html.DisplayFor(modelItem => item.Calificacion)</h4>
+                </div>
+                <div class="card-footer">
+                    <br />
+                    <!--<a href=""><small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small></a>-->
+                </div>
+            </div>
+        </div>
+        
+
+    }
+</div>

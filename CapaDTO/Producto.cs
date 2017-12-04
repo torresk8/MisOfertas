@@ -9,15 +9,13 @@ namespace CapaDTO
     public class Producto
     {
         private int idProducto;
-        private string marca;
-        private string modelo;
-        private int stock;
+        private string nombre;
         private string descripcion;
         private int precio;
-        public TipoProducto TipoProducto = new TipoProducto();
-        public Sucursal Sucursal = new Sucursal();
+        public TipoProducto TipoProducto = new TipoProducto();                
         public int IdTipoProducto { get; set; }
         public int IdSucursal { get; set; }
+        public int Stock { get; set; }
 
         public Producto()
         {
@@ -25,10 +23,10 @@ namespace CapaDTO
         }
 
         public int IdProducto { get => idProducto; set => idProducto = value; }
-        public string Marca { get => marca; set => marca = value; }
-        public string Modelo { get => modelo; set => modelo = value; }
+        public string Nombre { get => nombre; set => nombre = value; }
         public string Descripcion { get => descripcion; set => descripcion = value; }
         public int Precio { get => precio; set => precio = value; }
-        public int Stock { get => stock; set => stock = value; }
+        
+        
     }
 }

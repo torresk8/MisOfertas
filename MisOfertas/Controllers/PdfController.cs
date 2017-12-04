@@ -1,5 +1,4 @@
-﻿using CapaDTO;
-using CapaNegocio;
+﻿using CapaNegocio;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System;
@@ -26,9 +25,6 @@ namespace MisOfertas.Controllers
             PdfWriter pdfWriter = PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
             pdfDoc.Open();
 
-           
-
-            
 
             //TEXTO DEL HEADING
             Chunk chunk = new Chunk("MIS OFERTAS", FontFactory.GetFont("Arial", 20, Font.BOLDITALIC, BaseColor.DARK_GRAY));
@@ -52,22 +48,9 @@ namespace MisOfertas.Controllers
             Image image = Image.GetInstance(Server.MapPath("~/Content/Upload/CodigoQR.png"));
             image.ScaleAbsolute(200, 150);
             cell.AddElement(image);
-            table.AddCell(cell);
-
-
-            Usuario usu = (Usuario)Session["loginUsuario"];
-           // NegocioUsuario negocioUsuario = new NegocioUsuario();
-            
-              //  Usuario usuario = negocioUsuario.retornaUsuario(idUsuario);
-           
-            
-            
-            // Session["idUsuario"] = usuario.IdUsuario;
-            
+            table.AddCell(cell);            
             //Cell no 2
-            chunk = new Chunk("Nombre:"+ usu.Nombre+ " ,\nRut:"+ usu.Rut+" , \nDireccion:"+usu.Direccion+" , \nTelefono:"+usu.Telefono+" , \nFecha: ", FontFactory.GetFont("Arial", 15, Font.NORMAL, BaseColor.BLACK));
-            
-
+            chunk = new Chunk("Nombre: ,\nEmail: , \nProducto: , \nFecha: ", FontFactory.GetFont("Arial", 15, Font.NORMAL, BaseColor.BLACK));
             cell = new PdfPCell();
             cell.Border = 0;
             cell.AddElement(chunk);

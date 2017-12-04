@@ -13,7 +13,7 @@ namespace CapaDTO
         public int Descuento { get; set; }
         public int LimiteCompra { get; set; }
         public string Rubro { get; set; }
-        public Valoracion Valoracion = new Valoracion();
+        
         public Usuario Usuario = new Usuario();
 
 

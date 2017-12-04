@@ -1,0 +1,28 @@
+﻿@model CapaDTO.Puntaje
+
+@{
+    ViewBag.Title = "Cupon";
+}
+
+<h2>Cupon</h2>
+
+@Html.Label("Puntos acumulados: "+Model.Cantidad)
+
+<div id="viewContent">
+    <!--Boton que llama al controlador CREATEPDFCONTROLLER desde el index-->       
+        <a href="@Url.Action("GenerarCupon", "Home")" onclick="refesh()">Generar Cupon</a>
+    
+</div>
+
+<script>
+   
+    function refesh()
+    {
+        setTimeout(function () {            
+        window.location.href='@Url.Action("Cupon", "Home")';
+        }, 800, "JavaScript");
+        //alert();
+        //window.location.href='@Url.Action("Index", "Home")';
+    }
+
+</script>
