@@ -11,9 +11,8 @@ namespace CapaDTO
         public int IdCorreo { get; set; }
         public string Asunto { get; set; }
         public string Descripcion { get; set; }
-        public string Fecha { get; set; }
-        public int MyProperty { get; set; }
-        public Valoracion Valoracion = new Valoracion();
+        public string Fecha { get; set; }        
+        
         public Usuario Usuario = new Usuario();
 
     }

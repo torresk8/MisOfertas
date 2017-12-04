@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="NegocioCupon.cs" />
     <Compile Include="NegocioDescuento.cs" />
+    <Compile Include="NegocioEmail.cs" />
     <Compile Include="NegocioOferta.cs" />
     <Compile Include="NegocioProducto.cs" />
     <Compile Include="NegocioUsuario.cs" />

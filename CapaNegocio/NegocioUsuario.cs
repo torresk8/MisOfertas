@@ -92,7 +92,7 @@ namespace CapaNegocio
             
             OracleCommand cmd = new OracleCommand();
             cmd = new OracleCommand("SELECT * FROM usuario u "+
-                                    "WHERE u.IDUSUARIO <> ALL (SELECT p.IDUSUARIO FROM permiso p)", conn);
+                                    "WHERE  u.RECIBIRCORREO = 'Si' AND u.IDUSUARIO <> ALL (SELECT p.IDUSUARIO FROM permiso p)", conn);
 
 
             OracleDataAdapter da = new OracleDataAdapter();
@@ -104,7 +104,9 @@ namespace CapaNegocio
             {
                 Usuario usuario = new Usuario();
 
+                usuario.IdUsuario = dr.GetInt32(0);
                 usuario.NombreUsuario = String.Format("{0}", dr[2]);
+
 
                 list.Add(usuario);
             }

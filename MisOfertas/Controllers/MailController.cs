@@ -44,11 +44,21 @@ namespace MisOfertas.Controllers
 
 
                 NegocioUsuario negocio = new NegocioUsuario();
+                NegocioEmail negocioEmail = new NegocioEmail();
+
+                Correo correo = new Correo();
+
+                correo.Asunto = asunto;
+                correo.Descripcion = mensaje;
+
                 List<Usuario> list = negocio.retornaUsuarioList();
 
                 foreach (var item in list)
                 {
                     var para = new MailAddress(item.NombreUsuario, "Recibir");
+
+                    correo.Usuario.IdUsuario = item.IdUsuario;
+                    negocioEmail.insertarCorreo(correo);
 
                     using (var message = new MailMessage(envioCorreo, para)
                     {
