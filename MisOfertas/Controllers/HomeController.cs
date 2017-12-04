@@ -14,7 +14,7 @@ using System.Web.Security;
 
 namespace MisOfertas.Controllers
 {
-   [Authorize]
+   //[Authorize]
     public class HomeController : Controller
     {        
         
