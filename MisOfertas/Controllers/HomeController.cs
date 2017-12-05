@@ -22,16 +22,38 @@ namespace MisOfertas.Controllers
         {
 
             NegocioOferta auxOferta = new NegocioOferta();
-            Rubro auxRubro = auxOferta.retornaRubro(Convert.ToInt32(1));
+            List<Oferta> listOferta;
+            Rubro auxRubro;
+            if (Convert.ToInt32(Session["idUsuario"]) !=0)
+            {
+                NegocioLog negocioLog = new NegocioLog();
+                LogUsuario logUsuario = negocioLog.retornaLogUsuario(Convert.ToInt32(Session["idUsuario"]));
 
-            Session["idRubro"] = auxRubro.IdRubro;
-            Session["nombreRubro"] = auxRubro.Nombre;            
+                auxRubro = auxOferta.retornaRubro(logUsuario.rubro.IdRubro);
+
+                Session["idRubro"] = auxRubro.IdRubro;
+                Session["nombreRubro"] = auxRubro.Nombre;
 
 
-            List<Oferta> listOferta = auxOferta.retornaOfertaPuublicadaList(1,0);
+                listOferta = auxOferta.retornaOfertaPuublicadaList(logUsuario.rubro.IdRubro, 0);
+            }
+            else
+            {
+                
+                auxRubro = auxOferta.retornaRubro(1);
 
+                Session["idRubro"] = auxRubro.IdRubro;
+                Session["nombreRubro"] = auxRubro.Nombre;
+
+
+                listOferta = auxOferta.retornaOfertaPuublicadaList(1, 0);
+            }
+
+
+            ViewBag.listarRubro = obtenerRubro(Convert.ToInt32(Session["idRubro"]));
             ViewBag.listaRangoPrecio = obtenerRangoPrecio();
             ViewBag.listaSucursal = obtenerSucursal();
+
 
             return View(listOferta);
 
@@ -113,11 +135,26 @@ namespace MisOfertas.Controllers
                 
                 listOferta = auxOferta.retornaOfertaPuublicadaList(Convert.ToInt32(idRubro), Convert.ToInt32(sucursal));
 
+                //Generacion de log para el seguimiento usuario
+
+                if(Convert.ToInt32(Session["idUsuario"]) != 0)
+                {
+                    NegocioLog negocioLog = new NegocioLog();
+                    LogUsuario logUsuario = new LogUsuario();
+
+                    logUsuario.rubro.IdRubro = Convert.ToInt32(idRubro);
+                    logUsuario.usuario.IdUsuario = Convert.ToInt32(Session["idUsuario"]);
+
+                    negocioLog.insertarLog(logUsuario);
+                }
+               
+
             }
 
 
             ViewBag.listaRangoPrecio = obtenerRangoPrecio();
             ViewBag.listaSucursal = obtenerSucursal();
+            ViewBag.listarRubro = obtenerRubro(Convert.ToInt32(Session["idRubro"]));
 
             return View(listOferta);
         }
@@ -270,6 +307,49 @@ namespace MisOfertas.Controllers
                     Value = li.IdSucursal.ToString()
 
 
+
+                });
+            }
+
+            return list;
+        }
+
+        public List<SelectListItem> obtenerRubro(int idRubro)
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+
+            List<Rubro> listRubro;
+            NegocioOferta auxNegocio = new NegocioOferta();
+
+            listRubro = auxNegocio.retornaRubroList();
+
+            bool resultado = false;
+
+            foreach (var li in listRubro)
+            {
+                if (idRubro == li.IdRubro)
+                {
+                    resultado = true;                    
+                }
+                else
+                {
+                    if(li.IdRubro == 1)
+                    {
+                        resultado = true;
+                    }
+                    else
+                    {
+                        resultado = false;
+                    }
+                }
+
+                list.Add(new SelectListItem()
+                {
+                    Text = li.Nombre,
+                    Value = li.IdRubro.ToString(),
+                    Selected = resultado                
+
+
                 });
             }
 
@@ -319,8 +399,17 @@ namespace MisOfertas.Controllers
                 valoracion.usuario.IdUsuario = Convert.ToInt32(Session["idUsuario"]);
                 valoracion.usuario.NombreUsuario = Session["nombreUuario"].ToString();
                 ViewBag.listaCalificacion = obtenerCalificacion();
-      
-            
+
+            // Registramos el seguimiento del usuario
+
+            NegocioLog negocioLog = new NegocioLog();
+            LogUsuario logUsuario = new LogUsuario();
+
+            logUsuario.rubro.IdRubro = Convert.ToInt32(oferta.rubro.IdRubro);
+            logUsuario.usuario.IdUsuario = Convert.ToInt32(Session["idUsuario"]);
+
+            negocioLog.insertarLog(logUsuario);
+
             return View(valoracion);
         }
 

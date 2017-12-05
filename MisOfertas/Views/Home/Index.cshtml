@@ -11,7 +11,8 @@
         new SelectListItem()
         {
             Text = "Alimentos",
-            Value = "1"
+            Value = "1",
+            Selected = true 
         },
         new SelectListItem()
         {
@@ -60,7 +61,7 @@
         <div class="form-group">
             @Html.Label("Rubro", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("idRubro", lista, "Seleccione", new { @class = "form-control", onmousedown = "this.value='';", onchange = "jsFunction(this.value);", id = "idRubro", required = "" })
+                @Html.DropDownList("idRubro", (List<SelectListItem>)ViewBag.listarRubro, "Seleccione", new { @class = "form-control", onmousedown = "this.value='';", onchange = "jsFunction(this.value);", id = "idRubro", required = "" })
             </div>
         </div>
 
