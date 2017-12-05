@@ -25,7 +25,8 @@ namespace MisOfertas.Controllers
             Rubro auxRubro = auxOferta.retornaRubro(Convert.ToInt32(1));
 
             Session["idRubro"] = auxRubro.IdRubro;
-            Session["nombreRubro"] = auxRubro.Nombre;
+            Session["nombreRubro"] = auxRubro.Nombre;            
+
 
             List<Oferta> listOferta = auxOferta.retornaOfertaPuublicadaList(1,0);
 
@@ -305,25 +306,20 @@ namespace MisOfertas.Controllers
             return File(imagen.Imagen, "image/jpeg");
         }
 
-        public ActionResult Valoracion(int id)
+        [Authorize]
+        public ActionResult Valoracion()
         {
             NegocioOferta aux = new NegocioOferta();
-            Oferta oferta = aux.retornaOferta(id);
-            Session["idOferta"] = oferta.IdOferta;
+            Oferta oferta = aux.retornaOferta(Convert.ToInt32(Session["idOferta"]));
+             
             Valoracion valoracion = new Valoracion();
-            if (Convert.ToInt32(Session["idUsuario"]) != 0)
-            {
-                
+           
                 valoracion.oferta.IdOferta = oferta.IdOferta;
                 valoracion.oferta.Nombre = oferta.Nombre;
                 valoracion.usuario.IdUsuario = Convert.ToInt32(Session["idUsuario"]);
                 valoracion.usuario.NombreUsuario = Session["nombreUuario"].ToString();
                 ViewBag.listaCalificacion = obtenerCalificacion();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+      
             
             return View(valoracion);
         }
@@ -369,7 +365,9 @@ namespace MisOfertas.Controllers
         }
 
         public ActionResult VerValoracion(string id)
-        {           
+        {
+            Session["idOferta"] = id;
+
             NegocioValoracion auxValoracion = new NegocioValoracion();
             List<Valoracion> listaValoracion = auxValoracion.retornaValoracionList(Convert.ToInt32(id));
             
