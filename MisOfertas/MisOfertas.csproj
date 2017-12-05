@@ -630,20 +630,20 @@
     <Content Include="Views\Ventas\VerOferta.cshtml" />
     <Content Include="Views\Ventas\actualizarOferta.cshtml" />
     <Content Include="Views\Pdf\Index.cshtml" />
-<<<<<<< HEAD
+
     <Content Include="Views\Ventas\eliminarOferta.cshtml" />
     <Content Include="Views\verProducto\actualizarProducto.cshtml" />
     <Content Include="Views\verProducto\eliminarProducto.cshtml" />
     <Content Include="Views\verProducto\VerProducto.cshtml" />
     <Content Include="Views\Login\actualizarUsuario.cshtml" />
-=======
+
     <Content Include="Views\Home\Cupon.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Valoracion.cshtml" />
     <Content Include="Views\Home\VerValoracion.cshtml" />
     <Content Include="Views\Ventas\crearDescuento.cshtml" />
     <Content Include="Views\Mail\Index.cshtml" />
->>>>>>> parent of 1d927bb... m
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
