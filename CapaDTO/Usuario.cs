@@ -24,6 +24,7 @@ namespace CapaDTO
         private string direccion;
         private int telefono;
         private string correo;
+        public string RecibirCorreo { get; set; }
 
         public Usuario()
         {

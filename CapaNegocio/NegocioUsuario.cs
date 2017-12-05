@@ -85,6 +85,71 @@ namespace CapaNegocio
 
         }
 
+        public bool actualizarUsuario(Usuario usuario)
+        {
+            bool resultado = false;
+            
+
+            conn.Open();
+             OracleCommand cmd = new OracleCommand("UPDATE usuario SET  nombre =:nombre , nombreUsuario= :nombreUsuario, rut= :rut, " +
+           "direccion= :direccion, telefono= :telefono, recibirCorreo= :recibirCorreo WHERE idUsuario = :idUsuario", conn);
+
+             cmd.Parameters.Add(new OracleParameter("idUsuario",usuario.IdUsuario));
+             cmd.Parameters.Add(new OracleParameter(":nombre", usuario.Nombre));
+             cmd.Parameters.Add(new OracleParameter(":nombreUsuario", usuario.NombreUsuario));
+             cmd.Parameters.Add(new OracleParameter(":rut", usuario.Rut));
+             cmd.Parameters.Add(new OracleParameter(":direccion", usuario.Direccion));
+             cmd.Parameters.Add(new OracleParameter(":telefono", usuario.Telefono));
+            cmd.Parameters.Add(new OracleParameter(":recibirCorreo", usuario.RecibirCorreo));
+
+
+            int a = cmd.ExecuteNonQuery();
+            conn.Close();
+            if (a > 0)
+            {
+                resultado = true;
+            }
+
+            return resultado;
+        }
+
+        public Usuario retornaUsuario(int id)        
+        {
+            Usuario usuario = new Usuario();
+
+            conn.Open();
+
+            OracleCommand cmd = new OracleCommand();
+            cmd = new OracleCommand("SELECT * FROM usuario u " +
+                                    "WHERE  u.idUsuario = :idUsuario", conn);
+
+            cmd.Parameters.Add(new OracleParameter(":idUsuario", id));
+
+            OracleDataAdapter da = new OracleDataAdapter();
+            da.SelectCommand = cmd;
+            OracleDataReader dr = cmd.ExecuteReader();
+
+
+            while (dr.Read())
+            {               
+
+                usuario.IdUsuario = dr.GetInt32(0);
+                usuario.Nombre = String.Format("{0}", dr[1]);
+                usuario.NombreUsuario = String.Format("{0}", dr[2]);
+                usuario.Password = String.Format("{0}", dr[3]);
+                usuario.Rut = String.Format("{0}", dr[4]);
+                usuario.Direccion = String.Format("{0}", dr[5]);
+                usuario.Telefono = dr.GetInt32(6);
+                usuario.RecibirCorreo = String.Format("{0}", dr[7]);
+
+
+            }
+
+            conn.Close();
+
+            return usuario;
+        }
+
         public List<Usuario> retornaUsuarioList()
         {
             List<Usuario> list = new List<Usuario>();
@@ -123,16 +188,7 @@ namespace CapaNegocio
 
             conn.Open();
             OracleCommand cmd = new OracleCommand("DELETE from usuario where nombreUsuario =:usuario", conn);
-
-
-            /*  OracleCommand cmd = new OracleCommand("UPDATE usuario SET  nombre ='" + usuario.Nombre + "', nombreUsuario='" + usuario.NombreUsuario + "', rut='" + usuario.Rut + "', " +
-                  "direccion='" + usuario.Direccion + "', telefono='" + usuario.Telefono+ "', correo='" + usuario.Correo + "' WHERE idUsuario ='" + usuario.IdUsuario + "'", conn);
-
-              cmd.Parameters.Add(new OracleParameter(":nombre", usuario.Nombre));            
-              cmd.Parameters.Add(new OracleParameter(":rut", usuario.Rut));
-              cmd.Parameters.Add(new OracleParameter(":direccion", usuario.Direccion));
-              cmd.Parameters.Add(new OracleParameter(":telefono", usuario.Telefono));
-              cmd.Parameters.Add(new OracleParameter(":correo", usuario.Correo));*/
+   
 
             cmd.Parameters.Add(new OracleParameter(":nombreUsuario", usuario.NombreUsuario));
 
