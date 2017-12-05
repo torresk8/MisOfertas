@@ -124,18 +124,17 @@ namespace CapaNegocio
             conn.Open();
             OracleCommand cmd = new OracleCommand("DELETE from usuario where nombreUsuario =:usuario", conn);
 
-<<<<<<< HEAD
-            OracleCommand cmd = new OracleCommand("UPDATE usuario SET  nombre ='" + usuario.Nombre + "', nombreUsuario='" + usuario.NombreUsuario + "', rut='" + usuario.Rut + "', " +
-                "direccion='" + usuario.Direccion + "', telefono='" + usuario.Telefono+ "', correo='" + usuario.Correo + "' WHERE idUsuario ='" + usuario.IdUsuario + "'", conn);
 
-            cmd.Parameters.Add(new OracleParameter(":nombre", usuario.Nombre));
+            /*  OracleCommand cmd = new OracleCommand("UPDATE usuario SET  nombre ='" + usuario.Nombre + "', nombreUsuario='" + usuario.NombreUsuario + "', rut='" + usuario.Rut + "', " +
+                  "direccion='" + usuario.Direccion + "', telefono='" + usuario.Telefono+ "', correo='" + usuario.Correo + "' WHERE idUsuario ='" + usuario.IdUsuario + "'", conn);
+
+              cmd.Parameters.Add(new OracleParameter(":nombre", usuario.Nombre));            
+              cmd.Parameters.Add(new OracleParameter(":rut", usuario.Rut));
+              cmd.Parameters.Add(new OracleParameter(":direccion", usuario.Direccion));
+              cmd.Parameters.Add(new OracleParameter(":telefono", usuario.Telefono));
+              cmd.Parameters.Add(new OracleParameter(":correo", usuario.Correo));*/
+
             cmd.Parameters.Add(new OracleParameter(":nombreUsuario", usuario.NombreUsuario));
-            cmd.Parameters.Add(new OracleParameter(":rut", usuario.Rut));
-            cmd.Parameters.Add(new OracleParameter(":direccion", usuario.Direccion));
-            cmd.Parameters.Add(new OracleParameter(":telefono", usuario.Telefono));
-            cmd.Parameters.Add(new OracleParameter(":correo", usuario.Correo));
-
-
 
             int a = cmd.ExecuteNonQuery();
             conn.Close();
@@ -156,15 +155,11 @@ namespace CapaNegocio
 
             conn.Open();
 
-            OracleCommand cmd = new OracleCommand("UPDATE usuario SET  password ='" + usuario.Password +  "' WHERE idUsuario ='" + usuario.IdUsuario + "'", conn);
+            OracleCommand cmd = new OracleCommand("UPDATE usuario SET  password =:password WHERE idUsuario =:id", conn);
 
-            cmd.Parameters.Add(new OracleParameter(":nombre", usuario.Password));
-        
+            cmd.Parameters.Add(new OracleParameter(":password", usuario.Password));
+            cmd.Parameters.Add(new OracleParameter(":id", usuario.IdUsuario));
 
-
-=======
-            cmd.Parameters.Add(new OracleParameter(":usuario", usuario.NombreUsuario));
->>>>>>> parent of 1d927bb... m
 
             int a = cmd.ExecuteNonQuery();
             conn.Close();
