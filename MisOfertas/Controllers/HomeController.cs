@@ -310,14 +310,21 @@ namespace MisOfertas.Controllers
             NegocioOferta aux = new NegocioOferta();
             Oferta oferta = aux.retornaOferta(id);
             Session["idOferta"] = oferta.IdOferta;
-
             Valoracion valoracion = new Valoracion();
-            valoracion.oferta.IdOferta = oferta.IdOferta;
-            valoracion.oferta.Nombre = oferta.Nombre;
-            valoracion.usuario.IdUsuario = Convert.ToInt32(Session["idUsuario"]);
-            valoracion.usuario.NombreUsuario = Session["nombreUuario"].ToString();
-
-            ViewBag.listaCalificacion = obtenerCalificacion();
+            if (Convert.ToInt32(Session["idUsuario"]) != 0)
+            {
+                
+                valoracion.oferta.IdOferta = oferta.IdOferta;
+                valoracion.oferta.Nombre = oferta.Nombre;
+                valoracion.usuario.IdUsuario = Convert.ToInt32(Session["idUsuario"]);
+                valoracion.usuario.NombreUsuario = Session["nombreUuario"].ToString();
+                ViewBag.listaCalificacion = obtenerCalificacion();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            
             return View(valoracion);
         }
 
