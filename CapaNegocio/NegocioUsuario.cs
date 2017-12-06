@@ -64,8 +64,9 @@ namespace CapaNegocio
 
             conn.Open();
             OracleCommand cmd = new OracleCommand("INSERT INTO usuario (idUsuario,nombre,nombreUsuario," +
-                "                                  password,rut,direccion,telefono)" +
-                     "VALUES(sucuence_usu.NEXTVAL,:nombre,:usuario,:pass,:rut,:direccion,:telefono)", conn);
+                "                                  password,rut,direccion,telefono,recibirCorreo)" +
+                                                  "VALUES(sucuence_usu.NEXTVAL, :nombre, :usuario, :pass, " +
+                                                  " :rut, :direccion, :telefono, :recibirCorreo)", conn);
 
             cmd.Parameters.Add(new OracleParameter(":nombre", usuario.Nombre));            
             cmd.Parameters.Add(new OracleParameter(":usuario", usuario.NombreUsuario));
@@ -73,6 +74,7 @@ namespace CapaNegocio
             cmd.Parameters.Add(new OracleParameter(":rut", usuario.Rut));
             cmd.Parameters.Add(new OracleParameter(":direccion", usuario.Direccion));
             cmd.Parameters.Add(new OracleParameter(":telefono", usuario.Telefono));
+            cmd.Parameters.Add(new OracleParameter(":recibirCorreo", usuario.RecibirCorreo));
 
             int a= cmd.ExecuteNonQuery();
             conn.Close();

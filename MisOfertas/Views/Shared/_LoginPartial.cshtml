@@ -24,22 +24,32 @@
                  }
                  else
                  {
-                     if (Roles.IsUserInRole("crearOferta"))
-                     {
-                    <li>@Html.ActionLink("Crear Oferta", "Index", "Ventas")</li>
-                    <li>@Html.ActionLink("Producto", "Producto", "Ventas")</li>
-                    <li>@Html.ActionLink("Ver Oferta", "VerOferta", "Ventas")</li>
-                    <li>@Html.ActionLink("Ofertas Publicadas", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Enviar correo", "Index", "Mail")</li>
-                     }
-                     else
-                     {
-                        <li>@Html.ActionLink("Inicio", "Index", "Home")</li>                    
-                        <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
-                        <li>@Html.ActionLink("Cupon", "Cupon", "Home")</li>
-                     }
+                    if (Roles.IsUserInRole("crearOferta"))
+                    {
+                        <li>@Html.ActionLink("Crear Oferta", "Index", "Ventas")</li>
+                        <li>@Html.ActionLink("Producto", "Producto", "Ventas")</li>
+                        <li>@Html.ActionLink("Ver Oferta", "VerOferta", "Ventas")</li>
+                        <li>@Html.ActionLink("Ofertas Publicadas", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Enviar correo", "Index", "Mail")</li>
+                    }
+                    else
+                    {
+
+                        if (Roles.IsUserInRole("encargadoTienda"))
+                        {
+                            <li>@Html.ActionLink("Resumen", "Index", "Tienda")</li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                            <li>@Html.ActionLink("Cupon", "Cupon", "Home")</li>
+                        }
+
+                    }
                  }
+                                                                          
 
 
 

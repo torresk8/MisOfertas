@@ -358,23 +358,28 @@ namespace MisOfertas.Controllers
 
         public List<SelectListItem> obtenerCalificacion()
         {
-            List<SelectListItem> list = new List<SelectListItem>();
+            var lista = new List<SelectListItem>(){
 
-            for (int i = 0; i < 11; i++)
-            {                
-
-                list.Add(new SelectListItem()
+                 new SelectListItem()
                 {
-                    Text = i.ToString(),
-                    Value = i.ToString()
+                    Text = "Excelente",
+                    Value = "Excelente"
+                },
+                  new SelectListItem()
+                {
+                    Text = "Buena",
+                    Value = "Buena"
+                },
 
+                new SelectListItem()
+                {
+                    Text = "Mala",
+                    Value = "Mala"
+                }
+               
+            };
 
-                });
-                
-            }
-           
-
-            return list;
+            return lista;
         }
 
 

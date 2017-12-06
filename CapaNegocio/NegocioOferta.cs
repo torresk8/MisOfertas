@@ -28,7 +28,14 @@ namespace CapaNegocio
 
             DataSet ds = new DataSet();
             OracleCommand cmd = new OracleCommand();
-            cmd = new OracleCommand("SELECT * FROM oferta where idOferta=:id", conn);
+            cmd = new OracleCommand("SELECT o.idOferta, o.nombre, o.descripcion, o.precioNormal, o.precioOferta, " +
+                                    "o.cantidadMin, o.CantidadMax, o.idProducto, o.productImage, o.estado, " +
+                                    "o.idRubro,o.idSucursal, r.nombre, s.nombre , p.nombre " +
+                                    "FROM oferta o " +
+                                    "INNER JOIN rubro r ON r.idRubro = o.idRubro " +
+                                    "INNER JOIN sucursal s ON s.idSucursal = o.idSucursal " +
+                                    "INNER JOIN producto p ON p.idProducto = o.idProducto " +
+                                    "WHERE o.idOferta=:id", conn);
             cmd.Parameters.Add(new OracleParameter(":id", id));
 
             OracleDataAdapter da = new OracleDataAdapter();
@@ -58,6 +65,10 @@ namespace CapaNegocio
                 oferta.Estado = String.Format("{0}", dr[9]);
                 oferta.rubro.IdRubro = dr.GetInt32(10);
                 oferta.sucursal.IdSucursal = dr.GetInt32(11);
+
+                oferta.rubro.Nombre = String.Format("{0}", dr[12]);
+                oferta.sucursal.Nombre = String.Format("{0}", dr[13]);
+                oferta.Producto.Nombre = String.Format("{0}", dr[14]);
             }
 
             conn.Close();

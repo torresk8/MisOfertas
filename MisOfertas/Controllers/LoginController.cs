@@ -85,10 +85,18 @@ namespace MisOfertas.Controllers
         }
 
         [HttpPost]
-        public ActionResult RegistrarUsuario(Usuario usuario)
+        public ActionResult RegistrarUsuario(Usuario usuario,bool recibirCorreo)
         {
             if (ModelState.IsValid)
             {
+                if(recibirCorreo == true)
+                {
+                    usuario.RecibirCorreo = "Si";
+                }else
+                {
+                    usuario.RecibirCorreo = "No";
+                }
+
                 bool resultado = false;
                 NegocioUsuario auxUsuario = new NegocioUsuario();
                 if(usuario.Password == usuario.ConfirmarPassword && usuario.Password!="" && usuario.ConfirmarPassword!="")
