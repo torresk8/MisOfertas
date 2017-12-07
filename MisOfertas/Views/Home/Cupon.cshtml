@@ -3,16 +3,65 @@
 @{
     ViewBag.Title = "Cupon";
 }
+<br />
+<br />
+<br />
+<div class="container">
+    <div class="row">        
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2>Descuentos Exclusivos</h2>
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-3 col-md-3">
+                    <h4>Genere su cupon Cupon</h4>
 
-<h2>Cupon</h2>
+                    @Html.Label("Puntos acumulados: " + Model.Cantidad)
 
-@Html.Label("Puntos acumulados: "+Model.Cantidad)
+                    <div id="viewContent">
+                        <!--Boton que llama al controlador CREATEPDFCONTROLLER desde el index-->
+                        <a href="@Url.Action("GenerarCupon", "Home")" class="btn btn-primary" onclick="refesh()">Generar Cupon</a>
 
-<div id="viewContent">
-    <!--Boton que llama al controlador CREATEPDFCONTROLLER desde el index-->       
-        <a href="@Url.Action("GenerarCupon", "Home")" onclick="refesh()">Generar Cupon</a>
-    
-</div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9">
+                    <table border="1" style="background-color:white">
+                        <thead><tr><td colspan="4"><h3>Porcentaje de descuento</h3></td></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td>Puntos</td>
+                                <td>Descuento</td>
+                                <td>Tope</td>
+                                <td>Rubro</td>
+                            </tr>
+                            <tr>
+                                <td>0-100 </td>
+                                <td>5%</td>
+                                <td>100000</td>
+                                <td>Alimentos</td>
+                            </tr>
+                            <tr>
+                                <td>101-500</td>
+                                <td>10%</td>
+                                <td>150000</td>
+                                <td>Alimentos, Electrónica y Línea Blanca</td>
+                            </tr>
+                            <tr>
+                                <td>500-1000</td>
+                                <td>15%</td>
+                                <td>300000</td>
+                                <td>Alimentos, Electrónica, Línea Blanca, Ropa</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>               
+            </div>
+                
+            </div>
+        </div>        
+    </div>
+
+
 
 <script>
    

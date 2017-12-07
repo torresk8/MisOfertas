@@ -31,30 +31,29 @@
 
 }
 
+<style>
+    #mdialTamanio {
+        width: 80% !important;
+    }
+</style>
 <br />
 <br />
 <br />
-
-@using (Html.BeginForm(Html.BeginForm("Index", "Ventas", FormMethod.Post, new { enctype = "multipart/form-data" })))
-{
-    @Html.AntiForgeryToken()
-
-    <style>
-        #mdialTamanio {
-            width: 80% !important;
-        }
-    </style>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-1"></div>
-            <div class="col-lg-9 col-md-10">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h2>Crear Oferta</h2>
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="asdf">
+<div id="asdf">
+    @using (Html.BeginForm(Html.BeginForm("Index", "Ventas", FormMethod.Post, new { enctype = "multipart/form-data" })))
+    {
+        @Html.AntiForgeryToken()
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-9 col-md-10">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2>Crear Oferta</h2>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-horizontal">
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 <!--ID Producto-->
                                 <div class="form-group col-lg-12 col-md-12">
@@ -66,7 +65,6 @@
                                     </div>
                                     <a class="btn-link col-md-0" data-toggle="modal" data-target="#myModal">Seleccionar Producto</a>
                                 </div>
-                                <br />
                                 <!--Rubro-->
                                 <div class="form-group col-lg-12 col-md-12">
                                     @Html.Label("Rubro", htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
@@ -75,8 +73,6 @@
                                         @Html.ValidationMessageFor(model => model.rubro.Nombre, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <br />
-                                <br />
                                 <!--Descuento-->
                                 <div class="form-group col-lg-12 col-md-12">
                                     @Html.Label("Descuento", htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
@@ -85,8 +81,6 @@
                                         @Html.ValidationMessageFor(model => model.descuento.cantidad, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <br />
-                                <br />
                                 <!--Nombre-->
                                 <div class="form-group col-lg-12 col-md-12">
                                     @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
@@ -95,8 +89,6 @@
                                         @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <br />
-                                <br />
                                 <!--Descripcion-->
                                 <div class="form-group col-lg-12 col-md-12">
                                     @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
@@ -105,8 +97,6 @@
                                         @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <br />
-                                <br />
                                 <!--Precio Normal-->
                                 <div class="form-group col-lg-12 col-md-12">
                                     @Html.LabelFor(model => model.PrecioNormal, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
@@ -115,8 +105,6 @@
                                         @Html.ValidationMessageFor(model => model.PrecioNormal, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <br />
-                                <br />
                                 <!--Cantidad Minima-->
                                 <div class="form-group col-lg-12 col-md-12">
                                     @Html.LabelFor(model => model.CantidadMin, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
@@ -125,18 +113,14 @@
                                         @Html.ValidationMessageFor(model => model.CantidadMin, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <br />
-                                <br />
                                 <!--Cantidad Maxima-->
                                 <div class="form-group col-lg-12 col-md-12">
                                     @Html.LabelFor(model => model.CantidadMax, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
                                     <div class="col-lg-9 col-md-4">
-                                        @Html.EditorFor(model => model.CantidadMax, new { htmlAttributes = new { @class = "form-control", required = "", min="0" } })
+                                        @Html.EditorFor(model => model.CantidadMax, new { htmlAttributes = new { @class = "form-control", required = "", min = "0" } })
                                         @Html.ValidationMessageFor(model => model.CantidadMax, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <br />
-                                <br />
                                 <!--Surcusal-->
                                 <div class="form-group col-lg-12 col-md-12">
                                     @Html.Label("Sucursal", new { @class = "control-label col-lg-3 col-md-2" })
@@ -145,8 +129,6 @@
                                         @Html.ValidationMessageFor(model => model.sucursal.IdSucursal, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <br />
-                                <br />
                                 <!--Imagen Producto-->
                                 <div class="form-group col-lg-12 col-md-12">
                                     @Html.LabelFor(model => model.Imagen, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
@@ -154,8 +136,6 @@
                                         <input type="file" name="file" class="form-control" required="" />
                                     </div>
                                 </div>
-                                <br />
-                                <br />
                                 <!--Boton Crear Oferta-->
                                 <div class="form-group col-lg-12 col-md-12">
                                     <div class="col-lg-offset-3 col-md-offset-2 col-md-10">
@@ -168,8 +148,8 @@
                 </div>
             </div>
         </div>
-    </div>
-               
+   
+
 
             <!-- Modal PRODUCTO-->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -247,7 +227,6 @@
                 </div>
             </div>
             <!--fin modal-->
-
 }
 
 <script>
