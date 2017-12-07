@@ -27,6 +27,7 @@ public class reporte : System.Web.Services.WebService {
     {
         NegocioReporte negocioReporte = new NegocioReporte();
         negocioReporte.generarArchivoPlano();
+        //
         
         
 
