@@ -4,35 +4,53 @@
     ViewBag.Title = "Login";
 }
 
-
+<br />
+<br />
+<br />
 @using (Html.BeginForm()) 
 {
-    @Html.AntiForgeryToken()    
-    <div class="form-horizontal">
-        <h4>Inicio de Session</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="form-group">
-            @Html.Label("Nombre Usuario", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NombreUsuario, new { htmlAttributes = new { @class = "form-control", required = "", placeholder = "ejemplo@email.cl", type="email" } })
-                @Html.ValidationMessageFor(model => model.NombreUsuario, "", new { @class = "text-danger" })
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-4"></div>
+            <div class="col-lg-4 col-md-4">
+                <br />
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center">
+                        <h2>Iniciar Sesion</h2>
+                    </div>
+                    <div class="panel-body">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="row">
+                            <!--FORM nombre usuario-->
+                            <div class="form-group col-lg-12">
+                                <div class="col-lg-12"> </div>
+                                    @Html.Label("Nombre Usuario:", htmlAttributes: new { @class = "control-label col-lg-6" })
+                                <div class="col-lg-12">
+                                    @Html.EditorFor(model => model.NombreUsuario, new { htmlAttributes = new { @class = "form-control", required = "", placeholder = "ejemplo@email.cl", type = "email" } })
+                                    @Html.ValidationMessageFor(model => model.NombreUsuario, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <!--FORM contraseña-->
+                            <div class="form-group col-lg-12">
+                                <div class="col-lg-12"></div>   
+                                    @Html.Label("Contraseña:", htmlAttributes: new { @class = "control-label col-lg-6" })                                                             
+                                <div class="col-lg-12">
+                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Password", required = "" })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <!--FORM Boton Login-->
+                            <div class="form-group col-lg-12">
+                                <div class="col-lg-12">
+                                    <input type="submit" value="Login" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("Contraseña", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Password",required="" })   
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            </div>
-        </div>
-      
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Login" class="btn btn-prymary" />
-            </div>
+            <div class="col-lg-4 col-md-4"></div>
         </div>
     </div>
 }
