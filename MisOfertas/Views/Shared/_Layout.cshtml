@@ -32,7 +32,7 @@
 
 
 </head>
-<body>
+<body style="background-color:#FAFAFA">
    
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -77,7 +77,7 @@
         $(document).ready(function () {
             $("#mytabla").DataTable(
                 {
-
+                   
                     "language": {
 
                         "emptyTable": "No hay datos disponibles en la tabla.",
@@ -123,6 +123,7 @@
                         }
 
                     },
+                    scrollX: true,
 
                     "lengthMenu": [[5, 10, 20, 25, 50, -1], [5, 10, 20, 25, 50, "Todos"]],
 
