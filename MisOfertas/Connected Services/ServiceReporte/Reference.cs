@@ -12,49 +12,49 @@ namespace MisOfertas.ServiceReporte {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReporte.WebServiceReporteSoap")]
-    public interface WebServiceReporteSoap {
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReporte.reporteSoap")]
+    public interface reporteSoap {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/generarArchivo", ReplyAction="*")]
-        void generarArchivo();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/archivoPlano", ReplyAction="*")]
+        void archivoPlano();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/generarArchivo", ReplyAction="*")]
-        System.Threading.Tasks.Task generarArchivoAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/archivoPlano", ReplyAction="*")]
+        System.Threading.Tasks.Task archivoPlanoAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface WebServiceReporteSoapChannel : MisOfertas.ServiceReporte.WebServiceReporteSoap, System.ServiceModel.IClientChannel {
+    public interface reporteSoapChannel : MisOfertas.ServiceReporte.reporteSoap, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class WebServiceReporteSoapClient : System.ServiceModel.ClientBase<MisOfertas.ServiceReporte.WebServiceReporteSoap>, MisOfertas.ServiceReporte.WebServiceReporteSoap {
+    public partial class reporteSoapClient : System.ServiceModel.ClientBase<MisOfertas.ServiceReporte.reporteSoap>, MisOfertas.ServiceReporte.reporteSoap {
         
-        public WebServiceReporteSoapClient() {
+        public reporteSoapClient() {
         }
         
-        public WebServiceReporteSoapClient(string endpointConfigurationName) : 
+        public reporteSoapClient(string endpointConfigurationName) : 
                 base(endpointConfigurationName) {
         }
         
-        public WebServiceReporteSoapClient(string endpointConfigurationName, string remoteAddress) : 
+        public reporteSoapClient(string endpointConfigurationName, string remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public WebServiceReporteSoapClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public reporteSoapClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public WebServiceReporteSoapClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public reporteSoapClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
         }
         
-        public void generarArchivo() {
-            base.Channel.generarArchivo();
+        public void archivoPlano() {
+            base.Channel.archivoPlano();
         }
         
-        public System.Threading.Tasks.Task generarArchivoAsync() {
-            return base.Channel.generarArchivoAsync();
+        public System.Threading.Tasks.Task archivoPlanoAsync() {
+            return base.Channel.archivoPlanoAsync();
         }
     }
 }

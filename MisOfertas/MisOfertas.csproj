@@ -174,7 +174,7 @@
     <Compile Include="Utilidades\SeguridadUtilidades.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\ServiceReporte\WebServiceReporte.disco" />
+    <None Include="Connected Services\ServiceReporte\reporte.disco" />
     <None Include="Connected Services\ServiceReporte\configuration91.svcinfo" />
     <None Include="Connected Services\ServiceReporte\configuration.svcinfo" />
     <None Include="Connected Services\ServiceReporte\Reference.svcmap">
@@ -480,10 +480,6 @@
     <Content Include="Content\DataTables\media\images\sort_desc_disabled.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Upload\codigoQR.png" />
-    <Content Include="Content\Upload\logo.jpg" />
-    <Content Include="Content\Upload\pri.jpg" />
-    <Content Include="Content\Upload\sec.jpg" />
-    <Content Include="Content\Upload\ter.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -591,7 +587,7 @@
     <Content Include="Content\DataTables\extensions\RowReorder\css\semanticui.scss" />
     <Content Include="Content\DataTables\extensions\Buttons\css\mixins.scss" />
     <Content Include="Content\DataTables\extensions\Buttons\css\common.scss" />
-    <None Include="Connected Services\ServiceReporte\WebServiceReporte.wsdl" />
+    <None Include="Connected Services\ServiceReporte\reporte.wsdl" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\DataTables\media\js\dataTables.bootstrap.js" />
     <Content Include="Scripts\DataTables\media\js\dataTables.bootstrap.min.js" />
