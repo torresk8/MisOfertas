@@ -90,8 +90,8 @@ namespace MisOfertas.Controllers
         public ActionResult reporte(string a)
         {
             
-            //ServiceReporte.WebServiceReporteSoapClient reporte = new ServiceReporte.WebServiceReporteSoapClient();
-            //reporte.generarArchivo();
+            ServiceReporte.reporteSoapClient reporte = new ServiceReporte.reporteSoapClient();
+            reporte.archivoPlano();
             return View();
         }
 
