@@ -29,7 +29,7 @@ namespace CapaNegocio
 
             DataSet ds = new DataSet();
             OracleCommand cmd = new OracleCommand();
-            cmd = new OracleCommand("SELECT * FROM valoracion where idValoracion=:id", conn);
+            cmd = new OracleCommand("SELECT * FROM valoracion where idOferta=:id", conn);
             cmd.Parameters.Add(new OracleParameter(":id", id));
 
             OracleDataAdapter da = new OracleDataAdapter();

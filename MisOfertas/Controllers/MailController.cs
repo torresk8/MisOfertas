@@ -2,9 +2,11 @@
 using CapaNegocio;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -78,6 +80,28 @@ namespace MisOfertas.Controllers
             }
 
             return View();
+        }
+
+        public ActionResult reporte()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult reporte(string a)
+        {
+            
+            //ServiceReporte.WebServiceReporteSoapClient reporte = new ServiceReporte.WebServiceReporteSoapClient();
+            //reporte.generarArchivo();
+            return View();
+        }
+
+        public FileResult Download()
+        {
+            // Obtener contenido del archivo
+            string text = "El texto para mi archivo.";
+            var stream = new MemoryStream(Encoding.ASCII.GetBytes(text));
+
+            return File(stream, "text/plain", "Prueba.txt");
         }
     }
 }
