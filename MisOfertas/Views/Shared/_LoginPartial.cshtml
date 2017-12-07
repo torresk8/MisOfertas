@@ -38,9 +38,10 @@
                         if (Roles.IsUserInRole("encargadoTienda"))
                         {
                             <li>@Html.ActionLink("Resumen", "Index", "Tienda")</li>
-                        }
-                        else
-                        {
+                            <li>@Html.ActionLink("Reporte", "reporte", "Mail")</li>
+                         }
+                         else
+                         {
                             <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
                             <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
                             <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>

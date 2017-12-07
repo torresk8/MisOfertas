@@ -89,9 +89,9 @@ namespace MisOfertas.Controllers
         [HttpPost]
         public ActionResult reporte(string a)
         {
-
-            //ServiceReporte.WebServiceReporteSoapClient reporte = new ServiceReporte.WebServiceReporteSoapClient();
-            //reporte.generarArchivo();
+            
+            ServiceReporte.reporteSoapClient reporte = new ServiceReporte.reporteSoapClient();
+            reporte.archivoPlano();
             return View();
         }
 
@@ -104,5 +104,4 @@ namespace MisOfertas.Controllers
             return File(stream, "text/plain", "Prueba.txt");
         }
     }
-
 }
