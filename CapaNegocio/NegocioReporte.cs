@@ -37,5 +37,13 @@ namespace CapaNegocio
             }
         }
 
+
+        public MemoryStream archivo()
+        {
+            string text = "El texto para mi archivo.";
+            var stream = new MemoryStream(Encoding.ASCII.GetBytes(text));
+
+            return stream;
+        }
     }
 }

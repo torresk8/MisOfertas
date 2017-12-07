@@ -46,7 +46,7 @@ namespace CapaNegocio
 
                 conn.Open();
 
-                OracleCommand cmd = new OracleCommand("SELECT * FROM DESCUENTO WHERE idRubro = :idRubro", conn);
+                OracleCommand cmd = new OracleCommand("SELECT * FROM DESCUENTO WHERE idRubro = :idRubro ORDER BY cantidad ASC", conn);
                 
                 cmd.Parameters.Add(new OracleParameter(":idRubro", id));
                 
