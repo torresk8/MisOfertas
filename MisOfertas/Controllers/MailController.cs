@@ -79,5 +79,17 @@ namespace MisOfertas.Controllers
 
             return View();
         }
+
+        public ActionResult reporte()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult reporte(string a)
+        {
+            ServiceReporte.WebServiceReporteSoapClient reporte = new ServiceReporte.WebServiceReporteSoapClient();
+            reporte.generarArchivo();
+            return View();
+        }
     }
 }

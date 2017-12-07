@@ -86,6 +86,8 @@
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -149,6 +151,11 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Connected Services\ServiceReporte\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MailController.cs" />
@@ -167,6 +174,13 @@
     <Compile Include="Utilidades\SeguridadUtilidades.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\ServiceReporte\WebServiceReporte.disco" />
+    <None Include="Connected Services\ServiceReporte\configuration91.svcinfo" />
+    <None Include="Connected Services\ServiceReporte\configuration.svcinfo" />
+    <None Include="Connected Services\ServiceReporte\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Content\assets\css\animate.css" />
     <Content Include="Content\assets\css\bootstrap-select.min.css" />
     <Content Include="Content\assets\css\bootstrap-theme.css" />
@@ -573,6 +587,7 @@
     <Content Include="Content\DataTables\extensions\RowReorder\css\semanticui.scss" />
     <Content Include="Content\DataTables\extensions\Buttons\css\mixins.scss" />
     <Content Include="Content\DataTables\extensions\Buttons\css\common.scss" />
+    <None Include="Connected Services\ServiceReporte\WebServiceReporte.wsdl" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\DataTables\media\js\dataTables.bootstrap.js" />
     <Content Include="Scripts\DataTables\media\js\dataTables.bootstrap.min.js" />
@@ -643,6 +658,7 @@
     <Content Include="Views\Mail\Index.cshtml" />
     <Content Include="Views\Ventas\Index.cshtml" />
     <Content Include="Views\Tienda\Index.cshtml" />
+    <Content Include="Views\Mail\reporte.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -675,6 +691,12 @@
       <Project>{1bc3a76f-103d-47ac-9d2a-18da26a9ded4}</Project>
       <Name>CapaNegocio</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\ServiceReporte\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
