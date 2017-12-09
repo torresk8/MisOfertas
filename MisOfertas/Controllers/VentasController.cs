@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace MisOfertas.Controllers
 {
-    [Authorize(Roles = "crearOferta")]    
+    [Authorize(Roles = "crearOferta,encargadoTienda")]    
     public class VentasController : Controller
     {
         // GET: Ventas
