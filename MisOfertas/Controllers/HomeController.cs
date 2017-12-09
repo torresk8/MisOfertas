@@ -177,14 +177,50 @@ namespace MisOfertas.Controllers
         public ActionResult Cupon()
         {
             NegocioCupon negocioCupon = new NegocioCupon();
-            Puntaje auxPuntaje = negocioCupon.retornaPuntaje(Convert.ToInt32(Session["idUsuario"]));
+            Puntaje auxPuntaje = negocioCupon.retornaPuntaje(Convert.ToInt32(Session["idUsuario"]));          
 
-
-            return View(auxPuntaje);
+                return View(auxPuntaje);
         }
 
   
-        public ActionResult GenerarCupon(Puntaje puntaje)
+        public ActionResult GenerarCupon(string puntaje)
+        {
+            int cantidad = Convert.ToInt32(puntaje);
+            string rubro = "";
+            int tope = 0;
+            NegocioCupon negocioCupon = new NegocioCupon();
+
+            if (cantidad>0 && cantidad<=100)
+                {
+                    rubro = "Alimentos";
+                    tope = 100000;
+                    crearPdf(5, rubro,tope);
+                negocioCupon.limpiarPuntaje(Convert.ToInt32(Session["idUsuario"]));
+                 }
+
+            if (cantidad > 101 && cantidad <= 500)
+            {
+                rubro = "Alimentos, Electrónica y Línea Blanca";
+                tope = 150000;
+                crearPdf(10, rubro, tope);
+                negocioCupon.limpiarPuntaje(Convert.ToInt32(Session["idUsuario"]));
+            }
+
+            if (cantidad > 101 && cantidad <= 500)
+            {
+                rubro = "Alimentos, Electrónica, Línea Blanca, Ropa";
+                tope = 300000;
+                crearPdf(15, rubro, tope);
+                negocioCupon.limpiarPuntaje(Convert.ToInt32(Session["idUsuario"]));
+            }
+            Puntaje p = negocioCupon.retornaPuntaje(Convert.ToInt32(Session["idUsuario"]));
+
+
+
+            return RedirectToAction("Cupon", "Home",p);
+        }
+
+        public Document crearPdf(int descuento, string rubro,int tope)
         {
             Document pdfDoc = new Document(PageSize.A4, 25, 25, 25, 15);
             PdfWriter pdfWriter = PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
@@ -215,7 +251,7 @@ namespace MisOfertas.Controllers
 
             QRCodeGenerator qr = new QRCodeGenerator();
             //Texto que tendra el codigo
-            string code = "www.google.cl";
+            string code = "Usuario: " + Session["nombreUsuario"] + "\nFecha:" + DateTime.Now + "\nRubro: "+rubro+"\nDescuento: "+descuento+ "% \nTope: "+tope+"\nCodigo: "+ Session["nombreUsuario"] + DateTime.Now;
             QRCodeData qrData = qr.CreateQrCode(code, QRCodeGenerator.ECCLevel.Q);
             QRCode qrCode = new QRCode(qrData);
 
@@ -233,7 +269,7 @@ namespace MisOfertas.Controllers
                     imageQr.ImageUrl = "data:image/png;base64," + Convert.ToBase64String(byteImage);
                     string base64 = Convert.ToBase64String(byteImage);
                     byte[] imageBytes = Convert.FromBase64String(base64);
-                    iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(imageBytes);                
+                    iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(imageBytes);
                     image.ScaleAbsolute(200, 150);
                     cell.AddElement(image);
                 }
@@ -241,7 +277,7 @@ namespace MisOfertas.Controllers
             }
             table.AddCell(cell);
             //Cell no 2
-            chunk = new Chunk("Nombre: ,\nEmail: , \nProducto: , \nFecha: ", FontFactory.GetFont("Arial", 15, Font.NORMAL, BaseColor.BLACK));
+            chunk = new Chunk("\nFecha:  " + String.Format("{0:dd/MM/yyyy}", DateTime.Now)+ "\nNombre: " + Session["nombre"] + "\nEmail:  " + Session["nombreUsuario"] + "\nRubro: " + rubro + "\nDescuento: " + descuento + "% \nTope: " + tope, FontFactory.GetFont("Arial", 15, Font.NORMAL, BaseColor.BLACK));
             cell = new PdfPCell();
             cell.Border = 0;
             cell.AddElement(chunk);
@@ -254,25 +290,19 @@ namespace MisOfertas.Controllers
             line = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLACK, Element.ALIGN_LEFT, 1)));
             pdfDoc.Add(line);
 
-
             //creador pdf importante
             pdfWriter.CloseStream = false;
             pdfDoc.Close();
+
             Response.Buffer = true;
             Response.ContentType = "application/pdf";
-            Response.AddHeader("content-disposition", "attachment;filename=MisOfertasProducto.pdf");
+            Response.AddHeader("content-disposition", "attachment;filename=CuponDescuento"+Session["nombreUsuario"]+ String.Format("{0:dd/MM/yyyy}", DateTime.Now) + ".pdf");
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Write(pdfDoc);
             Response.End();
+
         
-
-
-            NegocioCupon negocioCupon = new NegocioCupon();
-            negocioCupon.limpiarPuntaje(Convert.ToInt32(Session["idUsuario"]));
-            puntaje = negocioCupon.retornaPuntaje(Convert.ToInt32(Session["idUsuario"]));
-
-
-            return RedirectToAction("Index", "Home");
+            return pdfDoc;
         }
 
         public List<SelectListItem> obtenerRangoPrecio()
@@ -429,7 +459,7 @@ namespace MisOfertas.Controllers
                 valoracion.oferta.IdOferta = oferta.IdOferta;
                 valoracion.oferta.Nombre = oferta.Nombre;
                 valoracion.usuario.IdUsuario = Convert.ToInt32(Session["idUsuario"]);
-                valoracion.usuario.NombreUsuario = Session["nombreUuario"].ToString();
+                valoracion.usuario.NombreUsuario = Session["nombreUsuario"].ToString();
                 ViewBag.listaCalificacion = obtenerCalificacion();
 
             // Registramos el seguimiento del usuario
@@ -440,8 +470,9 @@ namespace MisOfertas.Controllers
             logUsuario.rubro.IdRubro = Convert.ToInt32(oferta.rubro.IdRubro);
             logUsuario.usuario.IdUsuario = Convert.ToInt32(Session["idUsuario"]);
 
-            negocioLog.insertarLog(logUsuario);
-
+            negocioLog.insertarLog(logUsuario);        
+            
+            
             return View(valoracion);
         }
 
@@ -470,9 +501,10 @@ namespace MisOfertas.Controllers
 
                 if (resultado == true)
                 {
+                    ModelState.Clear();
                     ModelState.AddModelError("", "Datos Correctos");
                     negocioCupon.insertarPuntaje(valoracion.usuario.IdUsuario);
-                    ModelState.Clear();
+                    
                 }
                 else
                 {
@@ -484,7 +516,7 @@ namespace MisOfertas.Controllers
             ViewBag.listaCalificacion = obtenerCalificacion();
             return View();
         }
-
+        [Authorize]
         public ActionResult VerValoracion(string id)
         {
             Session["idOferta"] = id;

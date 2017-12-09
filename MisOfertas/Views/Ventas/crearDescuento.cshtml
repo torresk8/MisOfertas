@@ -17,7 +17,7 @@
                     <h2>Crear Descuento</h2>
                 </div>
                 <div class="panel-body">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.ValidationSummary(true, "", new { @class = Session["class"] })
                     <!--Cantidad-->
                     <div class="form-group">
                         @Html.LabelFor(model => model.cantidad, htmlAttributes: new { @class = "control-label col-md-2" })

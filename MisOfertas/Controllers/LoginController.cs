@@ -30,12 +30,13 @@ namespace MisOfertas.Controllers
                 Usuario u = auxNegocio.login(usuario);
                 Session["idUsuario"] = u.IdUsuario;
                 Session["usuario"] = u.Nombre;
-                Session["nombreUuario"] = u.NombreUsuario;
+                Session["nombreUsuario"] = u.NombreUsuario;
                 Session["nombre"] = u.Nombre;                                              
             }
             else
             {
                 ModelState.AddModelError("", "Error datos invalidos");
+                Session["class"] = "text-danger";
             }
             return View(usuario);
         }
@@ -72,7 +73,7 @@ namespace MisOfertas.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Error datos invalidos" + usuario.Nombre + "" + usuario.Password);
+                    ModelState.AddModelError("", "Error datos invalidos");
                 }
                 // 
             }
@@ -107,19 +108,22 @@ namespace MisOfertas.Controllers
 
                 if (resultado == true)
                 {
-                    ModelState.AddModelError("", "Datos Correctos");
+                    ModelState.Clear();
+                    ModelState.AddModelError("", "Registro exitoso");
                     Session["idUsuario"] = usuario.IdUsuario;
                     Session["usuario"] = usuario.Nombre;
                     Session["password"] = usuario.Password;
+                    Session["class"] = "text-success";
 
-                    ModelState.Clear();
+
                 }                 
             }
             else
             {
                 usuario.NombreUsuario = "";
                 ModelState.AddModelError("", "Error datos invalidos");
-                
+                Session["class"] = "text-danger";
+
             }
             return View();
         }
@@ -139,27 +143,9 @@ namespace MisOfertas.Controllers
             }
             else
             {
+                Session["class"] = "text-danger";
                 ModelState.AddModelError("", "Error datos invalidos");
-            }
-            /*
-            if (ModelState.IsValid)
-            {
-                NegocioUsuario auxUsuario = new NegocioUsuario();
-                auxUsuario.login(usuario);
-                
-                if (usuario !=null)
-                {
-                    Session["idUsuario"] = usuario.IdUsuario;
-                    Session["usuario"] = usuario.Nombre;
-                    Session["password"] = usuario.Password;
-                    return RedirectToAction("LoginIn");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Error datos invalidos" + usuario.Nombre + "" + usuario.Password);
-                }
-                // 
-            }*/
+            }         
 
             return View(usuario);
         }
@@ -213,10 +199,12 @@ namespace MisOfertas.Controllers
             if (resultado == true)
             {
                 ModelState.AddModelError("", "Datos Correctos");
+                Session["class"] = "text-success";
             }
             else
             {
                 ModelState.AddModelError("", "Error datos invalidos");
+                Session["class"] = "text-danger";
             }
 
             return View(auxUSuario);

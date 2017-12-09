@@ -183,6 +183,9 @@
     <Compile Include="Utilidades\SeguridadUtilidades.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Connected Services\ServiceReporte\MisOfertas.ServiceReporte.archivoPlanoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Connected Services\ServiceReporte\reporte.disco" />
     <None Include="Connected Services\ServiceReporte\configuration91.svcinfo" />
     <None Include="Connected Services\ServiceReporte\configuration.svcinfo" />
@@ -489,6 +492,7 @@
     <Content Include="Content\DataTables\media\images\sort_desc_disabled.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Upload\Banner.jpg" />
+    <Content Include="Content\Upload\CabezalMail.jpg" />
     <Content Include="Content\Upload\codigoQR.png" />
     <Content Include="Content\Upload\fondoPag.jpg" />
     <Content Include="favicon.ico" />
@@ -671,6 +675,7 @@
     <Content Include="Views\Ventas\eliminarProducto.cshtml" />
     <Content Include="Views\Ventas\actualizarProducto.cshtml" />
     <Content Include="Views\Ventas\verDescuento.cshtml" />
+    <Content Include="Views\Mail\MailBody.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

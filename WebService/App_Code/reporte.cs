@@ -22,10 +22,10 @@ public class reporte : System.Web.Services.WebService {
     }
 
     [WebMethod]
-    public void archivoPlano()
+    public string archivoPlano()
     {
         NegocioReporte negocioReporte = new NegocioReporte();
-        negocioReporte.generarArchivoPlano();
+        return negocioReporte.generarArchivoPlano();
         
         
 

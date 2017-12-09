@@ -33,12 +33,14 @@
                         <li>@Html.ActionLink("Ver Producto", "VerProducto", "Ventas")</li>
                         <li>@Html.ActionLink("Ofertas Publicadas", "Index", "Home")</li>
                         <li>@Html.ActionLink("Enviar correo", "Index", "Mail")</li>
-                    }
-                    else
-                    {
+                     }
+                     else
+                     {
 
-                        if (Roles.IsUserInRole("encargadoTienda"))
-                        {
+                         if (Roles.IsUserInRole("encargadoTienda"))
+                         {
+                            <li>@Html.ActionLink("Ver Oferta", "VerOferta", "Ventas")</li>
+                            <li>@Html.ActionLink("Crear Oferta", "Index", "Ventas")</li>
                             <li>@Html.ActionLink("Resumen", "Index", "Tienda")</li>
                             <li>@Html.ActionLink("Reporte", "reporte", "Mail")</li>
                          }
@@ -68,6 +70,11 @@
 }
 else
 {
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+        <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+        <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>        
+    </ul>
     <ul class="nav navbar-nav navbar-right">
         <li>@Html.ActionLink("Registrar", "RegistrarUsuario", "Login")</li>
         <li>@Html.ActionLink("Iniciar sesión", "Index", "Login")</li>

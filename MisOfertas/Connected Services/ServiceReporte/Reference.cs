@@ -15,11 +15,73 @@ namespace MisOfertas.ServiceReporte {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReporte.reporteSoap")]
     public interface reporteSoap {
         
+        // CODEGEN: Se está generando un contrato de mensaje, ya que el nombre de elemento archivoPlanoResult del espacio de nombres http://tempuri.org/ no está marcado para aceptar valores nil.
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/archivoPlano", ReplyAction="*")]
-        void archivoPlano();
+        MisOfertas.ServiceReporte.archivoPlanoResponse archivoPlano(MisOfertas.ServiceReporte.archivoPlanoRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/archivoPlano", ReplyAction="*")]
-        System.Threading.Tasks.Task archivoPlanoAsync();
+        System.Threading.Tasks.Task<MisOfertas.ServiceReporte.archivoPlanoResponse> archivoPlanoAsync(MisOfertas.ServiceReporte.archivoPlanoRequest request);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class archivoPlanoRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="archivoPlano", Namespace="http://tempuri.org/", Order=0)]
+        public MisOfertas.ServiceReporte.archivoPlanoRequestBody Body;
+        
+        public archivoPlanoRequest() {
+        }
+        
+        public archivoPlanoRequest(MisOfertas.ServiceReporte.archivoPlanoRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class archivoPlanoRequestBody {
+        
+        public archivoPlanoRequestBody() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class archivoPlanoResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="archivoPlanoResponse", Namespace="http://tempuri.org/", Order=0)]
+        public MisOfertas.ServiceReporte.archivoPlanoResponseBody Body;
+        
+        public archivoPlanoResponse() {
+        }
+        
+        public archivoPlanoResponse(MisOfertas.ServiceReporte.archivoPlanoResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class archivoPlanoResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string archivoPlanoResult;
+        
+        public archivoPlanoResponseBody() {
+        }
+        
+        public archivoPlanoResponseBody(string archivoPlanoResult) {
+            this.archivoPlanoResult = archivoPlanoResult;
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -49,12 +111,27 @@ namespace MisOfertas.ServiceReporte {
                 base(binding, remoteAddress) {
         }
         
-        public void archivoPlano() {
-            base.Channel.archivoPlano();
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MisOfertas.ServiceReporte.archivoPlanoResponse MisOfertas.ServiceReporte.reporteSoap.archivoPlano(MisOfertas.ServiceReporte.archivoPlanoRequest request) {
+            return base.Channel.archivoPlano(request);
         }
         
-        public System.Threading.Tasks.Task archivoPlanoAsync() {
-            return base.Channel.archivoPlanoAsync();
+        public string archivoPlano() {
+            MisOfertas.ServiceReporte.archivoPlanoRequest inValue = new MisOfertas.ServiceReporte.archivoPlanoRequest();
+            inValue.Body = new MisOfertas.ServiceReporte.archivoPlanoRequestBody();
+            MisOfertas.ServiceReporte.archivoPlanoResponse retVal = ((MisOfertas.ServiceReporte.reporteSoap)(this)).archivoPlano(inValue);
+            return retVal.Body.archivoPlanoResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<MisOfertas.ServiceReporte.archivoPlanoResponse> MisOfertas.ServiceReporte.reporteSoap.archivoPlanoAsync(MisOfertas.ServiceReporte.archivoPlanoRequest request) {
+            return base.Channel.archivoPlanoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<MisOfertas.ServiceReporte.archivoPlanoResponse> archivoPlanoAsync() {
+            MisOfertas.ServiceReporte.archivoPlanoRequest inValue = new MisOfertas.ServiceReporte.archivoPlanoRequest();
+            inValue.Body = new MisOfertas.ServiceReporte.archivoPlanoRequestBody();
+            return ((MisOfertas.ServiceReporte.reporteSoap)(this)).archivoPlanoAsync(inValue);
         }
     }
 }

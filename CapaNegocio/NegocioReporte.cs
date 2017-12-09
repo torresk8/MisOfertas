@@ -19,13 +19,12 @@ namespace CapaNegocio
         {
             conn = conexion.conectar();
         }
-        public void generarArchivoPlano()
+        public string generarArchivoPlano()
         {
+            string texto = "";
             try
             {
-
-                //Pass the filepath and filename to the StreamWriter Constructor
-                StreamWriter sw = new StreamWriter("C:\\Users\\Ariel\\Documents\\Test.csv");
+                
                 conn.Open();
 
                 OracleCommand cmd = new OracleCommand("SELECT u.nombreUsuario, r.nombre,o.idOferta, o.nombre AS OFERTA, l.fecha " +
@@ -41,7 +40,7 @@ namespace CapaNegocio
                 da.SelectCommand = cmd;
                 OracleDataReader dr = cmd.ExecuteReader();
 
-                string texto = "";
+                
                 while (dr.Read())
                 {
                     texto += String.Format("{0}", dr[0]) + " ,";
@@ -51,14 +50,7 @@ namespace CapaNegocio
                     texto += String.Format("{0}", dr[4]) + " \n";
 
                 }
-                conn.Close();
-                //Write a line of text
-                sw.WriteLine(texto);
-               
-
-                //Close the file
-                sw.Close();
-               // MessageBox.Show("Archivo Descargado", "Mis oferta");
+                conn.Close(); 
             }
             catch (Exception e)
             {
@@ -68,41 +60,15 @@ namespace CapaNegocio
             {
                 Console.WriteLine("Executing finally block.");
             }
+            return texto;
         }
 
 
-        public MemoryStream archivo()
+        public MemoryStream archivo(string texto)
         {
             var stream = new MemoryStream();
             try
-            {
-
-                conn.Open();
-
-                OracleCommand cmd = new OracleCommand("SELECT u.nombreUsuario, r.nombre,o.idOferta, o.nombre AS OFERTA, l.fecha "+
-                                                       "FROM log_usuario l " +
-                                                       "INNER JOIN usuario u ON u.idUsuario = l.idUsuario " +
-                                                       "INNER JOIN rubro r ON r.idRubro = l.idRubro " +
-                                                       "INNER JOIN oferta o ON o.idRubro = r.idRubro " +
-                                                       "INNER JOIN producto p ON p.idProducto = o.idProducto " +
-                                                       "WHERE o.estado = 'Publicado' " +
-                                                       "ORDER BY fecha ASC ", conn); 
-
-                OracleDataAdapter da = new OracleDataAdapter();
-                da.SelectCommand = cmd;
-                OracleDataReader dr = cmd.ExecuteReader();
-                
-                string texto = "";
-                while (dr.Read())
-                {                    
-                    texto += String.Format("{0}", dr[0])+" ,";
-                    texto += String.Format("{0}", dr[1]) + " ,";
-                    texto += dr.GetInt32(2) + " ,";
-                    texto += String.Format("{0}", dr[3]) + " ,";
-                    texto += String.Format("{0}", dr[4]) + " \n";
-
-                }
-                conn.Close();
+            {                 
                 stream = new MemoryStream(Encoding.ASCII.GetBytes(texto));
             }
             catch(Exception ex)
