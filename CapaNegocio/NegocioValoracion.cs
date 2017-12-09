@@ -171,7 +171,7 @@ namespace CapaNegocio
                 Byte[] Buffer = (Byte[])(dr.GetOracleBlob(1)).Value;
                 valoracion.Boleta = Buffer;
 
-                valoracion.fecha = String.Format("{0}", dr[2]);                                                       
+                valoracion.fecha = String.Format("{0:dd/MM/yyyy}", dr[2]);                                                       
                 valoracion.oferta.Nombre = String.Format("{0}", dr[3]);                
                 valoracion.usuario.NombreUsuario = String.Format("{0}", dr[4]);
                 valoracion.Calificacion = String.Format("{0}", dr[5]);

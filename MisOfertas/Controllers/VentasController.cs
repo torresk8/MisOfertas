@@ -74,14 +74,17 @@ namespace MisOfertas.Controllers
 
                     if (resultado == true)
                     {
-                        ModelState.AddModelError("", "Datos Correctos");
+                        
                         ModelState.Clear();
                         Session["idProducto"] = "";
                         Session["precio"] = "";
+                        ModelState.AddModelError("", "Oferta registrada");
+                        Session["class"] = "text-success";
                     }
                     else
                     {
                         ModelState.AddModelError("", "Error datos invalidos");
+                        Session["class"] = "text-danger";
                     }
                     // 
                     }
@@ -159,13 +162,15 @@ namespace MisOfertas.Controllers
 
                 if (resultado == true)
                 {
-                    ModelState.AddModelError("", "Datos Correctos");
                     ModelState.Clear();
+                    ModelState.AddModelError("", "Producto registrado");
+                    Session["class"] = "text-success";
                 }
                 else
                 {
 
                     ModelState.AddModelError("", "Error datos invalidos");
+                    Session["class"] = "text-dangert";
 
                 }
 
@@ -380,13 +385,15 @@ namespace MisOfertas.Controllers
 
                 if (resultado == true)
                 {
-                    ModelState.AddModelError("", "Datos Correctos");
                     ModelState.Clear();
+                    ModelState.AddModelError("", "Descuento registrado");                    
+                    Session["class"] = "text-success";
                 }
                 else
                 {
 
                     ModelState.AddModelError("", "Error datos invalidos");
+                    Session["class"] = "text-success";
 
                 }
                 ViewBag.listaRubro = obtenerRubro();
@@ -482,11 +489,14 @@ namespace MisOfertas.Controllers
 
             if (resultado == true)
             {
+                ModelState.Clear();
                 ModelState.AddModelError("", "Datos Correctos");
+                Session["class"] = "text-success";
             }
             else
             {
                 ModelState.AddModelError("", "Error datos invalidos");
+                Session["class"] = "text-danger";
             }
 
             return View(auxProducto);

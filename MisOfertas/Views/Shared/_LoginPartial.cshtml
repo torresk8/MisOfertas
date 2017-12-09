@@ -68,6 +68,11 @@
 }
 else
 {
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+        <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+        <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>        
+    </ul>
     <ul class="nav navbar-nav navbar-right">
         <li>@Html.ActionLink("Registrar", "RegistrarUsuario", "Login")</li>
         <li>@Html.ActionLink("Iniciar sesión", "Index", "Login")</li>

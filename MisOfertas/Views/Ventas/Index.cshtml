@@ -56,7 +56,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="asdf">
-                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.ValidationSummary(true, "", new { @class = Session["class"] })
                                 <!--ID Producto-->
                                 <div class="form-group col-lg-12 col-md-12">
                                     @Html.Label("Id Producto", htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
