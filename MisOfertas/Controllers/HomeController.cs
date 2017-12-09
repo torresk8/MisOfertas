@@ -4,6 +4,7 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using MisOfertas.MyRole;
 using MisOfertas.Seguridad;
+using QRCoder;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -209,9 +210,35 @@ namespace MisOfertas.Controllers
             //IMAGEN DEL CODIGO
             PdfPCell cell = new PdfPCell();
             cell.Border = 0;
-            Image image = Image.GetInstance(Server.MapPath("~/Content/Upload/CodigoQR.png"));
-            image.ScaleAbsolute(200, 150);
-            cell.AddElement(image);
+
+            // Codigo qr
+
+            QRCodeGenerator qr = new QRCodeGenerator();
+            //Texto que tendra el codigo
+            string code = "www.google.cl";
+            QRCodeData qrData = qr.CreateQrCode(code, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrData);
+
+
+            System.Web.UI.WebControls.Image imageQr = new System.Web.UI.WebControls.Image();
+            imageQr.Height = 150;
+            imageQr.Width = 150;
+
+            using (System.Drawing.Bitmap bitmap = qrCode.GetGraphic(20))
+            {
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    byte[] byteImage = ms.ToArray();
+                    imageQr.ImageUrl = "data:image/png;base64," + Convert.ToBase64String(byteImage);
+                    string base64 = Convert.ToBase64String(byteImage);
+                    byte[] imageBytes = Convert.FromBase64String(base64);
+                    iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(imageBytes);                
+                    image.ScaleAbsolute(200, 150);
+                    cell.AddElement(image);
+                }
+
+            }
             table.AddCell(cell);
             //Cell no 2
             chunk = new Chunk("Nombre: ,\nEmail: , \nProducto: , \nFecha: ", FontFactory.GetFont("Arial", 15, Font.NORMAL, BaseColor.BLACK));
