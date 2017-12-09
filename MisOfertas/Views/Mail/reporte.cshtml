@@ -2,21 +2,36 @@
 @{
     ViewBag.Title = "reporte";
 }
+<br />
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2>Reportes</h2>
+            </div>
+            <div class="panel-body">
+                <h4>Generar Reporte:</h4>
+                @using (Html.BeginForm("reporte", "Mail"))
+                {
 
-<h2>reporte</h2>
+                    <button id="reporte" onclick="setTimeout(alert('Archivo creado'), 3000)">Generar reporte</button>
+                }
+                <br />
+                <h4>Generar Archivo Plano:</h4>
+                @using (Html.BeginForm("Download", "Mail"))
+                {
 
-@using (Html.BeginForm("reporte", "Mail"))
-{
-    
-    <button id="reporte" onclick="setTimeout(alert('Archivo creado'), 3000)">Generar reporte</button>
-}
+                    <button id="submitButton" type="submit"> Descargar Archivo plano </button>
 
-@using (Html.BeginForm("Download", "Mail"))
-{
-    
-      <button id = "submitButton" type = "submit" > Descargar Archivo plano </button >
+                } 
+            </div>
+        </div>
+    </div>
+</div>
 
-} 
+
 
 <script>   
     
