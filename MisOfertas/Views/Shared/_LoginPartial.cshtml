@@ -33,12 +33,14 @@
                         <li>@Html.ActionLink("Ver Producto", "VerProducto", "Ventas")</li>
                         <li>@Html.ActionLink("Ofertas Publicadas", "Index", "Home")</li>
                         <li>@Html.ActionLink("Enviar correo", "Index", "Mail")</li>
-                    }
-                    else
-                    {
+                     }
+                     else
+                     {
 
-                        if (Roles.IsUserInRole("encargadoTienda"))
-                        {
+                         if (Roles.IsUserInRole("encargadoTienda"))
+                         {
+                            <li>@Html.ActionLink("Ver Oferta", "VerOferta", "Ventas")</li>
+                            <li>@Html.ActionLink("Crear Oferta", "Index", "Ventas")</li>
                             <li>@Html.ActionLink("Resumen", "Index", "Tienda")</li>
                             <li>@Html.ActionLink("Reporte", "reporte", "Mail")</li>
                          }
