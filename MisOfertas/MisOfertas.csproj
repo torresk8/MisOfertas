@@ -488,7 +488,9 @@
     <Content Include="Content\DataTables\media\images\sort_desc.png" />
     <Content Include="Content\DataTables\media\images\sort_desc_disabled.png" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\Upload\Banner.jpg" />
     <Content Include="Content\Upload\codigoQR.png" />
+    <Content Include="Content\Upload\fondoPag.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
