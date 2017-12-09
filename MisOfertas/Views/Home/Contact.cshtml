@@ -1,17 +1,33 @@
 ﻿@{
     ViewBag.Title = "Contacto";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<address>
-    Vicuña Mackena 10101<br />
-    La florida<br />
-    <abbr title="Phone">Telefono:</abbr>
-    133-133-133
-</address>
+<br />
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2>@ViewBag.Title.</h2>
+                </div>
+                <div class="panel-body">
+                    <h4>Direccion:</h4>
+                    <address>
+                        Vicuña Mackena 10101<br />
+                        La florida<br />
+                        <abbr title="Phone">Telefono:</abbr>
+                        133-133-133
+                    </address>
+                    <h4>Para Mas Información:</h4>
+                    <address>
+                    <strong>Soporte:</strong>   <a href="mailto:Support@example.com">soporte@misofertas.cl</a><br />
+                    <strong>Contacto:</strong> <a href="mailto:Marketing@example.com">contacto@misofertas.cl</a>
+                    </address>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<address>
-    <strong>Soporte:</strong>   <a href="mailto:Support@example.com">soporte@misofertas.cl</a><br />
-    <strong>Contacto:</strong> <a href="mailto:Marketing@example.com">contacto@misofertas.cl</a>
-</address>
