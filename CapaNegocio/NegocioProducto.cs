@@ -171,14 +171,14 @@ namespace CapaNegocio
         }
 
 
-        public bool eliminarProducto(Producto producto)
+        public bool eliminarProducto(int id)
         {
             bool resultado = false;
 
             conn.Open();
-            OracleCommand cmd = new OracleCommand("DELETE from producto where oferta =:idProducto", conn);
+            OracleCommand cmd = new OracleCommand("DELETE from producto where idProducto =:idProducto", conn);
 
-            cmd.Parameters.Add(new OracleParameter(":idProducto", producto.IdProducto));
+            cmd.Parameters.Add(new OracleParameter(":idProducto", id));
 
             int a = cmd.ExecuteNonQuery();
             conn.Close();
@@ -190,16 +190,26 @@ namespace CapaNegocio
             return resultado;
 
         }
+
+
 
         public bool actualizarProducto(Producto producto)
         {
             bool resultado = false;
 
-            conn.Open();
-            OracleCommand cmd = new OracleCommand("UPDATE FROM producto SET stock = :stock where oferta =:idProducto", conn);
 
-            cmd.Parameters.Add(new OracleParameter(":idProducto", producto.IdProducto));
+            conn.Open();
+
+            OracleCommand cmd = new OracleCommand("UPDATE producto SET  nombre ='" + producto.Nombre + "', descripcion='" + producto.Descripcion + "', " +
+                "precio='" + producto.Precio + "', stock='" + producto.Stock + "' WHERE idProducto ='" + producto.IdProducto + "'", conn);
+
+            cmd.Parameters.Add(new OracleParameter(":nombre", producto.Nombre));
+            //cmd.Parameters.Add(new OracleParameter(":modelo", producto.Modelo));
+            cmd.Parameters.Add(new OracleParameter(":descripcion", producto.Descripcion));
+            cmd.Parameters.Add(new OracleParameter(":precio", producto.Precio));
             cmd.Parameters.Add(new OracleParameter(":stock", producto.Stock));
+
+
 
             int a = cmd.ExecuteNonQuery();
             conn.Close();
@@ -211,5 +221,6 @@ namespace CapaNegocio
             return resultado;
 
         }
+
     }
 }

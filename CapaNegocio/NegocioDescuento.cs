@@ -130,6 +130,55 @@ namespace CapaNegocio
         }
 
 
+        public bool eliminarDescuento(int id)
+        {
+            bool resultado = false;
+
+            conn.Open();
+            OracleCommand cmd = new OracleCommand("DELETE from descuento where idDescuento =:idDescuento", conn);
+
+            cmd.Parameters.Add(new OracleParameter(":idDescuento", id));
+
+            int a = cmd.ExecuteNonQuery();
+            conn.Close();
+            if (a > 0)
+            {
+                resultado = true;
+            }
+
+            return resultado;
+
+        }
+
+
+
+        public bool actualizarDescuento(Descuento descuento)
+        {
+            bool resultado = false;
+
+
+            conn.Open();
+
+            OracleCommand cmd = new OracleCommand("UPDATE descuento SET  cantidad ='" + descuento.cantidad + "', idRubro='" + descuento.rubro + "' WHERE idDescuento ='" + descuento.idDescuento + "'", conn);
+
+            cmd.Parameters.Add(new OracleParameter(":cantidad", descuento.cantidad));            
+            cmd.Parameters.Add(new OracleParameter(":rubro", descuento.rubro));
+
+
+
+
+            int a = cmd.ExecuteNonQuery();
+            conn.Close();
+            if (a > 0)
+            {
+                resultado = true;
+            }
+
+            return resultado;
+
+        }
+
+
     }
 }
 
