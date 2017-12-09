@@ -4,64 +4,77 @@
     ViewBag.Title = "VerProducto";
 }
 
-<h2>VerProducto</h2>
+<br />
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2>Lista de Productos</h2>
+            </div>
+            <div class="panel-body">
+                <h4>
+                    @Html.ActionLink("Nuevo Producto", "Producto")
+                </h4>
+                <table id="mytabla" class="display hover order-column text-center" cellspacing="0" style="width:100%">
+                    <thead>
+                        <tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table id="mytabla" class="display hover order-column text-center" cellspacing="0" style="width:100%">
-    <thead>
-        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Stock)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.IdProducto)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Descripcion)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Precio)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-            <th>
-                @Html.DisplayNameFor(model => model.Stock)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdProducto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Precio)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
 
-        @foreach (var item in Model)
-        {
-            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Stock)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IdProducto)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Descripcion)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Precio)
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("actualizarProducto", "Ventas", new { id = item.IdProducto })">editar</a>
+                                    <a href="@Url.Action("eliminarProducto", "Ventas", new { id = item.IdProducto })">eliminar</a>
+                                </td>
+                            </tr>
+                        }
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Stock)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdProducto)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descripcion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Precio)
-                </td>
-                <td>
-                    <a href="@Url.Action("actualizarProducto", "Ventas", new { id = item.IdProducto })">editar</a>
-                    <a href="@Url.Action("eliminarProducto", "Ventas", new { id = item.IdProducto })">eliminar</a>
-                </td>
-            </tr>
-        }
+                    </tbody>
 
-    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
-</table>
 
 <script>
 
