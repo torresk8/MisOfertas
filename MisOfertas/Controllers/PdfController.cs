@@ -1,4 +1,5 @@
-﻿using CapaNegocio;
+﻿using CapaDTO;
+using CapaNegocio;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using QRCoder;
@@ -47,11 +48,11 @@ namespace MisOfertas.Controllers
             //IMAGEN DEL CODIGO
             PdfPCell cell = new PdfPCell();
             cell.Border = 0;
+            Usuario usu = (Usuario)Session["loginUsuario"];
 
-               
             table.AddCell(cell);            
             //Cell no 2
-            chunk = new Chunk("Nombre: ,\nEmail: , \nProducto: , \nFecha: ", FontFactory.GetFont("Arial", 15, Font.NORMAL, BaseColor.BLACK));
+            chunk = new Chunk("Nombre:'"+usu.Nombre+"' \nRut:'"+usu.Rut+"' , \nTelefono:'"+usu.Telefono+"',\nDireccion:'"+usu.Direccion+"' , \nFecha: ", FontFactory.GetFont("Arial", 15, Font.NORMAL, BaseColor.BLACK));
             cell = new PdfPCell();
             cell.Border = 0;
             cell.AddElement(chunk);
