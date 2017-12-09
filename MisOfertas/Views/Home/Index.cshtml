@@ -41,6 +41,7 @@
 
 
 </style>
+<br />
 <div class="container">
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <!-- Indicadores --> 
@@ -112,27 +113,31 @@
                                     </div>
                                 </div>
                                 -->
-                                <!--Filtro Rubro-->
-                                <div class="form-group">
-                                    @Html.Label("Rubro", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.DropDownList("idRubro", (List<SelectListItem>)ViewBag.listarRubro, "Seleccione", new { @class = "form-control", onmousedown = "this.value='';", onchange = "jsFunction(this.value);", id = "idRubro", required = "" })
-                                    </div>
-                                </div>
-                                <!--Filtro Precio-->
-                                <div class="form-group">
-                                    @Html.Label("Precio", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.DropDownList("precio", (List<SelectListItem>)ViewBag.listaRangoPrecio, "Seleccione", new { @class = "form-control", onmousedown = "this.value='';", onchange = "precio(this.value);", id = "precio", required = "" })
-                                    </div>
-                                </div>
-                                <!--Filtro Sucursal-->
-                                <div class="form-group">
-                                    @Html.Label("Sucursal", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.DropDownList("sucursal", (List<SelectListItem>)ViewBag.listaSucursal, "Seleccione", new { @class = "form-control", onmousedown = "this.value='';", onchange = "sucursal(this.value);", id = "sucursal", required = "" })
-                                    </div>
-                                </div>
+                                <div class="col-lg-push-3 col-lg-8 col-md-push-3 col-md-8 col-sm-push-3 col-sm-8">
+                                    <div class="form-horizontal">
+                                        <!--Filtro Rubro-->
+                                        <div class="form-group">
+                                            @Html.Label("Rubro", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DropDownList("idRubro", (List<SelectListItem>)ViewBag.listarRubro, "Seleccione", new { @class = "form-control", onmousedown = "this.value='';", onchange = "jsFunction(this.value);", id = "idRubro", required = "" })
+                                            </div>
+                                        </div>
+                                        <!--Filtro Precio-->
+                                        <div class="form-group">
+                                            @Html.Label("Precio", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DropDownList("precio", (List<SelectListItem>)ViewBag.listaRangoPrecio, "Seleccione", new { @class = "form-control", onmousedown = "this.value='';", onchange = "precio(this.value);", id = "precio", required = "" })
+                                            </div>
+                                        </div>
+                                        <!--Filtro Sucursal-->
+                                        <div class="form-group">
+                                            @Html.Label("Sucursal", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DropDownList("sucursal", (List<SelectListItem>)ViewBag.listaSucursal, "Seleccione", new { @class = "form-control", onmousedown = "this.value='';", onchange = "sucursal(this.value);", id = "sucursal", required = "" })
+                                            </div>
+                                        </div>
+                                    </div>  
+                                </div>                                                              
                             </div>
                         </div>
                     </div>                    
@@ -144,7 +149,7 @@
                 <div class="row">
                     @foreach (var item in Model)
                     {
-                         <div class="col-lg-3 col-md-6">
+                         <div class="col-lg-3 col-md-4 col-sm-6">
                              <div class="panel panel-default text-center">                                 
                                      <img class="card-img-top" src="@Url.Action("convertirImagen", "Home", new { id = item.IdOferta })" style="width:200px; height:150px">
                                         <h3 class="card-title">
