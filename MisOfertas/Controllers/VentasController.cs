@@ -101,7 +101,7 @@ namespace MisOfertas.Controllers
                 return View();
         }
 
-        public ActionResult Producto(string id)
+        public ActionResult Producto(string id,string idTipoProducto)
         {
 
             
@@ -116,7 +116,7 @@ namespace MisOfertas.Controllers
             if(id==null)
             {                
                 id = "0";
-                ViewBag.listaTipoProducto = obtenerTipoProducto();
+                ViewBag.listaTipoProducto = obtenerTipoProducto(0);
             }
             else
             {
@@ -126,8 +126,8 @@ namespace MisOfertas.Controllers
                 producto.IdProducto = prod.IdProducto;
                 producto.Descripcion = prod.Descripcion;
                 producto.Stock = prod.Stock;
-                producto.TipoProducto.IdTipoProducto = prod.TipoProducto.IdTipoProducto;
-                ViewBag.listaTipoProducto = obtenerTipoProducto();
+                producto.TipoProducto.IdTipoProducto = Convert.ToInt32(idTipoProducto);
+                ViewBag.listaTipoProducto = obtenerTipoProducto(producto.TipoProducto.IdTipoProducto);
             }
                         
             Session["idProducto"] = id;                                
@@ -137,18 +137,15 @@ namespace MisOfertas.Controllers
 
 
         [HttpPost]
-        public ActionResult Producto(Producto producto, string idTipoProducto, string idProducto)
+        public ActionResult Producto(Producto producto, string idProducto2, string idTipoProducto)
         {
             if (ModelState.IsValid)
             {
-                NegocioProducto auxProducto = new NegocioProducto();
-                int idTipoProduc = Convert.ToInt32(idTipoProducto);                
+                NegocioProducto auxProducto = new NegocioProducto();                         
                 bool resultado = false;
-
-                producto.TipoProducto.IdTipoProducto = idTipoProduc;
-                producto.IdProducto = Convert.ToInt32(idProducto);
-                
-                if(producto.IdProducto>0)
+               // producto.TipoProducto.IdTipoProducto = Convert.ToInt32(idTipoProducto);
+                //producto.IdProducto = Convert.ToInt32(idProducto2);
+                if(producto.IdProducto != 0)
                 {
                     resultado = auxProducto.actualizarProducto(producto);
                 }
@@ -170,11 +167,11 @@ namespace MisOfertas.Controllers
                 {
 
                     ModelState.AddModelError("", "Error datos invalidos");
-                    Session["class"] = "text-dangert";
+                    Session["class"] = "text-danger";
 
                 }
 
-                ViewBag.listaTipoProducto = obtenerTipoProducto();
+                ViewBag.listaTipoProducto = obtenerTipoProducto(0);
                 
                 List<Producto> listProducto = auxProducto.retornaProductoList();
 
@@ -185,7 +182,7 @@ namespace MisOfertas.Controllers
             return View();
         }
 
-        public List<SelectListItem> obtenerTipoProducto()
+        public List<SelectListItem> obtenerTipoProducto(int tipoProducto)
         {
             List<SelectListItem> list = new List<SelectListItem>();
 
@@ -194,13 +191,23 @@ namespace MisOfertas.Controllers
 
             listTipoProducto = auxNegocio.retornaTipoProducto();
 
+            bool resultado = false; 
 
             foreach (var li in listTipoProducto)
             {
+                if(tipoProducto == li.IdTipoProducto)
+                {
+                    resultado = true;
+                }
+                else
+                {
+                    resultado = false;
+                }
                 list.Add(new SelectListItem()
                 {
                     Text = li.Nombre,
-                    Value = li.IdTipoProducto.ToString()
+                    Value = li.IdTipoProducto.ToString(),
+                    Selected = resultado
                     
 
                 });

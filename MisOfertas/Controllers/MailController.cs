@@ -98,8 +98,9 @@ namespace MisOfertas.Controllers
         public FileResult Download()
         {
             NegocioReporte negocioReporte = new NegocioReporte();
-
-            return File(negocioReporte.archivo(), "text/plain", "Prueba.csv");
+            ServiceReporte.reporteSoapClient reporte = new ServiceReporte.reporteSoapClient();
+            reporte.archivoPlano();
+            return File(negocioReporte.archivo(reporte.archivoPlano()), "text/plain", "Prueba.csv");
         }
     }
 }
