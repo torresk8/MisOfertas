@@ -23,6 +23,8 @@ namespace CapaNegocio
         {
             bool resultado = false;
 
+            try
+            {            
 
             conn.Open();
             OracleCommand cmd = new OracleCommand("INSERT INTO log_usuario(idLogUsuario,idUsuario,idRubro,fecha) " +
@@ -38,7 +40,11 @@ namespace CapaNegocio
             {
                 resultado = true;
             }
+            }
+            catch (Exception ex)
+            {
 
+            }
             return resultado;
 
         }
@@ -46,7 +52,9 @@ namespace CapaNegocio
         public LogUsuario retornaLogUsuario(int idUsuario)
         {
             LogUsuario logUsuario = new LogUsuario();
-
+            try
+            {
+            
             conn.Open();
 
             OracleCommand cmd = new OracleCommand();
@@ -76,7 +84,11 @@ namespace CapaNegocio
             }
 
             conn.Close();
+            }
+            catch (Exception ex)
+            {
 
+            }
             return logUsuario;
         }
     }

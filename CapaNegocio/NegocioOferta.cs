@@ -23,7 +23,10 @@ namespace CapaNegocio
 
         public Oferta retornaOferta(int id)
         {
-            Oferta oferta = new Oferta(); 
+            Oferta oferta = new Oferta();
+            try
+            {
+            
             conn.Open();
 
             DataSet ds = new DataSet();
@@ -72,13 +75,20 @@ namespace CapaNegocio
             }
 
             conn.Close();
+            }
+            catch (Exception ex)
+            {
 
+            }
             return oferta;
         }
 
         public Rubro retornaRubro(int id)
         {
             Rubro rubro = new Rubro();
+            try
+            {
+            
             conn.Open();
 
             DataSet ds = new DataSet();
@@ -102,6 +112,11 @@ namespace CapaNegocio
             }
 
             conn.Close();
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             return rubro;
         }
@@ -109,6 +124,9 @@ namespace CapaNegocio
         public List<Rubro> retornaRubroList()
         {
             List<Rubro> auxRubro = new List<Rubro>();
+            try
+            {
+            
             conn.Open();
             
             OracleCommand cmd = new OracleCommand();
@@ -133,14 +151,20 @@ namespace CapaNegocio
             }
 
             conn.Close();
+            }
+            catch (Exception ex)
+            {
 
+            }
             return auxRubro;
         }
 
         public List<Oferta> retornaOfertaPuublicadaList(int idRubro, int idSucursal)
         {
             List<Oferta> list = new List<Oferta>();
-
+            try
+            {
+            
             conn.Open();
 
             DataSet ds = new DataSet();
@@ -201,7 +225,11 @@ namespace CapaNegocio
             }
 
             conn.Close();
+            }
+            catch (Exception ex)
+            {
 
+            }
             return list;
         }
 
@@ -210,63 +238,70 @@ namespace CapaNegocio
         {
             List<Oferta> list = new List<Oferta>();
 
-            conn.Open();
-
-            DataSet ds = new DataSet();
-            OracleCommand cmd = new OracleCommand();
-            if( order != "")
-            {
-                cmd = new OracleCommand("SELECT o.idOferta, o.nombre, o.descripcion, o.precioNormal,o.precioOferta, o.cantidadMin, o.cantidadMax, "+
-                                        "o.idProducto, o.productImage, o.estado, o.idRubro, s.idSucursal, s.nombre FROM oferta o "+
-                                        "INNER JOIN sucursal s ON s.idSucursal = o.idSucursal " +
-                                        "where estado = :estado ORDER BY precioOferta "+order+"", conn);
-
-                cmd.Parameters.Add(":estado", "Publicado");
-                //cmd.Parameters.Add(":order", order);
-            }
-            else
-            {
-                cmd = new OracleCommand("SELECT o.idOferta, o.nombre, o.descripcion, o.precioNormal, o.precioOferta, o.cantidadMin, o.cantidadMax, "+
-                                        " o.idProducto, o.productImage, o.estado, o.idRubro, s.idSucursal, s.nombre FROM oferta o " +
-                                        "INNER JOIN sucursal s ON s.idSucursal = o.idSucursal " +
-                                        "where estado = :estado AND precioOferta > :precioInicio AND precioOferta < :precioFin", conn);
-                cmd.Parameters.Add(":estado", "Publicado");
-                cmd.Parameters.Add(":precioInicio", precioInicio);
-                cmd.Parameters.Add(":precioFin", precioFin);
-            }
-
-            
-
-            OracleDataAdapter da = new OracleDataAdapter();
-            da.SelectCommand = cmd;
-            OracleDataReader dr = cmd.ExecuteReader();
-
-
-            while (dr.Read())
+            try
             {
 
-                Oferta oferta = new Oferta();
-                oferta.IdOferta = dr.GetInt32(0);
-                oferta.Nombre = String.Format("{0}", dr[1]);
-                oferta.Descripcion = String.Format("{0}", dr[2]);
-                oferta.PrecioNormal = dr.GetInt32(3);
-                oferta.PrecioOfeta = dr.GetInt32(4);
-                oferta.CantidadMin = dr.GetInt32(5);
-                oferta.CantidadMax = dr.GetInt32(6);
-                oferta.Producto.IdProducto = dr.GetInt32(7);
+                conn.Open();
 
-                OracleBlob blob = dr.GetOracleBlob(8);
-                Byte[] Buffer = (Byte[])(dr.GetOracleBlob(8)).Value;
-                oferta.Imagen = Buffer;
-                oferta.Estado = String.Format("{0}", dr[9]);
-                oferta.rubro.IdRubro = dr.GetInt32(10);
-                oferta.sucursal.IdSucursal = dr.GetInt32(11);
-                oferta.sucursal.Nombre = String.Format("{0}", dr[12]);
+                DataSet ds = new DataSet();
+                OracleCommand cmd = new OracleCommand();
+                if (order != "")
+                {
+                    cmd = new OracleCommand("SELECT o.idOferta, o.nombre, o.descripcion, o.precioNormal,o.precioOferta, o.cantidadMin, o.cantidadMax, " +
+                                            "o.idProducto, o.productImage, o.estado, o.idRubro, s.idSucursal, s.nombre FROM oferta o " +
+                                            "INNER JOIN sucursal s ON s.idSucursal = o.idSucursal " +
+                                            "where estado = :estado ORDER BY precioOferta " + order + "", conn);
 
-                list.Add(oferta);
+                    cmd.Parameters.Add(":estado", "Publicado");
+                    //cmd.Parameters.Add(":order", order);
+                }
+                else
+                {
+                    cmd = new OracleCommand("SELECT o.idOferta, o.nombre, o.descripcion, o.precioNormal, o.precioOferta, o.cantidadMin, o.cantidadMax, " +
+                                            " o.idProducto, o.productImage, o.estado, o.idRubro, s.idSucursal, s.nombre FROM oferta o " +
+                                            "INNER JOIN sucursal s ON s.idSucursal = o.idSucursal " +
+                                            "where estado = :estado AND precioOferta > :precioInicio AND precioOferta < :precioFin", conn);
+                    cmd.Parameters.Add(":estado", "Publicado");
+                    cmd.Parameters.Add(":precioInicio", precioInicio);
+                    cmd.Parameters.Add(":precioFin", precioFin);
+                }
+
+
+
+                OracleDataAdapter da = new OracleDataAdapter();
+                da.SelectCommand = cmd;
+                OracleDataReader dr = cmd.ExecuteReader();
+
+
+                while (dr.Read())
+                {
+
+                    Oferta oferta = new Oferta();
+                    oferta.IdOferta = dr.GetInt32(0);
+                    oferta.Nombre = String.Format("{0}", dr[1]);
+                    oferta.Descripcion = String.Format("{0}", dr[2]);
+                    oferta.PrecioNormal = dr.GetInt32(3);
+                    oferta.PrecioOfeta = dr.GetInt32(4);
+                    oferta.CantidadMin = dr.GetInt32(5);
+                    oferta.CantidadMax = dr.GetInt32(6);
+                    oferta.Producto.IdProducto = dr.GetInt32(7);
+
+                    OracleBlob blob = dr.GetOracleBlob(8);
+                    Byte[] Buffer = (Byte[])(dr.GetOracleBlob(8)).Value;
+                    oferta.Imagen = Buffer;
+                    oferta.Estado = String.Format("{0}", dr[9]);
+                    oferta.rubro.IdRubro = dr.GetInt32(10);
+                    oferta.sucursal.IdSucursal = dr.GetInt32(11);
+                    oferta.sucursal.Nombre = String.Format("{0}", dr[12]);
+
+                    list.Add(oferta);
+                }
+
+                conn.Close();
+            }catch(Exception ex)
+            {
+
             }
-
-            conn.Close();
 
             return list;
         }
@@ -275,6 +310,9 @@ namespace CapaNegocio
         public bool insertarOferta(Oferta oferta)
         {
             bool resultado = false;
+            try
+            {
+            
             oferta.Estado = "No publicado";
 
             conn.Open();
@@ -302,6 +340,11 @@ namespace CapaNegocio
             {
                 resultado = true;
             }
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             return resultado;
 
@@ -311,7 +354,9 @@ namespace CapaNegocio
         public bool eliminarOferta(int id)
         {
             bool resultado = false;
-
+            try
+            {
+                
             conn.Open();
             OracleCommand cmd = new OracleCommand("DELETE from oferta where idOferta =:idOferta", conn);
 
@@ -323,6 +368,11 @@ namespace CapaNegocio
             {
                 resultado = true;
             }
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             return resultado;
 
@@ -331,6 +381,8 @@ namespace CapaNegocio
         public List<Oferta> retornaOfertaList()
         {
             List<Oferta> list = new List<Oferta>();
+            try
+            {
             
             conn.Open();
 
@@ -373,6 +425,11 @@ namespace CapaNegocio
              }
 
             conn.Close();
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             return list;
         }
@@ -380,7 +437,9 @@ namespace CapaNegocio
         public bool actualizarOfertaEstado(string estado,int id)
         {
             bool resultado = false;
-
+            try
+            {
+            
             conn.Open();
             OracleCommand cmd = new OracleCommand("UPDATE oferta SET  estado = :estado WHERE idOferta =:idOferta", conn);
 
@@ -394,6 +453,11 @@ namespace CapaNegocio
             {
                 resultado = true;
             }
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             return resultado;
 
@@ -402,7 +466,9 @@ namespace CapaNegocio
         public bool actualizarOferta(Oferta oferta)
         {
             bool resultado = false;
-
+            try
+            {
+            
             conn.Open();
             //Arreglar consulta para actualizar con los campos
             OracleCommand cmd = new OracleCommand("UPDATE oferta SET  estado = :estado WHERE idOferta =:idOferta", conn);
@@ -427,6 +493,11 @@ namespace CapaNegocio
             if (a > 0)
             {
                 resultado = true;
+            }
+            }
+            catch (Exception ex)
+            {
+
             }
 
             return resultado;

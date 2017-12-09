@@ -25,6 +25,9 @@ namespace CapaNegocio
         public Valoracion retornaValoracion(int id)
         {
             Valoracion valoracion = new Valoracion();
+            try
+            {
+
             conn.Open();
 
             DataSet ds = new DataSet();
@@ -61,6 +64,11 @@ namespace CapaNegocio
             }
 
             conn.Close();
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             return valoracion;
         }
@@ -70,6 +78,8 @@ namespace CapaNegocio
         public bool insertarValoracion(Valoracion valoracion)
         {
             bool resultado = false;
+            try
+            {
             
             conn.Open();
 
@@ -90,6 +100,11 @@ namespace CapaNegocio
             {
                 resultado = true;
             }
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             return resultado;
 
@@ -99,7 +114,9 @@ namespace CapaNegocio
         public bool eliminarValoracion(Valoracion valoracion)
         {
             bool resultado = false;
-
+            try
+            {
+                        
             conn.Open();
             OracleCommand cmd = new OracleCommand("DELETE from valoracion where valoracion =:idValoracion", conn);
 
@@ -111,6 +128,11 @@ namespace CapaNegocio
             {
                 resultado = true;
             }
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             return resultado;
 
@@ -119,7 +141,9 @@ namespace CapaNegocio
         public List<Valoracion> retornaValoracionList(int id)
         {
             List<Valoracion> list = new List<Valoracion>();
-
+            try
+            {
+            
             conn.Open();
 
             DataSet ds = new DataSet();
@@ -159,6 +183,11 @@ namespace CapaNegocio
             }
 
             conn.Close();
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             return list;
         }

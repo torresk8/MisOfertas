@@ -20,7 +20,10 @@ namespace CapaNegocio
 
         public bool insertarCorreo(Correo correo)
         {
+            
             bool resultado = false;
+            try
+            {
             
 
             conn.Open();
@@ -39,7 +42,11 @@ namespace CapaNegocio
             {
                 resultado = true;
             }
+            }
+            catch (Exception ex)
+            {
 
+            }
             return resultado;
 
         }

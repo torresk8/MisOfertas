@@ -21,7 +21,9 @@ namespace CapaNegocio
             public bool insertarDescuento(Descuento descuento)
             {
                 bool resultado = false;
-
+            try
+            {
+            
                 conn.Open();
                 OracleCommand cmd = new OracleCommand("INSERT INTO DESCUENTO(idDescuento,cantidad,idRubro)" +
                          "VALUES(secuence_descuento.NEXTVAL,:cantidad,:idRubro)", conn);
@@ -35,15 +37,21 @@ namespace CapaNegocio
                 {
                     resultado = true;
                 }
+            }
+            catch (Exception ex)
+            {
 
-                return resultado;
+            }
+            return resultado;
 
             }
 
             public List<Descuento> retornaDescuentoListId(int id)
             {
                  List<Descuento> auxDescuento = new List<Descuento>();
-
+            try
+            {
+            
                 conn.Open();
 
                 OracleCommand cmd = new OracleCommand("SELECT * FROM DESCUENTO WHERE idRubro = :idRubro ORDER BY cantidad ASC", conn);
@@ -67,6 +75,12 @@ namespace CapaNegocio
                     auxDescuento.Add(descuento);
             }
              conn.Close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
             return auxDescuento;
             }
 
@@ -74,6 +88,8 @@ namespace CapaNegocio
         public Descuento retornaDescuento(int idRubro, int idDescuento)
         {
             Descuento auxDescuento = new Descuento();
+            try
+            {
 
             conn.Open();
 
@@ -97,13 +113,20 @@ namespace CapaNegocio
 
             }
             conn.Close();
+            }
+            catch (Exception ex)
+            {
+
+            }
             return auxDescuento;
         }
 
         public List<Descuento> retornaDescuentoList()
         {
             List<Descuento> auxDescuento = new List<Descuento>();
-
+            try
+            {
+            
             conn.Open();
 
             OracleCommand cmd = new OracleCommand("SELECT * FROM DESCUENTO ", conn);
@@ -125,7 +148,11 @@ namespace CapaNegocio
 
                 auxDescuento.Add(descuento);
             }
+            }
+            catch (Exception ex)
+            {
 
+            }
             return auxDescuento;
         }
 

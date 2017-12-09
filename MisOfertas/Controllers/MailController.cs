@@ -97,11 +97,9 @@ namespace MisOfertas.Controllers
 
         public FileResult Download()
         {
-            // Obtener contenido del archivo
-            string text = "El texto para mi archivo.";
-            var stream = new MemoryStream(Encoding.ASCII.GetBytes(text));
+            NegocioReporte negocioReporte = new NegocioReporte();
 
-            return File(stream, "text/plain", "Prueba.txt");
+            return File(negocioReporte.archivo(), "text/plain", "Prueba.csv");
         }
     }
 }

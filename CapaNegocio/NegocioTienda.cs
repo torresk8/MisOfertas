@@ -22,7 +22,9 @@ namespace CapaNegocio
         public List<ResumenTienda> retornaResumenTiendaList(int idSucural)
         {
             List<ResumenTienda> listaResumen = new List<ResumenTienda>();
-
+            try
+            {
+            
             conn.Open();
 
             OracleCommand cmd = new OracleCommand();
@@ -60,6 +62,11 @@ namespace CapaNegocio
             }
 
             conn.Close();
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             return listaResumen;
         }
