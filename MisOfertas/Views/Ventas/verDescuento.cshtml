@@ -1,0 +1,63 @@
+﻿@model IEnumerable<CapaDTO.Descuento>
+
+@{
+    ViewBag.Title = "verDescuento";
+}
+
+<h2>verDescuento</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.idDescuento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cantidad)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.idDescuento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cantidad)
+        </td>
+        <td>
+            <a href="@Url.Action("eliminarDescuento", "verDescuento", new { id = item.idDescuento })">eliminar</a>
+        </td>
+    </tr>
+}
+
+</table>
+
+<script>
+
+    function eliminar(id)
+    {
+        $.ajax({
+        url: "@Url.Action("eliminarDescuento", "Ventas")",
+                                type: "POST",
+                                data: {
+                                    id: id
+
+                                },
+
+                                success: function (data) {
+                                    //If you have a response, it will be in the 'data' object
+                                }
+                            });
+
+                            location.reload(true);
+                        }
+
+
+
+
+</script>
+

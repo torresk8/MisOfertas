@@ -22,9 +22,6 @@ namespace CapaNegocio
         public Producto retornaProducto(int id)
         {
             Producto producto = new Producto();
-            try
-            {
-            
             conn.Open();
 
             DataSet ds = new DataSet();
@@ -49,11 +46,6 @@ namespace CapaNegocio
            }
 
             conn.Close();
-            }
-            catch (Exception ex)
-            {
-
-            }
 
             return producto;
         }
@@ -61,9 +53,6 @@ namespace CapaNegocio
         public List<TipoProducto> retornaTipoProducto()
         {
             List<TipoProducto> list = new List<TipoProducto>();
-            try
-            {
-            
             conn.Open();
 
             DataSet ds = new DataSet();
@@ -85,11 +74,6 @@ namespace CapaNegocio
             }
 
             conn.Close();
-            }
-            catch (Exception ex)
-            {
-
-            }
 
             return list;
         }
@@ -97,9 +81,6 @@ namespace CapaNegocio
         public List<Producto> retornaProductoList()
         {
             List<Producto> list = new List<Producto>();
-            try
-            {
-            
             conn.Open();
 
             DataSet ds = new DataSet();
@@ -125,11 +106,6 @@ namespace CapaNegocio
             }
 
             conn.Close();
-            }
-            catch (Exception ex)
-            {
-
-            }
 
             return list;
         }
@@ -137,9 +113,6 @@ namespace CapaNegocio
         public List<Sucursal> retornaSucursal()
         {
             List<Sucursal> list = new List<Sucursal>();
-            try
-            {
-            
             conn.Open();
 
             DataSet ds = new DataSet();
@@ -166,11 +139,6 @@ namespace CapaNegocio
             }
 
             conn.Close();
-            }
-            catch (Exception ex)
-            {
-
-            }
 
             return list;
         }
@@ -178,9 +146,6 @@ namespace CapaNegocio
         public bool insertarProducto(Producto producto)
         {
             bool resultado = false;
-
-            try
-            {
 
             conn.Open();
 
@@ -200,27 +165,20 @@ namespace CapaNegocio
             {
                 resultado = true;
             }
-            }
-            catch (Exception ex)
-            {
-
-            }
 
             return resultado;
 
         }
 
 
-        public bool eliminarProducto(Producto producto)
+        public bool eliminarProducto(int id)
         {
             bool resultado = false;
-            try
-            {
-            
-            conn.Open();
-            OracleCommand cmd = new OracleCommand("DELETE from producto where oferta =:idProducto", conn);
 
-            cmd.Parameters.Add(new OracleParameter(":idProducto", producto.IdProducto));
+            conn.Open();
+            OracleCommand cmd = new OracleCommand("DELETE from producto where idProducto =:idProducto", conn);
+
+            cmd.Parameters.Add(new OracleParameter(":idProducto", id));
 
             int a = cmd.ExecuteNonQuery();
             conn.Close();
@@ -228,27 +186,30 @@ namespace CapaNegocio
             {
                 resultado = true;
             }
-            }
-            catch (Exception ex)
-            {
-
-            }
 
             return resultado;
 
         }
+
+
 
         public bool actualizarProducto(Producto producto)
         {
             bool resultado = false;
-            try
-            {
-            
-            conn.Open();
-            OracleCommand cmd = new OracleCommand("UPDATE FROM producto SET stock = :stock where oferta =:idProducto", conn);
 
-            cmd.Parameters.Add(new OracleParameter(":idProducto", producto.IdProducto));
+
+            conn.Open();
+
+            OracleCommand cmd = new OracleCommand("UPDATE producto SET  nombre ='" + producto.Nombre + "', descripcion='" + producto.Descripcion + "', " +
+                "precio='" + producto.Precio + "', stock='" + producto.Stock + "' WHERE idProducto ='" + producto.IdProducto + "'", conn);
+
+            cmd.Parameters.Add(new OracleParameter(":nombre", producto.Nombre));
+            //cmd.Parameters.Add(new OracleParameter(":modelo", producto.Modelo));
+            cmd.Parameters.Add(new OracleParameter(":descripcion", producto.Descripcion));
+            cmd.Parameters.Add(new OracleParameter(":precio", producto.Precio));
             cmd.Parameters.Add(new OracleParameter(":stock", producto.Stock));
+
+
 
             int a = cmd.ExecuteNonQuery();
             conn.Close();
@@ -256,14 +217,10 @@ namespace CapaNegocio
             {
                 resultado = true;
             }
-            }
-            catch (Exception ex)
-            {
-
-            }
 
             return resultado;
 
         }
+
     }
 }

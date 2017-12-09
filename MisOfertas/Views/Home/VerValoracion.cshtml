@@ -1,39 +1,54 @@
 ﻿@model IEnumerable<CapaDTO.Valoracion>
 
-@{
-    ViewBag.Title = "VerValoracion";
-}
+<br />
+<br />
+<br />
 
-<h2>VerValoracion</h2>
-
-<h1><a href="@Url.Action("Valoracion", "Home")">Valorar</a></h1>
-
-<div class="container col">
-    @foreach (var item in Model)
-    {
-
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-               <img class="card-img-top" src="@Url.Action("convertirBoleta", "Home", new { id = item.oferta.IdOferta})" style="width:200px; height:150px">
-                <div class="card-body">
-                    <h4 class="card-title">
-                        @Html.DisplayFor(modelItem => item.oferta.Nombre)
-                    </h4>
-                    <h4 >
-                      Usuario: @Html.DisplayFor(modelItem => item.usuario.NombreUsuario)
-                    </h4>
-                    <h4>Fecha: @Html.DisplayFor(modelItem => item.fecha)</h4>
-                    <h4>@Html.DisplayFor(modelItem => item.Comentario)</h4>
-                    <h4></h4>
-                    <h4>@Html.DisplayFor(modelItem => item.Calificacion)</h4>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2>Valoraciones:</h2>
                 </div>
-                <div class="card-footer">
-                    <br />
-                    <!--<a href=""><small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small></a>-->
+                <div class="panel-body">
+                    <p>Con su opinion podemos mejorar, haga click abajo y de su valoración</p>
+                    <h4><a href="@Url.Action("Valoracion", "Home")">Valore la oferta Aquí</a></h4>
+                    <hr />
+                    <h3>Valoraciones de nuestros usuarios:</h3>
+                <!--Lista de valoraciones-->
+                    <div class="row">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                <div class="panel panel-default text-center">
+                                    <img class="card-img-top" src="@Url.Action("convertirBoleta", "Home", new { id = item.oferta.IdOferta})" style="width:200px; height:150px">
+                                    <div class="card-body">
+                                        <h4 class="card-title">
+                                            @Html.DisplayFor(modelItem => item.oferta.Nombre)
+                                        </h4>
+                                        <h4>
+                                            Usuario: @Html.DisplayFor(modelItem => item.usuario.NombreUsuario)
+                                        </h4>
+                                        <h4>Fecha: @Html.DisplayFor(modelItem => item.fecha)</h4>
+                                        <h4>@Html.DisplayFor(modelItem => item.Comentario)</h4>
+                                        <h4></h4>
+                                        <h4>@Html.DisplayFor(modelItem => item.Calificacion)</h4>
+                                    </div>
+                                    <div class="card-footer">
+                                        <br />
+                                        <!--<a href=""><small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small></a>-->
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                <!--Fin lista-->
                 </div>
             </div>
         </div>
-        
-
-    }
+    </div>
 </div>
+
+
+

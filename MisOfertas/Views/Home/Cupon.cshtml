@@ -14,25 +14,20 @@
             </div>
             <div class="panel-body">
                 <div class="col-lg-3 col-md-3">
-                    <h4>Genere su cupon Cupon</h4>
+                    <h4>Sus Puntos:</h4>
 
                     @Html.Label("Puntos acumulados: " + Model.Cantidad)
-
-                    <div id="viewContent">
-                        <!--Boton que llama al controlador CREATEPDFCONTROLLER desde el index-->
-                        <a href="@Url.Action("GenerarCupon", "Home")" class="btn btn-primary" onclick="refesh()">Generar Cupon</a>
-
-                    </div>
+                                        
                 </div>
-                <div class="col-lg-9 col-md-9">
-                    <table border="1" style="background-color:white">
-                        <thead><tr><td colspan="4"><h3>Porcentaje de descuento</h3></td></tr></thead>
+                <div class="col-lg-6 col-md-8">                    
+                    <table class="table">
+                        <thead><tr><td colspan="4"><h3>Descuentos Obtenibles</h3></td></tr></thead>
                         <tbody>
                             <tr>
-                                <td>Puntos</td>
-                                <td>Descuento</td>
-                                <td>Tope</td>
-                                <td>Rubro</td>
+                                <th>Puntos</th>
+                                <th>Descuento</th>
+                                <th>Tope</th>
+                                <th>Rubro</th>
                             </tr>
                             <tr>
                                 <td>0-100 </td>
@@ -54,6 +49,12 @@
                             </tr>
                         </tbody>
                     </table>
+                    <br />
+                    <div id="viewContent">
+                        <!--Boton que llama al controlador CREATEPDFCONTROLLER desde el index-->
+                        <a href="@Url.Action("GenerarCupon", "Home")" class="btn btn-primary" onclick="refesh()">Generar Cupon</a>
+
+                    </div>
                 </div>               
             </div>
                 

@@ -9,23 +9,18 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table id="mytabla" class="display nowrap" cellspacing="0" width="100%">
+<table id="mytabla" class="display hover order-column text-center" cellspacing="0" style="width:100%">
     <thead>
         <tr>
+
             <th>
-                @Html.DisplayNameFor(model => model.IdTipoProducto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdSucursal)
+                @Html.DisplayNameFor(model => model.Stock)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IdProducto)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Marca)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Modelo)
+                @Html.DisplayNameFor(model => model.Nombre)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Descripcion)
@@ -33,30 +28,23 @@
             <th>
                 @Html.DisplayNameFor(model => model.Precio)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Stock)
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
+
         @foreach (var item in Model)
         {
             <tr>
+
                 <td>
-                    @Html.DisplayFor(modelItem => item.IdTipoProducto)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdSucursal)
+                    @Html.DisplayFor(modelItem => item.Stock)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.IdProducto)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Marca)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Modelo)
+                    @Html.DisplayFor(modelItem => item.Nombre)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Descripcion)
@@ -65,15 +53,14 @@
                     @Html.DisplayFor(modelItem => item.Precio)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Stock)
-                </td>
-                <td>
-                    <a href="@Url.Action("actualizarProducto", "verProducto", new { id = item.IdProducto })">editar</a>
-                    <a href="@Url.Action("eliminarProducto", "verProducto", new { id = item.IdProducto })">eliminar</a>
+                    <a href="@Url.Action("actualizarProducto", "Ventas", new { id = item.IdProducto })">editar</a>
+                    <a href="@Url.Action("eliminarProducto", "Ventas", new { id = item.IdProducto })">eliminar</a>
                 </td>
             </tr>
         }
+
     </tbody>
+
 </table>
 
 <script>
@@ -81,11 +68,11 @@
     function eliminar(id)
     {
         $.ajax({
-        url: "@Url.Action("eliminarProducto", "VerProducto")",
+        url: "@Url.Action("eliminarProducto", "Ventas")",
                                 type: "POST",
                                 data: {
                                     id: id
-
+  
                                 },
 
                                 success: function (data) {
