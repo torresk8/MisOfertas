@@ -350,9 +350,12 @@ namespace MisOfertas.Controllers
         {
 
             NegocioOferta auxNegocioOferta = new NegocioOferta();
-            bool resultado = auxNegocioOferta.actualizarOferta(oferta);
+
             Oferta auxOferta = new Oferta();
 
+            bool resultado = auxNegocioOferta.actualizarOferta(oferta);         
+
+            
             auxOferta.IdOferta = oferta.IdOferta;
             auxOferta.Nombre = oferta.Nombre;
             auxOferta.Descripcion = oferta.Descripcion;
@@ -361,6 +364,19 @@ namespace MisOfertas.Controllers
             auxOferta.CantidadMin = oferta.CantidadMin;
             auxOferta.CantidadMax = oferta.CantidadMax;
             auxOferta.Estado = oferta.Estado;
+
+            if (resultado == true)
+            {
+                ModelState.Clear();
+                ModelState.AddModelError("", "Datos Correctos");
+                Session["class"] = "text-success";
+            }
+            else
+            {
+                ModelState.AddModelError("", "Error datos invalidos");
+                Session["class"] = "text-danger";
+            }
+            
             return View(auxOferta);
         }
 
@@ -494,7 +510,7 @@ namespace MisOfertas.Controllers
 
         public ActionResult verDescuento()
         {
-
+            
             NegocioDescuento auxNegocoDescuento = new NegocioDescuento();
             List<Descuento> listDescuento = auxNegocoDescuento.retornaDescuentoList();
 
@@ -536,6 +552,7 @@ namespace MisOfertas.Controllers
 
             auxDescuento.idDescuento = descuento.idDescuento;
             auxDescuento.cantidad = descuento.cantidad;
+            auxDescuento.rubro.IdRubro = descuento.rubro.IdRubro;
 
             return View(auxDescuento);
         }
