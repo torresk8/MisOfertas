@@ -258,7 +258,7 @@ namespace MisOfertas.Controllers
 
        
 
-        public List<SelectListItem> obtenerRubro()
+        public List<SelectListItem> obtenerRubro(int idRubro)
         {
             List<SelectListItem> list = new List<SelectListItem>();
 
@@ -267,12 +267,24 @@ namespace MisOfertas.Controllers
 
             listRubro = negocioOferta.retornaRubroList();
 
+            bool resultado = false;  
+
             foreach (var li in listRubro)
             {
-                list.Add(new SelectListItem()
+                if (idRubro == li.IdRubro)
+                {
+                    resultado = true;
+
+                }
+                else
+                {
+                    resultado = false;
+                }
+                    list.Add(new SelectListItem()
                 {
                     Text = li.Nombre,
-                    Value = li.IdRubro.ToString()
+                    Value = li.IdRubro.ToString(),
+                    Selected = resultado
 
 
                 });
@@ -393,7 +405,7 @@ namespace MisOfertas.Controllers
         [Authorize(Roles = "administrador")]
         public ActionResult crearDescuento()
         {
-            ViewBag.listaRubro = obtenerRubro();
+            ViewBag.listaRubro = obtenerRubro(0);
 
             return View();
         }
@@ -425,7 +437,7 @@ namespace MisOfertas.Controllers
                     Session["class"] = "text-danger";
 
                 }
-                ViewBag.listaRubro = obtenerRubro();
+                ViewBag.listaRubro = obtenerRubro(0);
                 // 
             }
 
@@ -543,41 +555,47 @@ namespace MisOfertas.Controllers
 
         //
 
-        public ActionResult actualizarDescuento(int idD, int idR)
+        public ActionResult actualizarDescuento(int id)
         {
 
             NegocioDescuento auxNegocioDescuento = new NegocioDescuento();
-            Descuento descuento = auxNegocioDescuento.retornaDescuento(idD, idR);
+            Descuento descuento = auxNegocioDescuento.retornaDescuentoActualizar( id);
             Descuento auxDescuento = new Descuento();
 
             auxDescuento.idDescuento = descuento.idDescuento;
             auxDescuento.cantidad = descuento.cantidad;
             auxDescuento.rubro.IdRubro = descuento.rubro.IdRubro;
 
+            ViewBag.listaRubro = obtenerRubro(descuento.rubro.IdRubro);
+
             return View(auxDescuento);
         }
 
         [HttpPost]
-        public ActionResult actualizarDescuento(Descuento descuento)
+        public ActionResult actualizarDescuento(Descuento descuento, string idRubro)
         {
 
             NegocioDescuento auxNegocioDescuento = new NegocioDescuento();
-            Descuento auxDescuento = new Descuento();
-            bool resultado = auxNegocioDescuento.actualizarDescuento(descuento);
+            descuento.rubro.IdRubro = Convert.ToInt32(idRubro);
 
-            auxDescuento.idDescuento = descuento.idDescuento;
-            auxDescuento.cantidad = descuento.cantidad;
+            bool resultado = auxNegocioDescuento.actualizarDescuento(descuento);
+            
 
             if (resultado == true)
             {
+                ModelState.Clear();                
                 ModelState.AddModelError("", "Datos Correctos");
+                Session["class"] = "text-success";
             }
             else
             {
+                ModelState.Clear();
                 ModelState.AddModelError("", "Error datos invalidos");
+                Session["class"] = "text-danger";
             }
 
-            return View(auxDescuento);
+            ViewBag.listaRubro = obtenerRubro(0);
+            return View();
         }
 
     }

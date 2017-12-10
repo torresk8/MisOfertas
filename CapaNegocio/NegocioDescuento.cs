@@ -130,6 +130,41 @@ namespace CapaNegocio
             return auxDescuento;
         }
 
+        public Descuento retornaDescuentoActualizar(int idDescuento)
+        {
+            Descuento auxDescuento = new Descuento();
+            try
+            {
+
+                conn.Open();
+
+                OracleCommand cmd = new OracleCommand("SELECT * FROM DESCUENTO WHERE  idDescuento = :idDescuento", conn);
+                
+                cmd.Parameters.Add(new OracleParameter(":idDescuento", idDescuento));
+
+
+                OracleDataAdapter da = new OracleDataAdapter();
+                da.SelectCommand = cmd;
+                OracleDataReader dr = cmd.ExecuteReader();
+
+
+                while (dr.Read())
+                {
+
+                    auxDescuento.idDescuento = dr.GetInt32(0);
+                    auxDescuento.cantidad = dr.GetInt32(1);
+                    auxDescuento.rubro.IdRubro = dr.GetInt32(2);
+
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return auxDescuento;
+        }
+
         public List<Descuento> retornaDescuentoList()
         {
             List<Descuento> auxDescuento = new List<Descuento>();
@@ -197,10 +232,10 @@ namespace CapaNegocio
 
             conn.Open();
 
-            OracleCommand cmd = new OracleCommand("UPDATE descuento SET  cantidad ='" + descuento.cantidad + "', idRubro='" + descuento.rubro + "' WHERE idDescuento ='" + descuento.idDescuento + "'", conn);
+            OracleCommand cmd = new OracleCommand("UPDATE descuento SET  cantidad ='" + descuento.cantidad + "', idRubro='" + descuento.rubro.IdRubro + "' WHERE idDescuento ='" + descuento.idDescuento + "'", conn);
 
-            cmd.Parameters.Add(new OracleParameter(":cantidad", descuento.cantidad));            
-            cmd.Parameters.Add(new OracleParameter(":rubro", descuento.rubro));
+            /**cmd.Parameters.Add(new OracleParameter(":cantidad", descuento.cantidad));            
+            cmd.Parameters.Add(new OracleParameter(":rubro", descuento.rubro.IdRubro));*/
 
 
 

@@ -47,6 +47,7 @@
                                     @Html.DisplayFor(modelItem => item.cantidad)<label>%</label>
                                 </td>
                                 <td>
+                                    <a href="@Url.Action("actualizarDescuento", "Ventas", new { id = item.idDescuento })">Editar</a>
                                     <a href="" onclick="eliminar('@item.idDescuento')">Eliminar</a>
                                 </td>
                             </tr>
