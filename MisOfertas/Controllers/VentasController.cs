@@ -342,7 +342,14 @@ namespace MisOfertas.Controllers
             Oferta oferta = auxNegocioOferta.retornaOferta(id);
             Oferta auxOferta = new Oferta();
 
+            auxOferta.IdOferta = oferta.IdOferta;
             auxOferta.Nombre = oferta.Nombre;
+            auxOferta.Descripcion = oferta.Descripcion;
+            auxOferta.PrecioNormal = oferta.PrecioNormal;
+            auxOferta.PrecioOfeta = oferta.PrecioOfeta;
+            auxOferta.CantidadMin = oferta.CantidadMin;
+            auxOferta.CantidadMax = oferta.CantidadMax;
+            auxOferta.Estado = oferta.Estado;
             return View(auxOferta);
         }
 
@@ -354,7 +361,14 @@ namespace MisOfertas.Controllers
             bool resultado = auxNegocioOferta.actualizarOferta(oferta);
             Oferta auxOferta = new Oferta();
 
+            auxOferta.IdOferta = oferta.IdOferta;
             auxOferta.Nombre = oferta.Nombre;
+            auxOferta.Descripcion = oferta.Descripcion;
+            auxOferta.PrecioNormal = oferta.PrecioNormal;
+            auxOferta.PrecioOfeta = oferta.PrecioOfeta;
+            auxOferta.CantidadMin = oferta.CantidadMin;
+            auxOferta.CantidadMax = oferta.CantidadMax;
+            auxOferta.Estado = oferta.Estado;
             return View(auxOferta);
         }
 
@@ -471,6 +485,7 @@ namespace MisOfertas.Controllers
             auxProducto.Descripcion = producto.Descripcion;
             auxProducto.Precio = producto.Precio;
             auxProducto.Stock = producto.Stock;
+            auxProducto.TipoProducto.IdTipoProducto = producto.TipoProducto.IdTipoProducto;
             return View(auxProducto);
         }
 
@@ -491,6 +506,7 @@ namespace MisOfertas.Controllers
             auxProducto.Descripcion = producto.Descripcion;
             auxProducto.Precio = producto.Precio;
             auxProducto.Stock = producto.Stock;
+            auxProducto.IdTipoProducto = producto.IdTipoProducto;
 
             if (resultado == true)
             {
