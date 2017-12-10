@@ -457,44 +457,60 @@ namespace MisOfertas.Controllers
 
 
 
-        //
-
+        /*Vista actualizar producto recibira el id del producto por parametro 
+         * que es eviada al momento de seleccionar el actilizar en la tabla(verProducto)         
+         */
         public ActionResult actualizarProducto(int id)
         {
-
+            //llamamos al neogcio producto para poder llamar a los metodos
             NegocioProducto auxNegocioProducto = new NegocioProducto();
+            /*Declaramos una varible de la clase producto
+             * que tendra los valores del producto seleccionado
+             */
             Producto producto = auxNegocioProducto.retornaProducto(id);
+            // declaramos otra variable de tipo producto para ser enviada a la vista
             Producto auxProducto = new Producto();
-
+            /*a nuestra variable que sera enviada a la vista le asignamos los valores de la bd
+             * Estos seran lo que el usuario vera si faltan datos se deben incorprar
+             * EJ: auxProcuto.tipoProducto.idTipoProducto = producto..tipoProducto.idTipoProducto;
+             * Revisar clase TO para ver los atributos de las clases
+             */
             auxProducto.IdProducto = producto.IdProducto;
             auxProducto.Nombre = producto.Nombre;            
             auxProducto.Descripcion = producto.Descripcion;
             auxProducto.Precio = producto.Precio;
             auxProducto.Stock = producto.Stock;
+            //enviarmos a la vista nuestros valores
             return View(auxProducto);
         }
 
+        //Cuando el usuario haga click nos enviara a esta pagina para capturar los datos ingresados
         [HttpPost]
         public ActionResult actualizarProducto(Producto producto)
         {
-
+            //llamamos a nuesta clase negocioo
             NegocioProducto auxNegocioProducto = new NegocioProducto();
-
+            //Nose ocupara
             Producto auxProducto = new Producto();
 
-
+            /*Declaramos una variable tipo booleano para saber si los datos fueron actualizados
+             * El metodo actulizar nos duelve verdadero o falso             
+             */
             bool resultado = auxNegocioProducto.actualizarProducto(producto);
 
-
+            //Esto esta demas para que no te confudas no es necesario hacerlo nose ocupa
             auxProducto.IdProducto = producto.IdProducto;
             auxProducto.Nombre = producto.Nombre;
             auxProducto.Descripcion = producto.Descripcion;
             auxProducto.Precio = producto.Precio;
             auxProducto.Stock = producto.Stock;
 
+            //validamos si se actualizaron los datos y enviamos mensajes a la pantalla
             if (resultado == true)
             {
+                //limpia la vista
                 ModelState.Clear();
+                //Mensaje
                 ModelState.AddModelError("", "Datos Correctos");
                 Session["class"] = "text-success";
             }
@@ -503,7 +519,7 @@ namespace MisOfertas.Controllers
                 ModelState.AddModelError("", "Error datos invalidos");
                 Session["class"] = "text-danger";
             }
-
+            //deberia ser return View();
             return View(auxProducto);
         }
 
