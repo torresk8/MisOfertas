@@ -674,8 +674,8 @@
     <Content Include="Views\Ventas\VerProducto.cshtml" />
     <Content Include="Views\Ventas\eliminarProducto.cshtml" />
     <Content Include="Views\Ventas\actualizarProducto.cshtml" />
-    <Content Include="Views\Ventas\verDescuento.cshtml" />
     <Content Include="Views\Mail\MailBody.cshtml" />
+    <Content Include="Views\Ventas\verDescuento.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

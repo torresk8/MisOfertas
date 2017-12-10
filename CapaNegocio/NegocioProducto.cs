@@ -176,9 +176,9 @@ namespace CapaNegocio
             bool resultado = false;
 
             conn.Open();
-            OracleCommand cmd = new OracleCommand("DELETE from producto where idProducto =:idProducto", conn);
+            OracleCommand cmd = new OracleCommand("execute ELIMINIAR_PROD(:idProd)", conn);
 
-            cmd.Parameters.Add(new OracleParameter(":idProducto", id));
+            cmd.Parameters.Add(new OracleParameter(":idProd", id));
 
             int a = cmd.ExecuteNonQuery();
             conn.Close();

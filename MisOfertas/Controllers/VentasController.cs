@@ -467,8 +467,7 @@ namespace MisOfertas.Controllers
             Producto auxProducto = new Producto();
 
             auxProducto.IdProducto = producto.IdProducto;
-            auxProducto.Nombre = producto.Nombre;
-            //auxProducto.Modelo = producto.Modelo;
+            auxProducto.Nombre = producto.Nombre;            
             auxProducto.Descripcion = producto.Descripcion;
             auxProducto.Precio = producto.Precio;
             auxProducto.Stock = producto.Stock;
@@ -489,7 +488,6 @@ namespace MisOfertas.Controllers
 
             auxProducto.IdProducto = producto.IdProducto;
             auxProducto.Nombre = producto.Nombre;
-            // auxProducto.Modelo = producto.Modelo;
             auxProducto.Descripcion = producto.Descripcion;
             auxProducto.Precio = producto.Precio;
             auxProducto.Stock = producto.Stock;
