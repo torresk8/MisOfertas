@@ -598,6 +598,7 @@ namespace MisOfertas.Controllers
 
             auxDescuento.idDescuento = descuento.idDescuento;
             auxDescuento.cantidad = descuento.cantidad;
+            auxDescuento.rubro.IdRubro = descuento.rubro.IdRubro;
 
             return View(auxDescuento);
         }
