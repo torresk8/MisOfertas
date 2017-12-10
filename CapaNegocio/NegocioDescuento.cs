@@ -25,15 +25,23 @@ namespace CapaNegocio
             try
             {
             
-                
+                //Solo se ingresa el nombre del procedimiento
                 OracleCommand cmd = new OracleCommand("ingreso_descuento", conn);
-
+                
+                //decimos que ejecutaremos una consulta tipo procedimiento
                 cmd.CommandType = CommandType.StoredProcedure;
-                 cmd.Parameters.Add("cantidad_d", OracleDbType.Int32, ParameterDirection.Input).Value = descuento.cantidad;
-                cmd.Parameters.Add("idRubro_d", OracleDbType.Int32, ParameterDirection.Input).Value = descuento.cantidad;
+                //Se agregan los parametros del procedimiento(variables con los mismos nombre de la bd)
+                //            Nombre variable , tipo dato,(si es varchar agregar el largo),(input o outPut).valor = varible recibida por post
+                cmd.Parameters.Add("cantidad_d", OracleDbType.Int32, ParameterDirection.Input).Value = descuento.cantidad;
+                cmd.Parameters.Add("idRubro_d", OracleDbType.Int32, ParameterDirection.Input).Value = descuento.rubro.IdRubro;
+                //Abrimos la conexion
                 conn.Open();
+                //ejecutamos la consulta si devuelve -1 es porque se inserto correctamente
                 int a = cmd.ExecuteNonQuery();
+                //cerramos la conexion
                 conn.Close();
+                //vericamos si se inserto el descuento
+
                 if (a == -1)
                 {
                     resultado = true;
