@@ -3,6 +3,7 @@ using CapaDTO;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,16 +25,16 @@ namespace CapaNegocio
             try
             {
             
+                
+                OracleCommand cmd = new OracleCommand("ingreso_descuento", conn);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                 cmd.Parameters.Add("cantidad_d", OracleDbType.Int32, ParameterDirection.Input).Value = descuento.cantidad;
+                cmd.Parameters.Add("idRubro_d", OracleDbType.Int32, ParameterDirection.Input).Value = descuento.cantidad;
                 conn.Open();
-                OracleCommand cmd = new OracleCommand("INSERT INTO DESCUENTO(idDescuento,cantidad,idRubro)" +
-                         "VALUES(secuence_descuento.NEXTVAL,:cantidad,:idRubro)", conn);
-
-                cmd.Parameters.Add(new OracleParameter(":cantidad", descuento.cantidad));
-                cmd.Parameters.Add(new OracleParameter(":idRubro", descuento.rubro.IdRubro));
-
-            int a = cmd.ExecuteNonQuery();
+                int a = cmd.ExecuteNonQuery();
                 conn.Close();
-                if (a > 0)
+                if (a == -1)
                 {
                     resultado = true;
                 }
