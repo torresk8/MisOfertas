@@ -9,13 +9,12 @@
     @Html.AntiForgeryToken()
     <div class="container">
         <div class="row">
-            <div class="col-lg-2"></div>
-            <div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
+            <div class="col-lg-push-2 col-lg-8 col-md-push-1 col-md-9 col-sm-12 col-xs-12">
                 <div class="text-center" style="margin-top:0%; width:auto">
-                    <img src="~/Content/Upload/Banner.jpg" alt="Banner" />
+                    <img src="~/Content/Upload/Banner.jpg" alt="Banner" class="img-responsive" />
                 </div>
                 <div class="panel panel-primary">
-                    <div class="panel-heading text-center">
+                    <div class="panel-heading ">
                         <h2>Registro de Usuario</h2>
                     </div>
                     <div class="panel-body">
@@ -23,72 +22,72 @@
                         <div class="row">
                             <div class="form-horizontal">
                                 <!--Nombre-->
-                                <div class="form-group col-lg-12 col-md-12">
-                                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
-                                    <div class="col-lg-9 col-md-10">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-lg-3 col-md-3 col-sm-4 col-xs-3" })
+                                    <div class="col-lg-9 col-md-9">
                                         @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", required = "", placeholder = "Nombre" } })
                                         @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <!--Nombre Usuario-->
-                                <div class="form-group col-lg-12 col-md-12">
-                                    @Html.LabelFor(model => model.NombreUsuario, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
-                                    <div class="col-lg-9 col-md-10">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.NombreUsuario, htmlAttributes: new { @class = "control-label col-lg-3 col-md-3  col-sm-4 col-xs-3" })
+                                    <div class="col-lg-9 col-md-9">
                                         @Html.EditorFor(model => model.NombreUsuario, new { htmlAttributes = new { @class = "form-control", required = "", placeholder = "ejemplo@email.cl", type = "email" } })
                                         @Html.ValidationMessageFor(model => model.NombreUsuario, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <!--Rut-->
-                                <div class="form-group col-lg-12 col-md-12">
-                                    @Html.LabelFor(model => model.Rut, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
-                                    <div class="col-lg-9 col-md-10">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Rut, htmlAttributes: new { @class = "control-label col-lg-3 col-md-3  col-sm-4 col-xs-3" })
+                                    <div class="col-lg-9 col-md-9">
                                         @Html.EditorFor(model => model.Rut, new { htmlAttributes = new { @class = "form-control", required = "", placeholder = "19364838-k" } })
                                         @Html.ValidationMessageFor(model => model.Rut, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <!--Pass-->
-                                <div class="form-group col-lg-12 col-md-12">
-                                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
-                                    <div class="col-lg-9 col-md-10">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-lg-3 col-md-3  col-sm-4 col-xs-3" })
+                                    <div class="col-lg-9 col-md-9">
                                         @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Password", required = "" })
                                         @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <!--Confirm-Pass-->
-                                <div class="form-group col-lg-12 col-md-12">
-                                    @Html.LabelFor(model => model.ConfirmarPassword, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
-                                    <div class="col-lg-9 col-md-10">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ConfirmarPassword, htmlAttributes: new { @class = "control-label col-lg-3 col-md-3  col-sm-4 col-xs-3" })
+                                    <div class="col-lg-9 col-md-9">
                                         @Html.PasswordFor(model => model.ConfirmarPassword, new { @class = "form-control", placeholder = "Password", required = "" })
                                         @Html.ValidationMessageFor(model => model.ConfirmarPassword, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <!--Direccion-->
-                                <div class="form-group col-lg-12 col-md-12">
-                                    @Html.LabelFor(model => model.Direccion, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
-                                    <div class="col-lg-9 col-md-10">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Direccion, htmlAttributes: new { @class = "control-label col-lg-3 col-md-3  col-sm-4 col-xs-3" })
+                                    <div class="col-lg-9 col-md-9">
                                         @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control", required = "" } })
                                         @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <!--Telefono-->
-                                <div class="form-group col-lg-12 col-md-12">
-                                    @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
-                                    <div class="col-lg-9 col-md-10">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "control-label col-lg-3 col-md-3  col-sm-4 col-xs-3" })
+                                    <div class="col-lg-9 col-md-9">
                                         @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control", required = "" } })
                                         @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <!--Confirmar Recibir Correo-->
-                                <div class="form-group col-lg-12 col-md-12">
-                                    @Html.LabelFor(model => model.RecibirCorreo, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
-                                    <div class="col-lg-9 col-md-10">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.RecibirCorreo, htmlAttributes: new { @class = "control-label col-lg-3 col-md-3 col-sm-4 col-xs-3" })
+                                    <div class="col-lg-9 col-md-9">
                                         @Html.CheckBox("recibirCorreo", new { htmlAttributes = new { @class = "form-control", required = "" } })
                                         @Html.ValidationMessageFor(model => model.RecibirCorreo, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <!--Boton Registrar Usuario-->
-                                <div class="form-group col-lg-12 col-md-12">
-                                    <div class="col-lg-offset-3 col-md-offset-2 col-md-10">
+                                <div class="form-group">
+                                    <div class="col-lg-offset-3 col-md-offset-3 col-md-10 col-sm-offset-4 col-xs-offset-3">
                                         <input type="submit" value="Registrar" class="btn btn-primary" />
                                     </div>
                                 </div>

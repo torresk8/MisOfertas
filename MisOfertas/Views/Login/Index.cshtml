@@ -10,9 +10,9 @@
     @Html.AntiForgeryToken()
     <div class="container">
         <div class="row"> 
-            <div class="col-lg-push-2 col-lg-8 col-md-10 col-sm-12">               
+            <div class="col-lg-push-2 col-lg-8 col-md-push-2 col-md-9 col-sm-12">               
                 <div class="text-center" style="margin-top:0%;">
-                    <img src="~/Content/Upload/Banner.jpg" alt="Banner" />
+                    <img src="~/Content/Upload/Banner.jpg" alt="Banner" class="img-responsive"/>
                 </div>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -23,23 +23,23 @@
                             <div class="form-horizontal">
                                 <!--FORM nombre usuario-->
                                 <div class="form-group">
-                                    @Html.Label("Nombre Usuario:", htmlAttributes: new { @class = "control-label col-lg-4" })
-                                    <div class="col-lg-8">
+                                    @Html.Label("Nombre Usuario:", htmlAttributes: new { @class = "control-label col-lg-4 col-md-4 col-sm-4 col-xs-3" })
+                                    <div class="col-lg-8 col-md-6 col-sm-6 col-xs-9">
                                         @Html.EditorFor(model => model.NombreUsuario, new { htmlAttributes = new { @class = "form-control", required = "", placeholder = "ejemplo@email.cl", type = "email" } })
                                         @Html.ValidationMessageFor(model => model.NombreUsuario, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <!--FORM contraseña-->
                                 <div class="form-group">
-                                    @Html.Label("Contraseña:", htmlAttributes: new { @class = "control-label col-lg-4" })
-                                    <div class="col-lg-8">
+                                    @Html.Label("Contraseña:", htmlAttributes: new { @class = "control-label col-lg-4 col-md-4 col-sm-4 col-xs-3" })
+                                    <div class="col-lg-8 col-md-6 col-sm-6 col-xs-9">
                                         @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Password", required = "" })
                                         @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <!--FORM Boton Login-->
                                 <div class="form-group">
-                                    <div class="col-lg-push-4 col-lg-3">
+                                    <div class="col-lg-push-4 col-lg-3 col-md-push-4 col-md-4 col-sm-push-4 col-sm-4">
                                         <input type="submit" value="Login" class="btn btn-primary" />
                                     </div>
                                 </div>
