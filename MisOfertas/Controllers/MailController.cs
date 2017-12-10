@@ -2,6 +2,7 @@
 using CapaNegocio;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -88,6 +89,13 @@ namespace MisOfertas.Controllers
                     msg.To.Add(para);                    
                     msg.Subject = asunto;                    
                     msg.IsBodyHtml = true;
+                    msg.Body += "<!DOCTYPE html> " +
+                                "<html>" +
+                                "<head>" +
+
+"                            <title></title> " +
+                            "</head>" +
+                            "<body> ";
                     msg.Body += "<table align='center' border='1' cellpadding='0' cellspacing='0' width='600' style='border-collapse: collapse; border-color:#E6E6E6;'> " +
         "<tr> " +
             "<td align = 'center' bgcolor = '#70bbd9' style = 'padding: 40px 0 30px 0;' > " +
@@ -154,7 +162,7 @@ namespace MisOfertas.Controllers
                     {
                         msg.Body += "<div class='col-lg-3 col-md-4 col-sm-6'> " +
                             "<div class='panel panel-default text-center'> " +
-                                "<img class='card-img-top' src='"+ convertirImagen(oferta.IdOferta.ToString()) + "' style='width:70px; height:70px'>" +
+                                "<img class='card-img-top' src='data:image/png;base64," + Convert.ToBase64String(oferta.Imagen)+ "' style='width:70px; height:70px'>" +
                                 "<h3 class='card-title'> " +
                                     "<a href = '#' ><h2>" + oferta.Nombre + "</h2></a>" +
                                 "</h3>" +
@@ -171,6 +179,7 @@ namespace MisOfertas.Controllers
                         "</div> " +
 
                          " </div>";
+                        
                 }
         msg.Body += "</div> "+
     "</div> "+
@@ -202,6 +211,8 @@ namespace MisOfertas.Controllers
             "</td>" +
         "</tr>" +
     "</table>";
+                    msg.Body += "</body> " +
+                                "</html> ";
 
                    /* using (var message = new MailMessage(envioCorreo, para)
                     {
@@ -271,6 +282,23 @@ namespace MisOfertas.Controllers
             NegocioOferta auxOferta = new NegocioOferta();
             var imagen = auxOferta.retornaOferta(Convert.ToInt32(id));
             return File(imagen.Imagen, "image/jpeg");
+        }
+
+        public static Image Convertir_Bytes_Imagen(byte[] bytes)
+        {
+            if (bytes == null) return null;
+
+            MemoryStream ms = new MemoryStream(bytes);
+            Bitmap bm = null;
+            try
+            {
+                bm = new Bitmap(ms);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return bm;
         }
     }
 }

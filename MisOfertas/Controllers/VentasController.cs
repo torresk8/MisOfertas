@@ -400,7 +400,7 @@ namespace MisOfertas.Controllers
                 {
 
                     ModelState.AddModelError("", "Error datos invalidos");
-                    Session["class"] = "text-success";
+                    Session["class"] = "text-danger";
 
                 }
                 ViewBag.listaRubro = obtenerRubro();

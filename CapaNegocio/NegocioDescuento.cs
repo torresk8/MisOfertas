@@ -3,6 +3,7 @@ using CapaDTO;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,16 +25,24 @@ namespace CapaNegocio
             try
             {
             
+                //Solo se ingresa el nombre del procedimiento
+                OracleCommand cmd = new OracleCommand("ingreso_descuento", conn);
+                
+                //decimos que ejecutaremos una consulta tipo procedimiento
+                cmd.CommandType = CommandType.StoredProcedure;
+                //Se agregan los parametros del procedimiento(variables con los mismos nombre de la bd)
+                //            Nombre variable , tipo dato,(si es varchar agregar el largo),(input o outPut).valor = varible recibida por post
+                cmd.Parameters.Add("cantidad_d", OracleDbType.Int32, ParameterDirection.Input).Value = descuento.cantidad;
+                cmd.Parameters.Add("idRubro_d", OracleDbType.Int32, ParameterDirection.Input).Value = descuento.rubro.IdRubro;
+                //Abrimos la conexion
                 conn.Open();
-                OracleCommand cmd = new OracleCommand("INSERT INTO DESCUENTO(idDescuento,cantidad,idRubro)" +
-                         "VALUES(secuence_descuento.NEXTVAL,:cantidad,:idRubro)", conn);
-
-                cmd.Parameters.Add(new OracleParameter(":cantidad", descuento.cantidad));
-                cmd.Parameters.Add(new OracleParameter(":idRubro", descuento.rubro.IdRubro));
-
-            int a = cmd.ExecuteNonQuery();
+                //ejecutamos la consulta si devuelve -1 es porque se inserto correctamente
+                int a = cmd.ExecuteNonQuery();
+                //cerramos la conexion
                 conn.Close();
-                if (a > 0)
+                //vericamos si se inserto el descuento
+
+                if (a == -1)
                 {
                     resultado = true;
                 }
