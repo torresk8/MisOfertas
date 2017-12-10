@@ -20,10 +20,7 @@
                 <table id="mytabla" class="display hover order-column text-center" cellspacing="0" style="width:100%">
                     <thead>
                         <tr>
-
-                            <th>
-                                @Html.DisplayNameFor(model => model.Stock)
-                            </th>
+                            
                             <th>
                                 @Html.DisplayNameFor(model => model.IdProducto)
                             </th>
@@ -44,10 +41,7 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Stock)
-                                </td>
+                               
                                 <td>
                                     @Html.DisplayFor(modelItem => item.IdProducto)
                                 </td>
@@ -62,7 +56,7 @@
                                 </td>
                                 <td>
                                     <a href="@Url.Action("actualizarProducto", "Ventas", new { id = item.IdProducto })">editar</a>
-                                    <a href="@Url.Action("eliminarProducto", "Ventas", new { id = item.IdProducto })">eliminar</a>
+                                    <a href="" onclick="eliminar('@item.IdProducto')">Eliminar</a>
                                 </td>
                             </tr>
                         }

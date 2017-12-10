@@ -24,7 +24,10 @@
                                 @Html.DisplayNameFor(model => model.idDescuento)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.cantidad)
+                                @Html.DisplayNameFor(model => model.rubro.Nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayName("Descuento")
                             </th>
                             <th></th>
                         </tr>
@@ -38,10 +41,13 @@
                                     @Html.DisplayFor(modelItem => item.idDescuento)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.cantidad)
+                                    @Html.DisplayFor(modelItem => item.rubro.Nombre)
                                 </td>
                                 <td>
-                                    <a href="@Url.Action("eliminarDescuento", "verDescuento", new { id = item.idDescuento })">eliminar</a>
+                                    @Html.DisplayFor(modelItem => item.cantidad)<label>%</label>
+                                </td>
+                                <td>
+                                    <a href="" onclick="eliminar('@item.idDescuento')">Eliminar</a>
                                 </td>
                             </tr>
                         }

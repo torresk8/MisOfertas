@@ -124,8 +124,7 @@ namespace MisOfertas.Controllers
                 producto.Nombre = prod.Nombre;
                 producto.Precio = prod.Precio;
                 producto.IdProducto = prod.IdProducto;
-                producto.Descripcion = prod.Descripcion;
-                producto.Stock = prod.Stock;
+                producto.Descripcion = prod.Descripcion;                
                 producto.TipoProducto.IdTipoProducto = Convert.ToInt32(idTipoProducto);
                 ViewBag.listaTipoProducto = obtenerTipoProducto(producto.TipoProducto.IdTipoProducto);
             }
@@ -143,17 +142,10 @@ namespace MisOfertas.Controllers
             {
                 NegocioProducto auxProducto = new NegocioProducto();                         
                 bool resultado = false;
-               // producto.TipoProducto.IdTipoProducto = Convert.ToInt32(idTipoProducto);
+                producto.TipoProducto.IdTipoProducto = Convert.ToInt32(idTipoProducto);
                 //producto.IdProducto = Convert.ToInt32(idProducto2);
-                if(producto.IdProducto != 0)
-                {
-                    resultado = auxProducto.actualizarProducto(producto);
-                }
-                else
-                {
-                    resultado = auxProducto.insertarProducto(producto);
-                }
-
+                                             
+                resultado = auxProducto.insertarProducto(producto);               
 
                 
 
@@ -452,24 +444,8 @@ namespace MisOfertas.Controllers
 
             return View("VerProducto", listProducto);
         }
-
-
-        [HttpPost]
-        public ActionResult eliminarProducto(Producto producto)
-        {
-            NegocioProducto negocioProducto = new NegocioProducto();
-
-            Producto auxProducto = new Producto();
-
-            auxProducto.IdProducto = producto.IdProducto;
-            bool resultado = negocioProducto.eliminarProducto(producto.IdProducto);
-
-            List<Producto> listProducto = negocioProducto.retornaProductoList();
-
-            return View("VerProducto", listProducto);
-        }
-
-
+   
+    
 
         //
 
@@ -483,30 +459,22 @@ namespace MisOfertas.Controllers
             auxProducto.IdProducto = producto.IdProducto;
             auxProducto.Nombre = producto.Nombre;            
             auxProducto.Descripcion = producto.Descripcion;
-            auxProducto.Precio = producto.Precio;
-            auxProducto.Stock = producto.Stock;
-            auxProducto.TipoProducto.IdTipoProducto = producto.TipoProducto.IdTipoProducto;
+            auxProducto.Precio = producto.Precio;            
+            ViewBag.listaTipoProducto = obtenerTipoProducto(producto.TipoProducto.IdTipoProducto);
             return View(auxProducto);
         }
 
         [HttpPost]
-        public ActionResult actualizarProducto(Producto producto)
+        public ActionResult actualizarProducto(Producto producto,string idTipoProducto)
         {
 
             NegocioProducto auxNegocioProducto = new NegocioProducto();
 
-            Producto auxProducto = new Producto();
 
-
+            producto.TipoProducto.IdTipoProducto = Convert.ToInt32(idTipoProducto);
             bool resultado = auxNegocioProducto.actualizarProducto(producto);
 
-
-            auxProducto.IdProducto = producto.IdProducto;
-            auxProducto.Nombre = producto.Nombre;
-            auxProducto.Descripcion = producto.Descripcion;
-            auxProducto.Precio = producto.Precio;
-            auxProducto.Stock = producto.Stock;
-            auxProducto.IdTipoProducto = producto.IdTipoProducto;
+   
 
             if (resultado == true)
             {
@@ -519,8 +487,8 @@ namespace MisOfertas.Controllers
                 ModelState.AddModelError("", "Error datos invalidos");
                 Session["class"] = "text-danger";
             }
-
-            return View(auxProducto);
+            ViewBag.listaTipoProducto = obtenerTipoProducto(0);
+            return View();
         }
 
 
@@ -553,21 +521,7 @@ namespace MisOfertas.Controllers
             return View("verDescuento", listDescuento);
         }
 
-
-        [HttpPost]
-        public ActionResult eliminarDescuento(Descuento descuento)
-        {
-            NegocioDescuento negocioDescuento = new NegocioDescuento();
-
-            Descuento auxDescuento = new Descuento();
-
-            auxDescuento.idDescuento = descuento.idDescuento;
-            bool resultado = negocioDescuento.eliminarDescuento(descuento.idDescuento);
-
-            List<Descuento> listDescuento = negocioDescuento.retornaDescuentoList();
-
-            return View("VerDescuento", listDescuento);
-        }
+ 
 
 
 

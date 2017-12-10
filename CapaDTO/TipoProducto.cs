@@ -8,15 +8,9 @@ namespace CapaDTO
 {
     public class TipoProducto
     {
-        private int idTipoProducto;
-        private string nombre;
+        public int IdTipoProducto { get; set; }
+        public string Nombre { get; set; }
+      
 
-        public TipoProducto()
-        {
-
-        }
-
-        public int IdTipoProducto { get => idTipoProducto; set => idTipoProducto = value; }
-        public string Nombre { get => nombre; set => nombre = value; }
     }
 }

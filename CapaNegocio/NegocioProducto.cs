@@ -177,14 +177,13 @@ namespace CapaNegocio
             conn.Open();
 
             OracleCommand cmd = new OracleCommand("INSERT INTO producto(idProducto,nombre," +
-                "descripcion,precio,idTipoProducto,stock) VALUES (sucuence_producto.NEXTVAL," +
-                ":nombre,:descripcion,:precio,:idTipoP,:stock)", conn);
+                "descripcion,precio,idTipoProducto) VALUES (sucuence_producto.NEXTVAL," +
+                ":nombre,:descripcion,:precio,:idTipoP)", conn);
 
             cmd.Parameters.Add(new OracleParameter(":nombre", producto.Nombre));
             cmd.Parameters.Add(new OracleParameter(":descripcion", producto.Descripcion));
             cmd.Parameters.Add(new OracleParameter(":precio", producto.Precio));
-            cmd.Parameters.Add(new OracleParameter(":idTipoP", producto.TipoProducto.IdTipoProducto));
-            cmd.Parameters.Add(new OracleParameter(":stock", producto.Stock));
+            cmd.Parameters.Add(new OracleParameter(":idTipoP", producto.TipoProducto.IdTipoProducto));            
 
             int a = cmd.ExecuteNonQuery();
             conn.Close();
@@ -208,7 +207,7 @@ namespace CapaNegocio
             try
             { 
             conn.Open();
-            OracleCommand cmd = new OracleCommand("execute ELIMINIAR_PROD(:idProd)", conn);
+            OracleCommand cmd = new OracleCommand("delete from producto where idProducto =:idProd", conn);
 
             cmd.Parameters.Add(new OracleParameter(":idProd", id));
 
@@ -232,22 +231,12 @@ namespace CapaNegocio
         public bool actualizarProducto(Producto producto)
         {
             bool resultado = false;
-            try
-            {
-            
-
+            try { 
             conn.Open();
-
-            OracleCommand cmd = new OracleCommand("UPDATE producto SET  nombre ='" + producto.Nombre + "', descripcion='" + producto.Descripcion + "', " +
-                "precio='" + producto.Precio + "', stock='" + producto.Stock + "' WHERE idProducto ='" + producto.IdProducto + "'", conn);
-
-            cmd.Parameters.Add(new OracleParameter(":nombre", producto.Nombre));
-            //cmd.Parameters.Add(new OracleParameter(":modelo", producto.Modelo));
-            cmd.Parameters.Add(new OracleParameter(":descripcion", producto.Descripcion));
-            cmd.Parameters.Add(new OracleParameter(":precio", producto.Precio));
-            cmd.Parameters.Add(new OracleParameter(":stock", producto.Stock));
-
-
+                OracleCommand cmd = new OracleCommand("UPDATE producto SET  nombre ='" + producto.Nombre + "', descripcion='" + producto.Descripcion + "', " +
+                                "precio='" + producto.Precio + "', idTipoProducto ='"+producto.TipoProducto.IdTipoProducto+"'  WHERE idProducto ='" + producto.IdProducto + "'", conn);
+            
+                
 
             int a = cmd.ExecuteNonQuery();
             conn.Close();
@@ -255,8 +244,7 @@ namespace CapaNegocio
             {
                 resultado = true;
             }
-
-            }
+         }
             catch (Exception ex)
             {
 

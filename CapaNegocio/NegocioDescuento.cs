@@ -138,25 +138,27 @@ namespace CapaNegocio
             
             conn.Open();
 
-            OracleCommand cmd = new OracleCommand("SELECT * FROM DESCUENTO ", conn);
+            OracleCommand cmd = new OracleCommand("select d.idDescuento,r.nombre,d.cantidad from descuento d "+
+                                                    "INNER JOIN rubro r ON r.idRubro = d.idRubro ", conn);
 
 
 
             OracleDataAdapter da = new OracleDataAdapter();
             da.SelectCommand = cmd;
             OracleDataReader dr = cmd.ExecuteReader();
-            conn.Close();
+            
 
             while (dr.Read())
             {
                 Descuento descuento = new Descuento(); ;
 
-                descuento.idDescuento = dr.GetInt32(0);
-                descuento.cantidad = dr.GetInt32(1);
-                descuento.rubro.IdRubro = dr.GetInt32(2);
+                descuento.idDescuento = dr.GetInt32(0);                
+                descuento.rubro.Nombre = String.Format("{0}", dr[1]);
+                descuento.cantidad = dr.GetInt32(2);
 
-                auxDescuento.Add(descuento);
+                    auxDescuento.Add(descuento);
             }
+                conn.Close();
             }
             catch (Exception ex)
             {

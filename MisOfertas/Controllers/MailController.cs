@@ -171,8 +171,7 @@ namespace MisOfertas.Controllers
                         "<h5>$<label>" + oferta.PrecioOfeta + "</label></h5> " +
                         "<h4 class='card-text'>Precio normal</h4>" +
                         "<h5>$<label>" + oferta.PrecioNormal + "</label></h5> " +
-                        "<h4 class='card-text'>Stock disponible</h4> " +
-                        "<h5><label>" + oferta.Producto.Stock + "</label></h5> " +
+                        "<h4 class='card-text'>Stock disponible</h4> " +                        
                         "<p class='card-text'>" + oferta.Descripcion + "</h2></p> " +
                         "<p>Sucursal: <a class='btn-link col-md-0' data-toggle='modal' data-target='#myModal'>" + oferta.sucursal.Nombre + "</a></p> " +
 
