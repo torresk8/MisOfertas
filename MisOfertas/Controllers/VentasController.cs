@@ -542,7 +542,7 @@ namespace MisOfertas.Controllers
 
         public ActionResult verDescuento()
         {
-
+            
             NegocioDescuento auxNegocoDescuento = new NegocioDescuento();
             List<Descuento> listDescuento = auxNegocoDescuento.retornaDescuentoList();
 

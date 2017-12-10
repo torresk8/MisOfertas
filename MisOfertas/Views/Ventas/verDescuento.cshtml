@@ -26,7 +26,10 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.cantidad)
                             </th>
-                            <th></th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.rubro)
+                            </th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,6 +44,10 @@
                                     @Html.DisplayFor(modelItem => item.cantidad)
                                 </td>
                                 <td>
+                                    @Html.DisplayFor(modelItem => item.rubro)
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("actualizarDescuento", "Ventas", new { id = item.idDescuento })">Editar</a>
                                     <a href="@Url.Action("eliminarDescuento", "verDescuento", new { id = item.idDescuento })">eliminar</a>
                                 </td>
                             </tr>

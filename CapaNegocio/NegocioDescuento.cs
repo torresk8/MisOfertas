@@ -138,14 +138,15 @@ namespace CapaNegocio
             
             conn.Open();
 
-            OracleCommand cmd = new OracleCommand("SELECT * FROM DESCUENTO ", conn);
+                DataSet ds = new DataSet();
+                OracleCommand cmd = new OracleCommand();
+                cmd = new OracleCommand("SELECT * FROM DESCUENTO ", conn);
 
 
 
             OracleDataAdapter da = new OracleDataAdapter();
             da.SelectCommand = cmd;
             OracleDataReader dr = cmd.ExecuteReader();
-            conn.Close();
 
             while (dr.Read())
             {
@@ -157,6 +158,7 @@ namespace CapaNegocio
 
                 auxDescuento.Add(descuento);
             }
+                conn.Close();
             }
             catch (Exception ex)
             {
