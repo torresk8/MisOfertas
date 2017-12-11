@@ -162,16 +162,17 @@ namespace MisOfertas.Controllers
             //Usuario usu = (Usuario)Session["loginUsuario"];
             NegocioUsuario auxNegocioUsuario = new NegocioUsuario();
             Usuario auxUSuario = new Usuario();
-            Usuario usuario = auxNegocioUsuario.retornaUsuario(auxUSuario.IdUsuario);
+            int id = Convert.ToInt32(Session["idUsuario"]);
+            Usuario usuario = auxNegocioUsuario.retornaUsuario(id);
 
-            Session["idUsuario"] = usuario.IdUsuario;
+            //Session["idUsuario"] = usuario.IdUsuario;
             auxUSuario.IdUsuario = usuario.IdUsuario;
             auxUSuario.Nombre = usuario.Nombre;
             auxUSuario.NombreUsuario = usuario.NombreUsuario;
             auxUSuario.Rut = usuario.Rut;
             auxUSuario.Direccion = usuario.Direccion;
             auxUSuario.Telefono = usuario.Telefono;
-            auxUSuario.RecibirCorreo = usuario.RecibirCorreo;
+            auxUSuario.NombreUsuario = usuario.NombreUsuario;
             return View(auxUSuario);
         }
 
