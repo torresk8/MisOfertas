@@ -171,7 +171,7 @@ namespace MisOfertas.Controllers
             auxUSuario.Rut = usuario.Rut;
             auxUSuario.Direccion = usuario.Direccion;
             auxUSuario.Telefono = usuario.Telefono;
-            auxUSuario.Correo = usuario.Correo;
+            auxUSuario.RecibirCorreo = usuario.RecibirCorreo;
             return View(auxUSuario);
         }
 
