@@ -494,6 +494,7 @@
     <Content Include="Content\Upload\Banner.jpg" />
     <Content Include="Content\Upload\CabezalMail.jpg" />
     <Content Include="Content\Upload\codigoQR.png" />
+    <Content Include="Content\Upload\Contacto.jpg" />
     <Content Include="Content\Upload\fondoPag.jpg" />
     <Content Include="Content\Upload\Nosotros.jpg" />
     <Content Include="favicon.ico" />
