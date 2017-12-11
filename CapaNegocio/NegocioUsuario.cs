@@ -58,7 +58,7 @@ namespace CapaNegocio
 
             }
 
-            conn.Open();
+            
                                
             
 

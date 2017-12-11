@@ -494,7 +494,9 @@
     <Content Include="Content\Upload\Banner.jpg" />
     <Content Include="Content\Upload\CabezalMail.jpg" />
     <Content Include="Content\Upload\codigoQR.png" />
+    <Content Include="Content\Upload\Contacto.jpg" />
     <Content Include="Content\Upload\fondoPag.jpg" />
+    <Content Include="Content\Upload\Nosotros.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -660,7 +662,6 @@
     <Content Include="Views\Ventas\VerOferta.cshtml" />
     <Content Include="Views\Ventas\actualizarOferta.cshtml" />
     <Content Include="Views\Pdf\Index.cshtml" />
-    <Content Include="Views\Ventas\eliminarOferta.cshtml" />
     <Content Include="Views\Login\actualizarUsuario.cshtml" />
     <Content Include="Views\Home\Cupon.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
@@ -672,10 +673,10 @@
     <Content Include="Views\Tienda\Index.cshtml" />
     <Content Include="Views\Mail\reporte.cshtml" />
     <Content Include="Views\Ventas\VerProducto.cshtml" />
-    <Content Include="Views\Ventas\eliminarProducto.cshtml" />
     <Content Include="Views\Ventas\actualizarProducto.cshtml" />
     <Content Include="Views\Mail\MailBody.cshtml" />
     <Content Include="Views\Ventas\verDescuento.cshtml" />
+    <Content Include="Views\Ventas\actualizarDescuento.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

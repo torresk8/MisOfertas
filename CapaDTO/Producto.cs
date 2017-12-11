@@ -13,9 +13,7 @@ namespace CapaDTO
         private string descripcion;
         private int precio;
         public TipoProducto TipoProducto = new TipoProducto();                
-        public int IdTipoProducto { get; set; }
-        public int IdSucursal { get; set; }
-        public int Stock { get; set; }
+        public int IdTipoProducto { get; set; }        
 
         public Producto()
         {

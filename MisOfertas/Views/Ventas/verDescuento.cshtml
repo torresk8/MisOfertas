@@ -3,43 +3,63 @@
 @{
     ViewBag.Title = "verDescuento";
 }
+<br />
+<br />
+<br />
 
-<h2>verDescuento</h2>
+<div class="container">
+    <div class="row">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2>Lista de Descuento</h2>
+            </div>
+            <div class="panel-body">
+                <p>
+                    @Html.ActionLink("Nuevo Descuento", "CrearDescuento")
+                </p>
+                <table id="mytabla" class="display hover order-column text-center" cellspacing="0" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.idDescuento)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.rubro.Nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayName("Descuento")
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table id="mytabla" class="display hover order-column text-center" cellspacing="0" style="width:100%">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.idDescuento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.cantidad)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.idDescuento)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.rubro.Nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.cantidad)<label>%</label>
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("actualizarDescuento", "Ventas", new { id = item.idDescuento })">Editar</a>
+                                    <a href="" onclick="eliminar('@item.idDescuento')">Eliminar</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.idDescuento)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.cantidad)
-                </td>
-                <td>
-                    <a href="@Url.Action("eliminarDescuento", "verDescuento", new { id = item.idDescuento })">eliminar</a>
-                </td>
-            </tr>
-        }
-    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
-</table>
 
 <script>
    
