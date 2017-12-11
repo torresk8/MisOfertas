@@ -495,6 +495,7 @@
     <Content Include="Content\Upload\CabezalMail.jpg" />
     <Content Include="Content\Upload\codigoQR.png" />
     <Content Include="Content\Upload\fondoPag.jpg" />
+    <Content Include="Content\Upload\Nosotros.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
