@@ -157,14 +157,14 @@ namespace MisOfertas.Controllers
         }
 
 
-        public ActionResult actualizarUsuario(int id)
+        public ActionResult actualizarUsuario()
         {
-
+            //Usuario usu = (Usuario)Session["loginUsuario"];
             NegocioUsuario auxNegocioUsuario = new NegocioUsuario();
             Usuario auxUSuario = new Usuario();
-            Usuario usuario = auxNegocioUsuario.retornaUsuario(id);
+            Usuario usuario = auxNegocioUsuario.retornaUsuario(auxUSuario.IdUsuario);
 
-
+            Session["idUsuario"] = usuario.IdUsuario;
             auxUSuario.IdUsuario = usuario.IdUsuario;
             auxUSuario.Nombre = usuario.Nombre;
             auxUSuario.NombreUsuario = usuario.NombreUsuario;

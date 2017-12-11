@@ -471,26 +471,20 @@ namespace MisOfertas.Controllers
             auxProducto.Descripcion = producto.Descripcion;
             auxProducto.Precio = producto.Precio;
             auxProducto.Stock = producto.Stock;
+            auxProducto.IdTipoProducto = 1;
             return View(auxProducto);
         }
 
         [HttpPost]
         public ActionResult actualizarProducto(Producto producto)
         {
-
             NegocioProducto auxNegocioProducto = new NegocioProducto();
 
             Producto auxProducto = new Producto();
-
-
+            
             bool resultado = auxNegocioProducto.actualizarProducto(producto);
 
 
-            auxProducto.IdProducto = producto.IdProducto;
-            auxProducto.Nombre = producto.Nombre;
-            auxProducto.Descripcion = producto.Descripcion;
-            auxProducto.Precio = producto.Precio;
-            auxProducto.Stock = producto.Stock;
 
             if (resultado == true)
             {

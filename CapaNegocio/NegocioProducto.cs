@@ -147,21 +147,20 @@ namespace CapaNegocio
         {
             bool resultado = false;
 
+           
+
+            OracleCommand cmd = new OracleCommand("ingreso_prod", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("nombre_p", OracleDbType.Varchar2, ParameterDirection.Input).Value = producto.Nombre;
+            cmd.Parameters.Add("descripcion_p", OracleDbType.Varchar2, ParameterDirection.Input).Value = producto.Descripcion;
+            cmd.Parameters.Add("precio_p", OracleDbType.Int32, ParameterDirection.Input).Value = producto.Precio;
+            cmd.Parameters.Add("idTipoprod_p", OracleDbType.Int32, ParameterDirection.Input).Value = producto.IdProducto;
+            
+        
             conn.Open();
-
-            OracleCommand cmd = new OracleCommand("INSERT INTO producto(idProducto,nombre," +
-                "descripcion,precio,idTipoProducto,stock) VALUES (sucuence_producto.NEXTVAL," +
-                ":nombre,:descripcion,:precio,:idTipoP,:stock)", conn);
-
-            cmd.Parameters.Add(new OracleParameter(":nombre", producto.Nombre));
-            cmd.Parameters.Add(new OracleParameter(":descripcion", producto.Descripcion));
-            cmd.Parameters.Add(new OracleParameter(":precio", producto.Precio));
-            cmd.Parameters.Add(new OracleParameter(":idTipoP", producto.TipoProducto.IdTipoProducto));
-            cmd.Parameters.Add(new OracleParameter(":stock", producto.Stock));
-
             int a = cmd.ExecuteNonQuery();
             conn.Close();
-            if (a > 0)
+            if (a == -1)
             {
                 resultado = true;
             }
@@ -176,9 +175,9 @@ namespace CapaNegocio
             bool resultado = false;
 
             conn.Open();
-            OracleCommand cmd = new OracleCommand("execute ELIMINIAR_PROD(:idProd)", conn);
-
-            cmd.Parameters.Add(new OracleParameter(":idProd", id));
+            OracleCommand cmd = new OracleCommand(" ELIMINIAR_PROD", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("idProd_p", OracleDbType.Int32, ParameterDirection.Input).Value = id;
 
             int a = cmd.ExecuteNonQuery();
             conn.Close();
@@ -198,22 +197,20 @@ namespace CapaNegocio
             bool resultado = false;
 
 
+           
+
+            OracleCommand cmd = new OracleCommand("update_prod", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("nombre_p", OracleDbType.Varchar2, ParameterDirection.Input).Value = producto.Nombre;
+            cmd.Parameters.Add("descripcion_p", OracleDbType.Varchar2, ParameterDirection.Input).Value = producto.Descripcion;
+            cmd.Parameters.Add("precio_p", OracleDbType.Int32, ParameterDirection.Input).Value = producto.Precio;
+            cmd.Parameters.Add("idTipoprod_p", OracleDbType.Int32, ParameterDirection.Input).Value = producto.IdProducto;
+          
+
             conn.Open();
-
-            OracleCommand cmd = new OracleCommand("UPDATE producto SET  nombre ='" + producto.Nombre + "', descripcion='" + producto.Descripcion + "', " +
-                "precio='" + producto.Precio + "', stock='" + producto.Stock + "' WHERE idProducto ='" + producto.IdProducto + "'", conn);
-
-            cmd.Parameters.Add(new OracleParameter(":nombre", producto.Nombre));
-            //cmd.Parameters.Add(new OracleParameter(":modelo", producto.Modelo));
-            cmd.Parameters.Add(new OracleParameter(":descripcion", producto.Descripcion));
-            cmd.Parameters.Add(new OracleParameter(":precio", producto.Precio));
-            cmd.Parameters.Add(new OracleParameter(":stock", producto.Stock));
-
-
-
             int a = cmd.ExecuteNonQuery();
             conn.Close();
-            if (a > 0)
+            if (a == -1)
             {
                 resultado = true;
             }

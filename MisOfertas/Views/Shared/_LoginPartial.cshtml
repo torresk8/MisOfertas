@@ -64,7 +64,7 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @Html.ActionLink("Hola "+Session["nombre"]+ "!", "Index", "Home")
+                @Html.ActionLink("Hola "+Session["nombre"]+ "!", "actualizarUsuario", "Login")
             </li>
             <li>@Html.ActionLink("Cerrar session", "cerrarSession", "Login")</li>
         </ul>

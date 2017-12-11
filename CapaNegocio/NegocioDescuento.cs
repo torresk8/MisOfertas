@@ -3,6 +3,7 @@ using CapaDTO;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -160,11 +161,10 @@ namespace CapaNegocio
         public bool eliminarDescuento(int id)
         {
             bool resultado = false;
-
             conn.Open();
-            OracleCommand cmd = new OracleCommand("DELETE from descuento where idDescuento =:idDescuento", conn);
-
-            cmd.Parameters.Add(new OracleParameter(":idDescuento", id));
+            OracleCommand cmd = new OracleCommand(" delete_descuento", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("idDes", OracleDbType.Int32, ParameterDirection.Input).Value = id;
 
             int a = cmd.ExecuteNonQuery();
             conn.Close();

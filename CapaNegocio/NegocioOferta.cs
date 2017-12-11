@@ -311,32 +311,27 @@ namespace CapaNegocio
         {
             bool resultado = false;
             try
-            {
+            {         
             
-            oferta.Estado = "No publicado";
 
-            conn.Open();
+                OracleCommand cmd = new OracleCommand("create_oferta", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("nombre_o", OracleDbType.Varchar2,ParameterDirection.Input).Value= oferta.Nombre;
+                cmd.Parameters.Add("descrip", OracleDbType.Varchar2, ParameterDirection.Input).Value = oferta.Descripcion;
+                cmd.Parameters.Add("precioN", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.PrecioNormal;
+                cmd.Parameters.Add("precioO", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.PrecioOfeta;
+                cmd.Parameters.Add("cantidadMi", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.CantidadMin;
+                cmd.Parameters.Add("cantidadMa", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.CantidadMax;
+                cmd.Parameters.Add("imagen", OracleDbType.Blob, ParameterDirection.Input).Value = oferta.Imagen;
+                cmd.Parameters.Add("estad", OracleDbType.Varchar2, ParameterDirection.Input).Value = oferta.Estado = "No publicado"; 
+                cmd.Parameters.Add("rubro_o", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.rubro.IdRubro;
+                cmd.Parameters.Add("idSu", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.sucursal.IdSucursal;
+               
 
-            OracleCommand cmd = new OracleCommand("INSERT INTO oferta (idOferta, nombre, descripcion, " +
-                "precioNormal, precioOferta, cantidadMin, cantidadMax, idProducto, productImage,estado,idRubro,idSucursal)" +
-                     "VALUES(sucuence_oferta.NEXTVAL, :nombre, :descripcion, :precioNormal," +
-                     ":precioOferta, :cantidadMin, :cantidadMax, :idProducto, :productImage, :estado, :rubro, :idScursal)", conn);
-
-            cmd.Parameters.Add(new OracleParameter(":nombre", oferta.Nombre));
-            cmd.Parameters.Add(new OracleParameter(":descripcion", oferta.Descripcion));
-            cmd.Parameters.Add(new OracleParameter(":precioNormal", oferta.PrecioNormal));
-            cmd.Parameters.Add(new OracleParameter(":precioOferta", oferta.PrecioOfeta));
-            cmd.Parameters.Add(new OracleParameter(":cantidadMin", oferta.CantidadMin));
-            cmd.Parameters.Add(new OracleParameter(":cantidadMax", oferta.CantidadMax));
-            cmd.Parameters.Add(new OracleParameter(":idProducto", oferta.Producto.IdProducto));
-            cmd.Parameters.Add(new OracleParameter(":productImage", oferta.Imagen));
-            cmd.Parameters.Add(new OracleParameter(":estado", oferta.Estado));
-            cmd.Parameters.Add(new OracleParameter(":rubro", oferta.rubro.IdRubro));
-            cmd.Parameters.Add(new OracleParameter(":idScursal", oferta.sucursal.IdSucursal));
-
-            int a = cmd.ExecuteNonQuery();
-            conn.Close();
-            if (a > 0)
+                conn.Open();
+                int a = cmd.ExecuteNonQuery();
+                conn.Close();
+                if (a == -1)
             {
                 resultado = true;
             }
@@ -356,16 +351,16 @@ namespace CapaNegocio
             bool resultado = false;
             try
             {
-                
-            conn.Open();
-            OracleCommand cmd = new OracleCommand("DELETE from oferta where idOferta =:idOferta", conn);
 
-            cmd.Parameters.Add(new OracleParameter(":idOferta", id));
+                conn.Open();
+                OracleCommand cmd = new OracleCommand(" delete_oferta", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("idOferta_o", OracleDbType.Int32, ParameterDirection.Input).Value = id;
 
-            int a = cmd.ExecuteNonQuery();
-            conn.Close();
-            if (a > 0)
-            {
+                int a = cmd.ExecuteNonQuery();
+                conn.Close();
+                if (a > 0)
+                {
                 resultado = true;
             }
             }
@@ -439,18 +434,17 @@ namespace CapaNegocio
             bool resultado = false;
             try
             {
-            
-            conn.Open();
-            OracleCommand cmd = new OracleCommand("UPDATE oferta SET  estado = :estado WHERE idOferta =:idOferta", conn);
 
-
-            cmd.Parameters.Add(new OracleParameter(":estado", estado));
-            cmd.Parameters.Add(new OracleParameter(":idOferta", id));
-
-            int a = cmd.ExecuteNonQuery();
-            conn.Close();
-            if (a > 0)
-            {
+                
+                OracleCommand cmd = new OracleCommand(" update_estado_oferta", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("idOferta_o", OracleDbType.Int32, ParameterDirection.Input).Value = id;
+                cmd.Parameters.Add("estado_o", OracleDbType.Int32, ParameterDirection.Input).Value = estado;
+                conn.Open();
+                int a = cmd.ExecuteNonQuery();
+                conn.Close();
+                if (a == -1)
+                {
                 resultado = true;
             }
             }
@@ -468,30 +462,24 @@ namespace CapaNegocio
             bool resultado = false;
             try
             {
-            
-            conn.Open();
-            //Arreglar consulta para actualizar con los campos
-            OracleCommand cmd = new OracleCommand("UPDATE oferta SET  estado = :estado WHERE idOferta =:idOferta", conn);
 
-
-            cmd.Parameters.Add(new OracleParameter(":nombre", oferta.Nombre));
-            cmd.Parameters.Add(new OracleParameter(":descripcion", oferta.Descripcion));
-            cmd.Parameters.Add(new OracleParameter(":precioNormal", oferta.PrecioNormal));
-            cmd.Parameters.Add(new OracleParameter(":precioOferta", oferta.PrecioOfeta));
-            cmd.Parameters.Add(new OracleParameter(":cantidadMin", oferta.CantidadMin));
-            cmd.Parameters.Add(new OracleParameter(":cantidadMax", oferta.CantidadMax));
-            cmd.Parameters.Add(new OracleParameter(":idProducto", oferta.Producto.IdProducto));
-            cmd.Parameters.Add(new OracleParameter(":rubro", oferta.rubro.IdRubro));
-
-            // estado y imagen nose si se deberia actualizar pero queda a criterio tuyo 
-
-            //cmd.Parameters.Add(new OracleParameter(":productImage", productImage));
-            //cmd.Parameters.Add(new OracleParameter(":estado", oferta.Estado));
-
-            int a = cmd.ExecuteNonQuery();
-            conn.Close();
-            if (a > 0)
-            {
+                OracleCommand cmd = new OracleCommand(" update_oferta", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("idOferta_o", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.IdOferta;
+                cmd.Parameters.Add("nombre_o", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.Nombre;
+                cmd.Parameters.Add("descripcion_o", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.Descripcion;
+                cmd.Parameters.Add("precioNormal_o", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.PrecioNormal;
+                cmd.Parameters.Add("precioOferta_o", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.PrecioOfeta;
+                cmd.Parameters.Add("cantidadMin_o", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.CantidadMin;
+                cmd.Parameters.Add("cantidadMax_o", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.CantidadMax;
+                cmd.Parameters.Add("idProducto_p", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.Producto.IdProducto;
+                cmd.Parameters.Add("idRubro_o", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.rubro.IdRubro;
+                cmd.Parameters.Add("idSucursal_o", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.sucursal.IdSucursal;
+                conn.Open();
+                int a = cmd.ExecuteNonQuery();
+                conn.Close();
+                if (a == -1)
+                {
                 resultado = true;
             }
             }
