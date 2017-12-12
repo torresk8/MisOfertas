@@ -116,16 +116,16 @@ namespace CapaNegocio
             bool resultado = false;
             try
             {
-                        
-            conn.Open();
-            OracleCommand cmd = new OracleCommand("DELETE from valoracion where valoracion =:idValoracion", conn);
 
-            cmd.Parameters.Add(new OracleParameter(":idValoracion", valoracion.IdValoracion));
+                conn.Open();
+                OracleCommand cmd = new OracleCommand("delete_valoracion", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("idValoracion_v", OracleDbType.Int32, ParameterDirection.Input).Value = valoracion.IdValoracion;
 
-            int a = cmd.ExecuteNonQuery();
-            conn.Close();
-            if (a > 0)
-            {
+                int a = cmd.ExecuteNonQuery();
+                conn.Close();
+                if (a > 0)
+                {
                 resultado = true;
             }
             }

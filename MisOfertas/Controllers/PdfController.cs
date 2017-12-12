@@ -52,7 +52,7 @@ namespace MisOfertas.Controllers
 
             table.AddCell(cell);            
             //Cell no 2
-            chunk = new Chunk("Nombre:'"+usu.Nombre+"' \nRut:'"+usu.Rut+"' , \nTelefono:'"+usu.Telefono+"',\nDireccion:'"+usu.Direccion+"' , \nFecha: ", FontFactory.GetFont("Arial", 15, Font.NORMAL, BaseColor.BLACK));
+            chunk = new Chunk("Nombre: \nRut:, \nTelefono:',\nDireccion:, \nFecha: ", FontFactory.GetFont("Arial", 15, Font.NORMAL, BaseColor.BLACK));
             cell = new PdfPCell();
             cell.Border = 0;
             cell.AddElement(chunk);

@@ -71,28 +71,24 @@ namespace CapaNegocio
             bool resultado = false;
 
             try
-            {
-                
+            {               
 
                 var pass = SeguridadUtilidades.getSha1(usuario.Password);
+                
+                OracleCommand cmd = new OracleCommand("nuevo_usu", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("nombre_u", OracleDbType.Varchar2,ParameterDirection.Input).Value=usuario.Nombre;
+                cmd.Parameters.Add("nombreU_u", OracleDbType.Varchar2, ParameterDirection.Input).Value = usuario.NombreUsuario;
+                cmd.Parameters.Add("pass_u", OracleDbType.Varchar2, ParameterDirection.Input).Value = usuario.Password;
+                cmd.Parameters.Add("rut_u", OracleDbType.Varchar2, ParameterDirection.Input).Value = usuario.Rut;
+                cmd.Parameters.Add("direc", OracleDbType.Varchar2, ParameterDirection.Input).Value = usuario.Direccion;
+                cmd.Parameters.Add("telefono_u", OracleDbType.Int32, ParameterDirection.Input).Value = usuario.Telefono;
+                cmd.Parameters.Add("recibirC", OracleDbType.Varchar2, ParameterDirection.Input).Value = usuario.RecibirCorreo;
 
                 conn.Open();
-                OracleCommand cmd = new OracleCommand("INSERT INTO usuario (idUsuario,nombre,nombreUsuario," +
-                    "                                  password,rut,direccion,telefono,recibirCorreo)" +
-                                                      "VALUES(sucuence_usu.NEXTVAL, :nombre, :usuario, :pass, " +
-                                                      " :rut, :direccion, :telefono, :recibirCorreo)", conn);
-
-                cmd.Parameters.Add(new OracleParameter(":nombre", usuario.Nombre));
-                cmd.Parameters.Add(new OracleParameter(":usuario", usuario.NombreUsuario));
-                cmd.Parameters.Add(new OracleParameter(":pass", pass));
-                cmd.Parameters.Add(new OracleParameter(":rut", usuario.Rut));
-                cmd.Parameters.Add(new OracleParameter(":direccion", usuario.Direccion));
-                cmd.Parameters.Add(new OracleParameter(":telefono", usuario.Telefono));
-                cmd.Parameters.Add(new OracleParameter(":recibirCorreo", usuario.RecibirCorreo));
-
                 int a = cmd.ExecuteNonQuery();
                 conn.Close();
-                if (a > 0)
+                if (a == -1)
                 {
                     resultado = true;
                 }
@@ -110,24 +106,21 @@ namespace CapaNegocio
             bool resultado = false;
             try
             {
-               
+
+                OracleCommand cmd = new OracleCommand("update_usuario", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("nombre_u", OracleDbType.Varchar2, ParameterDirection.Output).Value = usuario.Nombre;
+                cmd.Parameters.Add("nombreU_u", OracleDbType.Varchar2, ParameterDirection.Output).Value = usuario.NombreUsuario;
+                cmd.Parameters.Add("pass_u", OracleDbType.Varchar2, ParameterDirection.Output).Value = usuario.Password;
+                cmd.Parameters.Add("rut_u", OracleDbType.Varchar2, ParameterDirection.Output).Value = usuario.Rut;
+                cmd.Parameters.Add("direc", OracleDbType.Varchar2, ParameterDirection.Output).Value = usuario.Direccion;
+                cmd.Parameters.Add("telefono_u", OracleDbType.Int32, ParameterDirection.Output).Value = usuario.Telefono;
+                cmd.Parameters.Add("recibirC", OracleDbType.Varchar2, ParameterDirection.Output).Value = usuario.RecibirCorreo;
+
                 conn.Open();
-
-                OracleCommand cmd = new OracleCommand("UPDATE usuario SET  nombre =:nombre , nombreUsuario= :nombreUsuario, rut= :rut, " +
-              "direccion= :direccion, telefono= :telefono, recibirCorreo= :recibirCorreo WHERE idUsuario = :idUsuario", conn);
-
-                cmd.Parameters.Add(new OracleParameter("idUsuario", usuario.IdUsuario));
-                cmd.Parameters.Add(new OracleParameter(":nombre", usuario.Nombre));
-                cmd.Parameters.Add(new OracleParameter(":nombreUsuario", usuario.NombreUsuario));
-                cmd.Parameters.Add(new OracleParameter(":rut", usuario.Rut));
-                cmd.Parameters.Add(new OracleParameter(":direccion", usuario.Direccion));
-                cmd.Parameters.Add(new OracleParameter(":telefono", usuario.Telefono));
-                cmd.Parameters.Add(new OracleParameter(":recibirCorreo", usuario.RecibirCorreo));
-
-
                 int a = cmd.ExecuteNonQuery();
                 conn.Close();
-                if (a > 0)
+                if (a == -1)
                 {
                     resultado = true;
                 }

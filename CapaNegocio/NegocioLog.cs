@@ -3,6 +3,7 @@ using CapaDTO;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,17 +28,19 @@ namespace CapaNegocio
             {            
 
             conn.Open();
-            OracleCommand cmd = new OracleCommand("INSERT INTO log_usuario(idLogUsuario,idUsuario,idRubro,fecha) " +
-                                                " VALUES(sucuence_log_usuario.nextval, :idUsuario, :idRubro, SYSDATE)", conn);
+            OracleCommand cmd = new OracleCommand("insert_logUsu", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("nombre_p", OracleDbType.Varchar2, ParameterDirection.Input).Value = logUsuario.idLogUsuario;
+                cmd.Parameters.Add("descripcion_p", OracleDbType.Varchar2, ParameterDirection.Input).Value = logUsuario.rubro;
+                cmd.Parameters.Add("precio_p", OracleDbType.Int32, ParameterDirection.Input).Value = logUsuario.Fecha;
+                
 
-            cmd.Parameters.Add(new OracleParameter(":idUsuario", logUsuario.usuario.IdUsuario));
-            cmd.Parameters.Add(new OracleParameter(":idRubro", logUsuario.rubro.IdRubro));            
 
-            int a = cmd.ExecuteNonQuery();
-
-            conn.Close();
-            if (a > 0)
-            {
+                conn.Open();
+                int a = cmd.ExecuteNonQuery();
+                conn.Close();
+                if (a == -1)
+                {
                 resultado = true;
             }
             }
