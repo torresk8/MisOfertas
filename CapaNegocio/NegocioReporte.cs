@@ -1,5 +1,6 @@
 ﻿
 using CapaConexion;
+using CapaDTO;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace CapaNegocio
             string texto = "";
             try
             {
-                
+
                 conn.Open();
 
                 OracleCommand cmd = new OracleCommand("SELECT u.nombreUsuario, r.nombre,o.idOferta, o.nombre AS OFERTA, l.fecha " +
@@ -40,7 +41,7 @@ namespace CapaNegocio
                 da.SelectCommand = cmd;
                 OracleDataReader dr = cmd.ExecuteReader();
 
-                
+
                 while (dr.Read())
                 {
                     texto += String.Format("{0}", dr[0]) + " ,";
@@ -50,7 +51,7 @@ namespace CapaNegocio
                     texto += String.Format("{0}", dr[4]) + " \n";
 
                 }
-                conn.Close(); 
+                conn.Close();
             }
             catch (Exception e)
             {
@@ -68,17 +69,61 @@ namespace CapaNegocio
         {
             var stream = new MemoryStream();
             try
-            {                 
+            {
                 stream = new MemoryStream(Encoding.ASCII.GetBytes(texto));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
 
-          
+
 
             return stream;
+        }
+
+        public List<Reporte> retornaReporte()
+        {
+            List<Reporte> list = new List<Reporte>();
+            try
+            {
+                conn.Open();
+                
+                OracleCommand cmd = new OracleCommand();
+                cmd = new OracleCommand("SELECT  s.nombre,(select count(idUsuario) from usuario u WHERE  u.IDUSUARIO <> ALL (SELECT p.IDUSUARIO FROM permiso p)) AS CantidadUsuario,"+
+                                        "(select count(idCorreo) from correo) as cantidadCorreo, COUNT(v.idValoracion) as CantidadValoracion,"+
+                                        "(select count(d.idRubro) from descuento d) as CantidadDescuento "+
+                                        "FROM oferta o "+
+                                         "INNER JOIN sucursal s ON s.idSucursal = o.idSucursal "+
+                                        "INNER JOIN valoracion v ON v.idOferta = o.idOferta "+
+                                        "group by  s.nombre", conn);
+
+
+                OracleDataAdapter da = new OracleDataAdapter();
+                da.SelectCommand = cmd;
+                OracleDataReader dr = cmd.ExecuteReader();
+
+
+                while (dr.Read())
+                {
+                    Reporte reporte = new Reporte();
+
+                    reporte.sucursal.Nombre = String.Format("{0}", dr[0]);
+                    reporte.CantidadUsuario = dr.GetInt32(1);
+                    reporte.CantidadCorreo = dr.GetInt32(2);
+                    reporte.CantidadValoracion = dr.GetInt32(3);
+                    reporte.CantidadDescuento = dr.GetInt32(4);
+
+                    list.Add(reporte);
+                }
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return list;
         }
     }
 }

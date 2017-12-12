@@ -1,0 +1,72 @@
+﻿@model IEnumerable<CapaDTO.Usuario>
+
+@{
+    ViewBag.Title = "verUsuario";
+}
+
+
+<br />
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2>Lista de usuarios</h2>
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-12">
+                    <table id="mytabla" class="display hover order-column text-center" cellspacing="0" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayName("Id Usuario")
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Nombre)
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Usuario")
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Rut)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Direccion)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.RecibirCorreo)
+                                </th>                                                              
+                            </tr>
+                            </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.IdUsuario)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nombre)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NombreUsuario)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Rut)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Direccion)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RecibirCorreo)
+                                    </td>                                                                   
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

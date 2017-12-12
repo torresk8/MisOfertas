@@ -11,7 +11,7 @@ namespace MisOfertas.Controllers
     public class TiendaController : Controller
     {
         // GET: Tienda
-        [Authorize(Roles ="encargadoTienda")]
+        [Authorize(Roles = "gerenteAsociacion")]
         public ActionResult Index()
         {
 
@@ -146,6 +146,41 @@ namespace MisOfertas.Controllers
             }
 
             return list;
+        }
+
+
+        public ActionResult ReporteTienda()
+        {
+
+
+            NegocioReporte negocioReporte = new NegocioReporte();
+            List<Reporte> listReporte = negocioReporte.retornaReporte();
+                  
+            
+            return View(listReporte);
+        }
+
+        [Authorize(Roles = "gerenteAsociacion")]
+        public ActionResult reporteBi()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult reporteBi(string a)
+        {
+
+            ServiceReporte.reporteSoapClient reporte = new ServiceReporte.reporteSoapClient();
+            reporte.archivoPlano();
+            return View();
+        }
+
+        public FileResult Download()
+        {
+            NegocioReporte negocioReporte = new NegocioReporte();
+            ServiceReporte.reporteSoapClient reporte = new ServiceReporte.reporteSoapClient();
+            reporte.archivoPlano();
+            return File(negocioReporte.archivo(reporte.archivoPlano()), "text/plain", "ReporteBi"+DateTime.Now+".csv");
         }
     }
 }

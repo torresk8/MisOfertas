@@ -16,6 +16,7 @@ namespace MisOfertas.Controllers
     public class MailController : Controller
     {
         // GET: Mail
+        [Authorize(Roles ="encargadoTienda")]
         public ActionResult Index()
         {
             return View();
@@ -234,26 +235,7 @@ namespace MisOfertas.Controllers
             return View();
         }
 
-        public ActionResult reporte()
-        {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult reporte(string a)
-        {
-            
-            ServiceReporte.reporteSoapClient reporte = new ServiceReporte.reporteSoapClient();
-            reporte.archivoPlano();
-            return View();
-        }
-
-        public FileResult Download()
-        {
-            NegocioReporte negocioReporte = new NegocioReporte();
-            ServiceReporte.reporteSoapClient reporte = new ServiceReporte.reporteSoapClient();
-            reporte.archivoPlano();
-            return File(negocioReporte.archivo(reporte.archivoPlano()), "text/plain", "Prueba.csv");
-        }
+       
 
         public ActionResult MailBody()
         {

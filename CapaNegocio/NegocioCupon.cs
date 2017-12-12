@@ -3,7 +3,6 @@ using CapaDTO;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,25 +18,26 @@ namespace CapaNegocio
             conn = conexion.conectar();
         }
 
-        public bool insertarPuntaje(int  id)
+        public bool insertarPuntaje(int id)
         {
             bool resultado = false;
             try
             {
 
-                OracleCommand cmd = new OracleCommand("ingreso_puntaje", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("idUsuario_p", OracleDbType.Int32, ParameterDirection.Input).Value = id;
-        
-
                 conn.Open();
+                OracleCommand cmd = new OracleCommand("INSERT INTO PUNTAJE(idPuntaje,cantidad,idUsuario)" +
+                         "VALUES(secuence_cupon.NEXTVAL,10,:idUsuario)", conn);
+
+                cmd.Parameters.Add(new OracleParameter(":idUsuario", id));
+
                 int a = cmd.ExecuteNonQuery();
                 conn.Close();
-                if (a == -1)
+                if (a > 0)
                 {
                     resultado = true;
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
 
             }
@@ -80,7 +80,8 @@ namespace CapaNegocio
                 }
 
                 conn.Close();
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
 
             }
@@ -105,7 +106,8 @@ namespace CapaNegocio
                 {
                     resultado = true;
                 }
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
 
             }

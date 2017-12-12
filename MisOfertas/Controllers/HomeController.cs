@@ -174,15 +174,20 @@ namespace MisOfertas.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult Cupon()
         {
             NegocioCupon negocioCupon = new NegocioCupon();
             Puntaje auxPuntaje = negocioCupon.retornaPuntaje(Convert.ToInt32(Session["idUsuario"]));          
 
+            if(auxPuntaje.Cantidad ==0)
+            {
+                ModelState.AddModelError("","No tiene puntos suficientes");
+
+            }
                 return View(auxPuntaje);
         }
-
-  
+     
         public ActionResult GenerarCupon(string puntaje)
         {
             int cantidad = Convert.ToInt32(puntaje);
@@ -212,6 +217,10 @@ namespace MisOfertas.Controllers
                 tope = 300000;
                 crearPdf(15, rubro, tope);
                 negocioCupon.limpiarPuntaje(Convert.ToInt32(Session["idUsuario"]));
+            }
+            else
+            {
+                ModelState.AddModelError("","No tiene suficientes puntos");
             }
             Puntaje p = negocioCupon.retornaPuntaje(Convert.ToInt32(Session["idUsuario"]));
 
@@ -464,13 +473,13 @@ namespace MisOfertas.Controllers
 
             // Registramos el seguimiento del usuario
 
-          /*  NegocioLog negocioLog = new NegocioLog();
+           NegocioLog negocioLog = new NegocioLog();
             LogUsuario logUsuario = new LogUsuario();
 
             logUsuario.rubro.IdRubro = Convert.ToInt32(oferta.rubro.IdRubro);
             logUsuario.usuario.IdUsuario = Convert.ToInt32(Session["idUsuario"]);
 
-            negocioLog.insertarLog(logUsuario);        */
+            negocioLog.insertarLog(logUsuario);        
             
             
             return View(valoracion);

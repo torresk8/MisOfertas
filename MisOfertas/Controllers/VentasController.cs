@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace MisOfertas.Controllers
 {
-    [Authorize(Roles = "crearOferta,encargadoTienda")]    
+    [Authorize(Roles = "encargadoTienda")]    
     public class VentasController : Controller
     {
         // GET: Ventas
@@ -361,21 +361,10 @@ namespace MisOfertas.Controllers
         public ActionResult actualizarOferta(Oferta oferta)
         {
 
-            NegocioOferta auxNegocioOferta = new NegocioOferta();
-
-            Oferta auxOferta = new Oferta();
+            NegocioOferta auxNegocioOferta = new NegocioOferta();            
 
             bool resultado = auxNegocioOferta.actualizarOferta(oferta);         
-
             
-            auxOferta.IdOferta = oferta.IdOferta;
-            auxOferta.Nombre = oferta.Nombre;
-            auxOferta.Descripcion = oferta.Descripcion;
-            auxOferta.PrecioNormal = oferta.PrecioNormal;
-            auxOferta.PrecioOfeta = oferta.PrecioOfeta;
-            auxOferta.CantidadMin = oferta.CantidadMin;
-            auxOferta.CantidadMax = oferta.CantidadMax;
-            auxOferta.Estado = oferta.Estado;
 
             if (resultado == true)
             {
@@ -385,11 +374,12 @@ namespace MisOfertas.Controllers
             }
             else
             {
+                ModelState.Clear();
                 ModelState.AddModelError("", "Error datos invalidos");
                 Session["class"] = "text-danger";
             }
             
-            return View(auxOferta);
+            return View();
         }
 
         public ActionResult eliminarOferta(int id)
@@ -401,8 +391,7 @@ namespace MisOfertas.Controllers
 
             return View("VerOferta",listOferta);
         }
-
-        [Authorize(Roles = "administrador")]
+        
         public ActionResult crearDescuento()
         {
             ViewBag.listaRubro = obtenerRubro(0);

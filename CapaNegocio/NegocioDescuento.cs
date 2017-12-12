@@ -12,22 +12,22 @@ namespace CapaNegocio
 {
     public class NegocioDescuento
     {
-            private Conexion conexion = new Conexion();
-            OracleConnection conn;
-            public NegocioDescuento()
-            {
-                conn = conexion.conectar();
-            }
+        private Conexion conexion = new Conexion();
+        OracleConnection conn;
+        public NegocioDescuento()
+        {
+            conn = conexion.conectar();
+        }
 
-            public bool insertarDescuento(Descuento descuento)
-            {
-                bool resultado = false;
+        public bool insertarDescuento(Descuento descuento)
+        {
+            bool resultado = false;
             try
             {
-            
+
                 //Solo se ingresa el nombre del procedimiento
                 OracleCommand cmd = new OracleCommand("ingreso_descuento", conn);
-                
+
                 //decimos que ejecutaremos una consulta tipo procedimiento
                 cmd.CommandType = CommandType.StoredProcedure;
                 //Se agregan los parametros del procedimiento(variables con los mismos nombre de la bd)
@@ -53,28 +53,28 @@ namespace CapaNegocio
             }
             return resultado;
 
-            }
+        }
 
-            public List<Descuento> retornaDescuentoListId(int id)
-            {
-                 List<Descuento> auxDescuento = new List<Descuento>();
+        public List<Descuento> retornaDescuentoListId(int id)
+        {
+            List<Descuento> auxDescuento = new List<Descuento>();
             try
             {
-            
+
                 conn.Open();
 
                 OracleCommand cmd = new OracleCommand("SELECT * FROM DESCUENTO WHERE idRubro = :idRubro ORDER BY cantidad ASC", conn);
-                
+
                 cmd.Parameters.Add(new OracleParameter(":idRubro", id));
-                
+
 
                 OracleDataAdapter da = new OracleDataAdapter();
                 da.SelectCommand = cmd;
                 OracleDataReader dr = cmd.ExecuteReader();
-                
 
-                 while (dr.Read())
-                 {
+
+                while (dr.Read())
+                {
                     Descuento descuento = new Descuento(); ;
 
                     descuento.idDescuento = dr.GetInt32(0);
@@ -82,8 +82,8 @@ namespace CapaNegocio
                     descuento.rubro.IdRubro = dr.GetInt32(2);
 
                     auxDescuento.Add(descuento);
-            }
-             conn.Close();
+                }
+                conn.Close();
             }
             catch (Exception ex)
             {
@@ -91,7 +91,7 @@ namespace CapaNegocio
             }
 
             return auxDescuento;
-            }
+        }
 
 
         public Descuento retornaDescuento(int idRubro, int idDescuento)
@@ -100,28 +100,28 @@ namespace CapaNegocio
             try
             {
 
-            conn.Open();
+                conn.Open();
 
-            OracleCommand cmd = new OracleCommand("SELECT * FROM DESCUENTO WHERE idRubro = :idRubro AND idDescuento = :idDescuento", conn);
+                OracleCommand cmd = new OracleCommand("SELECT * FROM DESCUENTO WHERE idRubro = :idRubro AND idDescuento = :idDescuento", conn);
 
-            cmd.Parameters.Add(new OracleParameter(":idRubro", idRubro));
-            cmd.Parameters.Add(new OracleParameter(":idDescuento", idDescuento));
-
-
-            OracleDataAdapter da = new OracleDataAdapter();
-            da.SelectCommand = cmd;
-            OracleDataReader dr = cmd.ExecuteReader();
+                cmd.Parameters.Add(new OracleParameter(":idRubro", idRubro));
+                cmd.Parameters.Add(new OracleParameter(":idDescuento", idDescuento));
 
 
-            while (dr.Read())
-            {
+                OracleDataAdapter da = new OracleDataAdapter();
+                da.SelectCommand = cmd;
+                OracleDataReader dr = cmd.ExecuteReader();
 
-                auxDescuento.idDescuento = dr.GetInt32(0);
-                auxDescuento.cantidad = dr.GetInt32(1);
-                auxDescuento.rubro.IdRubro = dr.GetInt32(2);
 
-            }
-            conn.Close();
+                while (dr.Read())
+                {
+
+                    auxDescuento.idDescuento = dr.GetInt32(0);
+                    auxDescuento.cantidad = dr.GetInt32(1);
+                    auxDescuento.rubro.IdRubro = dr.GetInt32(2);
+
+                }
+                conn.Close();
             }
             catch (Exception ex)
             {
@@ -139,7 +139,7 @@ namespace CapaNegocio
                 conn.Open();
 
                 OracleCommand cmd = new OracleCommand("SELECT * FROM DESCUENTO WHERE  idDescuento = :idDescuento", conn);
-                
+
                 cmd.Parameters.Add(new OracleParameter(":idDescuento", idDescuento));
 
 
@@ -170,29 +170,29 @@ namespace CapaNegocio
             List<Descuento> auxDescuento = new List<Descuento>();
             try
             {
-            
-            conn.Open();
 
-            OracleCommand cmd = new OracleCommand("select d.idDescuento,r.nombre,d.cantidad from descuento d "+
-                                                    "INNER JOIN rubro r ON r.idRubro = d.idRubro ", conn);
+                conn.Open();
+
+                OracleCommand cmd = new OracleCommand("select d.idDescuento,r.nombre,d.cantidad from descuento d " +
+                                                        "INNER JOIN rubro r ON r.idRubro = d.idRubro ", conn);
 
 
 
-            OracleDataAdapter da = new OracleDataAdapter();
-            da.SelectCommand = cmd;
-            OracleDataReader dr = cmd.ExecuteReader();
-            
+                OracleDataAdapter da = new OracleDataAdapter();
+                da.SelectCommand = cmd;
+                OracleDataReader dr = cmd.ExecuteReader();
 
-            while (dr.Read())
-            {
-                Descuento descuento = new Descuento(); ;
 
-                descuento.idDescuento = dr.GetInt32(0);                
-                descuento.rubro.Nombre = String.Format("{0}", dr[1]);
-                descuento.cantidad = dr.GetInt32(2);
+                while (dr.Read())
+                {
+                    Descuento descuento = new Descuento(); ;
+
+                    descuento.idDescuento = dr.GetInt32(0);
+                    descuento.rubro.Nombre = String.Format("{0}", dr[1]);
+                    descuento.cantidad = dr.GetInt32(2);
 
                     auxDescuento.Add(descuento);
-            }
+                }
                 conn.Close();
             }
             catch (Exception ex)
@@ -206,10 +206,11 @@ namespace CapaNegocio
         public bool eliminarDescuento(int id)
         {
             bool resultado = false;
+
             conn.Open();
-            OracleCommand cmd = new OracleCommand(" delete_descuento", conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("idDes", OracleDbType.Int32, ParameterDirection.Input).Value = id;
+            OracleCommand cmd = new OracleCommand("DELETE from descuento where idDescuento =:idDescuento", conn);
+
+            cmd.Parameters.Add(new OracleParameter(":idDescuento", id));
 
             int a = cmd.ExecuteNonQuery();
             conn.Close();

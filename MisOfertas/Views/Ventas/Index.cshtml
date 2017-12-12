@@ -187,7 +187,7 @@
                             </div>
                             <div class="modal-body">
 
-                                <table id="mytabla" class="display hover order-column" cellspacing="0" style="width:auto">
+                                <table id="mytabla" class="display hover order-column" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
                                             <th>
@@ -225,7 +225,7 @@
                                                     @Html.DisplayFor(modelItem => item.Precio)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.TipoProducto.IdTipoProducto)
+                                                    @Html.DisplayFor(modelItem => item.TipoProducto.Nombre)
                                                 </td>
                                                 <td>
                                                     <a href="@Url.Action("Index", "Ventas", new { id = item.IdProducto, nom = item.Nombre, precio = item.Precio})">Seleccionar</a>

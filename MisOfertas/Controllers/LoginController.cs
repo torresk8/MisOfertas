@@ -54,32 +54,17 @@ namespace MisOfertas.Controllers
 
         }
 
-        public ActionResult eliminarUsuario()
+        public ActionResult eliminarUsuario(string id)
         {
-            return View();
+
+            NegocioUsuario auxUsuario = new NegocioUsuario();
+            bool resultado = auxUsuario.eliminarUsuario(Convert.ToInt32(id));
+
+            NegocioUsuario negocioUsuario = new NegocioUsuario();
+            List<Usuario> listaUsuario = negocioUsuario.retornTodosLosaUsuario();
+            return View("verUsuario", listaUsuario) ;
         }
-
-        [HttpPost]
-        public ActionResult eliminarUsuario(Usuario usuario)
-        {
-            if (ModelState.IsValid)
-            {
-                NegocioUsuario auxUsuario = new NegocioUsuario();
-                bool resultado = auxUsuario.eliminarUsuario(usuario);
-
-                if (resultado == true)
-                {                    
-                    ModelState.AddModelError("", "Usuario eliminado" + usuario.Nombre);
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Error datos invalidos");
-                }
-                // 
-            }
-            return View();
-        }
-
+        
         public ActionResult RegistrarUsuario()
         {
             return View();
@@ -209,6 +194,16 @@ namespace MisOfertas.Controllers
             }
 
             return View(auxUSuario);
+        }
+
+        [Authorize(Roles = "gerenteAsociacion")]
+        public ActionResult verUsuario()
+        {
+
+            NegocioUsuario negocioUsuario = new NegocioUsuario();
+            List<Usuario> listaUsuario = negocioUsuario.retornTodosLosaUsuario();
+
+            return View(listaUsuario);
         }
 
 

@@ -14,37 +14,27 @@
         <ul class="nav navbar-nav">          
                 
                 
-                 @if (Roles.IsUserInRole("administrador"))
+                 @if (Roles.IsUserInRole("gerenteAsociacion"))
                  {
-                    <li>@Html.ActionLink("Crear Oferta", "Index", "Ventas")</li>
-                    <li>@Html.ActionLink("Producto", "Producto", "Ventas")</li>
-                    <li>@Html.ActionLink("Ver Oferta", "VerOferta", "Ventas")</li>
-                    <li>@Html.ActionLink("Ver Producto", "VerProducto", "Ventas")</li>
-                    <li>@Html.ActionLink("Ofertas Publicadas", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Crear Descuento", "crearDescuento", "Ventas")</li>
-                    <li>@Html.ActionLink("Ver descuentos", "VerDescuento", "Ventas")</li>
+
+                    <li>@Html.ActionLink("Resumen valoracion", "Index", "Tienda")</li>
+                    <li>@Html.ActionLink("Reporte BI", "reporteBi", "Tienda")</li>
+                    <li>@Html.ActionLink("Reporte tienda", "ReporteTienda", "Tienda")</li>
+                   
                  }
                  else
-                 {
-                     if (Roles.IsUserInRole("crearOferta"))
-                     {
-                        <li>@Html.ActionLink("Crear Oferta", "Index", "Ventas")</li>
-                        <li>@Html.ActionLink("Producto", "Producto", "Ventas")</li>
-                        <li>@Html.ActionLink("Ver Oferta", "VerOferta", "Ventas")</li>
-                        <li>@Html.ActionLink("Ver Producto", "VerProducto", "Ventas")</li>
-                        <li>@Html.ActionLink("Ofertas Publicadas", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Enviar correo", "Index", "Mail")</li>
-                        <li>@Html.ActionLink("Ver descuentos", "VerDescuento", "Ventas")</li>
-                     }
-                     else
-                     {
+                 {                    
 
                          if (Roles.IsUserInRole("encargadoTienda"))
                          {
-                            <li>@Html.ActionLink("Ver Oferta", "VerOferta", "Ventas")</li>
+                            <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
                             <li>@Html.ActionLink("Crear Oferta", "Index", "Ventas")</li>
-                            <li>@Html.ActionLink("Resumen", "Index", "Tienda")</li>
-                            <li>@Html.ActionLink("Reporte", "reporte", "Mail")</li>
+                            <li>@Html.ActionLink("Ver Oferta", "VerOferta", "Ventas")</li>
+                            <li>@Html.ActionLink("Crear Producto", "Producto", "Ventas")</li>
+                            <li>@Html.ActionLink("Crear Descuento", "crearDescuento", "Ventas")</li>
+                            <li>@Html.ActionLink("Ver descuentos", "VerDescuento", "Ventas")</li>
+                            <li>@Html.ActionLink("Enviar correo", "Index", "Mail")</li>
+                            
                          }
                          else
                          {
@@ -54,7 +44,7 @@
                             <li>@Html.ActionLink("Cupon", "Cupon", "Home")</li>
                         }
 
-                    }
+                    
                  }
                                                                           
 

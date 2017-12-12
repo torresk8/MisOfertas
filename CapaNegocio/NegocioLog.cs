@@ -3,7 +3,6 @@ using CapaDTO;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,24 +24,22 @@ namespace CapaNegocio
             bool resultado = false;
 
             try
-            {            
-
-            conn.Open();
-            OracleCommand cmd = new OracleCommand("insert_logUsu", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("nombre_p", OracleDbType.Varchar2, ParameterDirection.Input).Value = logUsuario.idLogUsuario;
-                cmd.Parameters.Add("descripcion_p", OracleDbType.Varchar2, ParameterDirection.Input).Value = logUsuario.rubro;
-                cmd.Parameters.Add("precio_p", OracleDbType.Int32, ParameterDirection.Input).Value = logUsuario.Fecha;
-                
-
+            {
 
                 conn.Open();
+                OracleCommand cmd = new OracleCommand("INSERT INTO log_usuario(idLogUsuario,idUsuario,idRubro,fecha) " +
+                                                    " VALUES(sucuence_log_usuario.nextval, :idUsuario, :idRubro, SYSDATE)", conn);
+
+                cmd.Parameters.Add(new OracleParameter(":idUsuario", logUsuario.usuario.IdUsuario));
+                cmd.Parameters.Add(new OracleParameter(":idRubro", logUsuario.rubro.IdRubro));
+
                 int a = cmd.ExecuteNonQuery();
+
                 conn.Close();
-                if (a == -1)
+                if (a > 0)
                 {
-                resultado = true;
-            }
+                    resultado = true;
+                }
             }
             catch (Exception ex)
             {
@@ -57,36 +54,36 @@ namespace CapaNegocio
             LogUsuario logUsuario = new LogUsuario();
             try
             {
-            
-            conn.Open();
 
-            OracleCommand cmd = new OracleCommand();
-            cmd = new OracleCommand("SELECT l.idLogUsuario,l.idUsuario, l.idRubro "+
-                                     "FROM log_usuario l "+
-                                      "INNER JOIN usuario u ON u.idUsuario = l.idUsuario "+
-                                      "WHERE l.idUsuario = :idUsuario "+
-                                      "ORDER BY l.idLogUsuario DESC ", conn);
+                conn.Open();
+
+                OracleCommand cmd = new OracleCommand();
+                cmd = new OracleCommand("SELECT l.idLogUsuario,l.idUsuario, l.idRubro " +
+                                         "FROM log_usuario l " +
+                                          "INNER JOIN usuario u ON u.idUsuario = l.idUsuario " +
+                                          "WHERE l.idUsuario = :idUsuario " +
+                                          "ORDER BY l.idLogUsuario DESC ", conn);
 
 
-            cmd.Parameters.Add(new OracleParameter(":idUsuario", idUsuario));
+                cmd.Parameters.Add(new OracleParameter(":idUsuario", idUsuario));
 
-            OracleDataAdapter da = new OracleDataAdapter();
-            da.SelectCommand = cmd;
-            OracleDataReader dr = cmd.ExecuteReader();
+                OracleDataAdapter da = new OracleDataAdapter();
+                da.SelectCommand = cmd;
+                OracleDataReader dr = cmd.ExecuteReader();
 
-            
 
-            while (dr.Read())
-            {
 
-                logUsuario.idLogUsuario = dr.GetInt32(0);
-                logUsuario.usuario.IdUsuario = dr.GetInt32(1);
-                logUsuario.rubro.IdRubro = dr.GetInt32(2);
+                while (dr.Read())
+                {
 
-                break;
-            }
+                    logUsuario.idLogUsuario = dr.GetInt32(0);
+                    logUsuario.usuario.IdUsuario = dr.GetInt32(1);
+                    logUsuario.rubro.IdRubro = dr.GetInt32(2);
 
-            conn.Close();
+                    break;
+                }
+
+                conn.Close();
             }
             catch (Exception ex)
             {

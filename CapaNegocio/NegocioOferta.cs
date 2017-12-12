@@ -26,55 +26,55 @@ namespace CapaNegocio
             Oferta oferta = new Oferta();
             try
             {
-            
-            conn.Open();
 
-            DataSet ds = new DataSet();
-            OracleCommand cmd = new OracleCommand();
-            cmd = new OracleCommand("SELECT o.idOferta, o.nombre, o.descripcion, o.precioNormal, o.precioOferta, " +
-                                    "o.cantidadMin, o.CantidadMax, o.idProducto, o.productImage, o.estado, " +
-                                    "o.idRubro,o.idSucursal, r.nombre, s.nombre , p.nombre " +
-                                    "FROM oferta o " +
-                                    "INNER JOIN rubro r ON r.idRubro = o.idRubro " +
-                                    "INNER JOIN sucursal s ON s.idSucursal = o.idSucursal " +
-                                    "INNER JOIN producto p ON p.idProducto = o.idProducto " +
-                                    "WHERE o.idOferta=:id", conn);
-            cmd.Parameters.Add(new OracleParameter(":id", id));
+                conn.Open();
 
-            OracleDataAdapter da = new OracleDataAdapter();
-            da.SelectCommand = cmd;
-            OracleDataReader dr = cmd.ExecuteReader();
+                DataSet ds = new DataSet();
+                OracleCommand cmd = new OracleCommand();
+                cmd = new OracleCommand("SELECT o.idOferta, o.nombre, o.descripcion, o.precioNormal, o.precioOferta, " +
+                                        "o.cantidadMin, o.CantidadMax, o.idProducto, o.productImage, o.estado, " +
+                                        "o.idRubro,o.idSucursal, r.nombre, s.nombre , p.nombre " +
+                                        "FROM oferta o " +
+                                        "INNER JOIN rubro r ON r.idRubro = o.idRubro " +
+                                        "INNER JOIN sucursal s ON s.idSucursal = o.idSucursal " +
+                                        "INNER JOIN producto p ON p.idProducto = o.idProducto " +
+                                        "WHERE o.idOferta=:id", conn);
+                cmd.Parameters.Add(new OracleParameter(":id", id));
 
-            //byte[] ima = (byte[])cmd.ExecuteScalar();          
-            
-            
+                OracleDataAdapter da = new OracleDataAdapter();
+                da.SelectCommand = cmd;
+                OracleDataReader dr = cmd.ExecuteReader();
 
-            while (dr.Read())
-            {
-                
+                //byte[] ima = (byte[])cmd.ExecuteScalar();          
 
-                oferta.IdOferta = dr.GetInt32(0);
-                oferta.Nombre = String.Format("{0}", dr[1]);
-                oferta.Descripcion = String.Format("{0}", dr[2]);
-                oferta.PrecioNormal = dr.GetInt32(3);
-                oferta.PrecioOfeta = dr.GetInt32(4);
-                oferta.CantidadMin = dr.GetInt32(5);
-                oferta.CantidadMax = dr.GetInt32(6);
-                oferta.Producto.IdProducto = dr.GetInt32(7);
 
-                OracleBlob blob = dr.GetOracleBlob(8);
-                Byte[] Buffer = (Byte[])(dr.GetOracleBlob(8)).Value;
-                oferta.Imagen = Buffer;
-                oferta.Estado = String.Format("{0}", dr[9]);
-                oferta.rubro.IdRubro = dr.GetInt32(10);
-                oferta.sucursal.IdSucursal = dr.GetInt32(11);
 
-                oferta.rubro.Nombre = String.Format("{0}", dr[12]);
-                oferta.sucursal.Nombre = String.Format("{0}", dr[13]);
-                oferta.Producto.Nombre = String.Format("{0}", dr[14]);
-            }
+                while (dr.Read())
+                {
 
-            conn.Close();
+
+                    oferta.IdOferta = dr.GetInt32(0);
+                    oferta.Nombre = String.Format("{0}", dr[1]);
+                    oferta.Descripcion = String.Format("{0}", dr[2]);
+                    oferta.PrecioNormal = dr.GetInt32(3);
+                    oferta.PrecioOfeta = dr.GetInt32(4);
+                    oferta.CantidadMin = dr.GetInt32(5);
+                    oferta.CantidadMax = dr.GetInt32(6);
+                    oferta.Producto.IdProducto = dr.GetInt32(7);
+
+                    OracleBlob blob = dr.GetOracleBlob(8);
+                    Byte[] Buffer = (Byte[])(dr.GetOracleBlob(8)).Value;
+                    oferta.Imagen = Buffer;
+                    oferta.Estado = String.Format("{0}", dr[9]);
+                    oferta.rubro.IdRubro = dr.GetInt32(10);
+                    oferta.sucursal.IdSucursal = dr.GetInt32(11);
+
+                    oferta.rubro.Nombre = String.Format("{0}", dr[12]);
+                    oferta.sucursal.Nombre = String.Format("{0}", dr[13]);
+                    oferta.Producto.Nombre = String.Format("{0}", dr[14]);
+                }
+
+                conn.Close();
             }
             catch (Exception ex)
             {
@@ -88,30 +88,30 @@ namespace CapaNegocio
             Rubro rubro = new Rubro();
             try
             {
-            
-            conn.Open();
 
-            DataSet ds = new DataSet();
-            OracleCommand cmd = new OracleCommand();
-            cmd = new OracleCommand("SELECT * FROM rubro where idRubro=:id", conn);
-            cmd.Parameters.Add(new OracleParameter(":id", id));
+                conn.Open();
 
-            OracleDataAdapter da = new OracleDataAdapter();
-            da.SelectCommand = cmd;
-            OracleDataReader dr = cmd.ExecuteReader();
+                DataSet ds = new DataSet();
+                OracleCommand cmd = new OracleCommand();
+                cmd = new OracleCommand("SELECT * FROM rubro where idRubro=:id", conn);
+                cmd.Parameters.Add(new OracleParameter(":id", id));
 
-            //byte[] ima = (byte[])cmd.ExecuteScalar();          
+                OracleDataAdapter da = new OracleDataAdapter();
+                da.SelectCommand = cmd;
+                OracleDataReader dr = cmd.ExecuteReader();
+
+                //byte[] ima = (byte[])cmd.ExecuteScalar();          
 
 
 
-            while (dr.Read())
-            {
+                while (dr.Read())
+                {
 
-                rubro.IdRubro= dr.GetInt32(0);
-                rubro.Nombre = String.Format("{0}", dr[1]);              
-            }
+                    rubro.IdRubro = dr.GetInt32(0);
+                    rubro.Nombre = String.Format("{0}", dr[1]);
+                }
 
-            conn.Close();
+                conn.Close();
             }
             catch (Exception ex)
             {
@@ -126,31 +126,31 @@ namespace CapaNegocio
             List<Rubro> auxRubro = new List<Rubro>();
             try
             {
-            
-            conn.Open();
-            
-            OracleCommand cmd = new OracleCommand();
-            cmd = new OracleCommand("SELECT * FROM rubro ", conn);
-            
-            OracleDataAdapter da = new OracleDataAdapter();
-            da.SelectCommand = cmd;
-            OracleDataReader dr = cmd.ExecuteReader();
 
-            //byte[] ima = (byte[])cmd.ExecuteScalar();          
+                conn.Open();
+
+                OracleCommand cmd = new OracleCommand();
+                cmd = new OracleCommand("SELECT * FROM rubro ", conn);
+
+                OracleDataAdapter da = new OracleDataAdapter();
+                da.SelectCommand = cmd;
+                OracleDataReader dr = cmd.ExecuteReader();
+
+                //byte[] ima = (byte[])cmd.ExecuteScalar();          
 
 
 
-            while (dr.Read())
-            {
-                Rubro rubro = new Rubro();
+                while (dr.Read())
+                {
+                    Rubro rubro = new Rubro();
 
-                rubro.IdRubro = dr.GetInt32(0);
-                rubro.Nombre = String.Format("{0}", dr[1]);
+                    rubro.IdRubro = dr.GetInt32(0);
+                    rubro.Nombre = String.Format("{0}", dr[1]);
 
-                auxRubro.Add(rubro);
-            }
+                    auxRubro.Add(rubro);
+                }
 
-            conn.Close();
+                conn.Close();
             }
             catch (Exception ex)
             {
@@ -164,67 +164,67 @@ namespace CapaNegocio
             List<Oferta> list = new List<Oferta>();
             try
             {
-            
-            conn.Open();
 
-            DataSet ds = new DataSet();
-            OracleCommand cmd = new OracleCommand();
+                conn.Open();
 
-            if(idRubro>0)
-            {
-                cmd = new OracleCommand("SELECT o.idOferta, o.nombre, o.descripcion, o.precioNormal,o.precioOferta, o.cantidadMin, o.cantidadMax, " +
-                                    "o.idProducto, o.productImage, o.estado, o.idRubro, s.idSucursal, s.nombre FROM oferta o " +
-                                    " INNER JOIN sucursal s ON s.idSucursal = o.idSucursal " +
-                                    "where estado = :estado AND idRubro = :idRubro", conn);
+                DataSet ds = new DataSet();
+                OracleCommand cmd = new OracleCommand();
 
-                cmd.Parameters.Add(":estado", "Publicado");
-                cmd.Parameters.Add(":idRubro", idRubro);
-            }
-            else
-            {
-                cmd = new OracleCommand("SELECT o.idOferta, o.nombre, o.descripcion, o.precioNormal,o.precioOferta, o.cantidadMin, o.cantidadMax, " +
-                                    "o.idProducto, o.productImage, o.estado, o.idRubro, s.idSucursal, s.nombre FROM oferta o " +
-                                    " INNER JOIN sucursal s ON s.idSucursal = o.idSucursal " +
-                                    "where estado = :estado AND s.idSucursal = :idSucursal", conn);
+                if (idRubro > 0)
+                {
+                    cmd = new OracleCommand("SELECT o.idOferta, o.nombre, o.descripcion, o.precioNormal,o.precioOferta, o.cantidadMin, o.cantidadMax, " +
+                                        "o.idProducto, o.productImage, o.estado, o.idRubro, s.idSucursal, s.nombre FROM oferta o " +
+                                        " INNER JOIN sucursal s ON s.idSucursal = o.idSucursal " +
+                                        "where estado = :estado AND idRubro = :idRubro", conn);
 
-                cmd.Parameters.Add(":estado", "Publicado");
-                cmd.Parameters.Add(":idSucursal", idSucursal);
-            }
+                    cmd.Parameters.Add(":estado", "Publicado");
+                    cmd.Parameters.Add(":idRubro", idRubro);
+                }
+                else
+                {
+                    cmd = new OracleCommand("SELECT o.idOferta, o.nombre, o.descripcion, o.precioNormal,o.precioOferta, o.cantidadMin, o.cantidadMax, " +
+                                        "o.idProducto, o.productImage, o.estado, o.idRubro, s.idSucursal, s.nombre FROM oferta o " +
+                                        " INNER JOIN sucursal s ON s.idSucursal = o.idSucursal " +
+                                        "where estado = :estado AND s.idSucursal = :idSucursal", conn);
 
-            
-            
-            
-
-            OracleDataAdapter da = new OracleDataAdapter();
-            da.SelectCommand = cmd;
-            OracleDataReader dr = cmd.ExecuteReader();
+                    cmd.Parameters.Add(":estado", "Publicado");
+                    cmd.Parameters.Add(":idSucursal", idSucursal);
+                }
 
 
-            while (dr.Read())
-            {
 
-                Oferta oferta = new Oferta();
-                oferta.IdOferta = dr.GetInt32(0);
-                oferta.Nombre = String.Format("{0}", dr[1]);
-                oferta.Descripcion = String.Format("{0}", dr[2]);
-                oferta.PrecioNormal = dr.GetInt32(3);
-                oferta.PrecioOfeta = dr.GetInt32(4);
-                oferta.CantidadMin = dr.GetInt32(5);
-                oferta.CantidadMax = dr.GetInt32(6);
-                oferta.Producto.IdProducto = dr.GetInt32(7);
 
-                OracleBlob blob = dr.GetOracleBlob(8);
-                Byte[] Buffer = (Byte[])(dr.GetOracleBlob(8)).Value;
-                oferta.Imagen = Buffer;
-                oferta.Estado = String.Format("{0}", dr[9]);
-                oferta.rubro.IdRubro = dr.GetInt32(10);
-                oferta.sucursal.IdSucursal = dr.GetInt32(11);
-                oferta.sucursal.Nombre = String.Format("{0}", dr[12]);
 
-                list.Add(oferta);
-            }
+                OracleDataAdapter da = new OracleDataAdapter();
+                da.SelectCommand = cmd;
+                OracleDataReader dr = cmd.ExecuteReader();
 
-            conn.Close();
+
+                while (dr.Read())
+                {
+
+                    Oferta oferta = new Oferta();
+                    oferta.IdOferta = dr.GetInt32(0);
+                    oferta.Nombre = String.Format("{0}", dr[1]);
+                    oferta.Descripcion = String.Format("{0}", dr[2]);
+                    oferta.PrecioNormal = dr.GetInt32(3);
+                    oferta.PrecioOfeta = dr.GetInt32(4);
+                    oferta.CantidadMin = dr.GetInt32(5);
+                    oferta.CantidadMax = dr.GetInt32(6);
+                    oferta.Producto.IdProducto = dr.GetInt32(7);
+
+                    OracleBlob blob = dr.GetOracleBlob(8);
+                    Byte[] Buffer = (Byte[])(dr.GetOracleBlob(8)).Value;
+                    oferta.Imagen = Buffer;
+                    oferta.Estado = String.Format("{0}", dr[9]);
+                    oferta.rubro.IdRubro = dr.GetInt32(10);
+                    oferta.sucursal.IdSucursal = dr.GetInt32(11);
+                    oferta.sucursal.Nombre = String.Format("{0}", dr[12]);
+
+                    list.Add(oferta);
+                }
+
+                conn.Close();
             }
             catch (Exception ex)
             {
@@ -298,7 +298,8 @@ namespace CapaNegocio
                 }
 
                 conn.Close();
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
 
             }
@@ -310,32 +311,36 @@ namespace CapaNegocio
         public bool insertarOferta(Oferta oferta)
         {
             bool resultado = false;
-            oferta.Estado = "No publicado";
             try
-                
-            {         
-            
-                OracleCommand cmd = new OracleCommand("create_oferta", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("nombre_o", OracleDbType.Varchar2,ParameterDirection.Input).Value= oferta.Nombre;
-                cmd.Parameters.Add("descrip", OracleDbType.Varchar2, ParameterDirection.Input).Value = oferta.Descripcion;
-                cmd.Parameters.Add("precioN", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.PrecioNormal;
-                cmd.Parameters.Add("precioO", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.PrecioOfeta;
-                cmd.Parameters.Add("cantidadMi", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.CantidadMin;
-                cmd.Parameters.Add("cantidadMa", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.CantidadMax;
-                cmd.Parameters.Add("idP", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.Producto.IdProducto;
-                cmd.Parameters.Add("imagen", OracleDbType.Blob, ParameterDirection.Input).Value = oferta.Imagen;
-                cmd.Parameters.Add("estad", OracleDbType.Varchar2, ParameterDirection.Input).Value = oferta.Estado ; 
-                cmd.Parameters.Add("rubro_o", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.rubro.IdRubro;
-                cmd.Parameters.Add("idSu", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.sucursal.IdSucursal;
-               
+            {
+
+                oferta.Estado = "No publicado";
+
                 conn.Open();
+
+                OracleCommand cmd = new OracleCommand("INSERT INTO oferta (idOferta, nombre, descripcion, " +
+                    "precioNormal, precioOferta, cantidadMin, cantidadMax, idProducto, productImage,estado,idRubro,idSucursal)" +
+                         "VALUES(sucuence_oferta.NEXTVAL, :nombre, :descripcion, :precioNormal," +
+                         ":precioOferta, :cantidadMin, :cantidadMax, :idProducto, :productImage, :estado, :rubro, :idScursal)", conn);
+
+                cmd.Parameters.Add(new OracleParameter(":nombre", oferta.Nombre));
+                cmd.Parameters.Add(new OracleParameter(":descripcion", oferta.Descripcion));
+                cmd.Parameters.Add(new OracleParameter(":precioNormal", oferta.PrecioNormal));
+                cmd.Parameters.Add(new OracleParameter(":precioOferta", oferta.PrecioOfeta));
+                cmd.Parameters.Add(new OracleParameter(":cantidadMin", oferta.CantidadMin));
+                cmd.Parameters.Add(new OracleParameter(":cantidadMax", oferta.CantidadMax));
+                cmd.Parameters.Add(new OracleParameter(":idProducto", oferta.Producto.IdProducto));
+                cmd.Parameters.Add(new OracleParameter(":productImage", oferta.Imagen));
+                cmd.Parameters.Add(new OracleParameter(":estado", oferta.Estado));
+                cmd.Parameters.Add(new OracleParameter(":rubro", oferta.rubro.IdRubro));
+                cmd.Parameters.Add(new OracleParameter(":idScursal", oferta.sucursal.IdSucursal));
+
                 int a = cmd.ExecuteNonQuery();
                 conn.Close();
-                if (a ==-1)
-            {
-                resultado = true;
-            }
+                if (a > 0)
+                {
+                    resultado = true;
+                }
             }
             catch (Exception ex)
             {
@@ -354,16 +359,16 @@ namespace CapaNegocio
             {
 
                 conn.Open();
-                OracleCommand cmd = new OracleCommand("delete_oferta", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("idOferta_o", OracleDbType.Int32, ParameterDirection.Input).Value = id;
+                OracleCommand cmd = new OracleCommand("DELETE from oferta where idOferta =:idOferta", conn);
+
+                cmd.Parameters.Add(new OracleParameter(":idOferta", id));
 
                 int a = cmd.ExecuteNonQuery();
                 conn.Close();
                 if (a > 0)
                 {
-                resultado = true;
-            }
+                    resultado = true;
+                }
             }
             catch (Exception ex)
             {
@@ -379,48 +384,48 @@ namespace CapaNegocio
             List<Oferta> list = new List<Oferta>();
             try
             {
-            
-            conn.Open();
 
-            DataSet ds = new DataSet();
-            OracleCommand cmd = new OracleCommand();
-            cmd = new OracleCommand("SELECT o.idOferta,r.nombre,o.nombre,o.descripcion," +
-                "o.precioNormal,o.precioOferta,o.cantidadMin,o.cantidadMax, o.idProducto, o.productImage" +
-                ", o.estado, s.nombre as sucursal "+
-                "FROM OFERTA O "+
-                "INNER JOIN RUBRO r ON r.idRubro = o.IdRubro "+
-                "INNER JOIN PRODUCTO p ON p.idProducto = o.idProducto " +
-                "INNER JOIN SUCURSAL s ON o.idSucursal = s.idSucursal", conn);
-            
+                conn.Open();
 
-            OracleDataAdapter da = new OracleDataAdapter();
-            da.SelectCommand = cmd;
-            OracleDataReader dr = cmd.ExecuteReader();
+                DataSet ds = new DataSet();
+                OracleCommand cmd = new OracleCommand();
+                cmd = new OracleCommand("SELECT o.idOferta,r.nombre,o.nombre,o.descripcion," +
+                    "o.precioNormal,o.precioOferta,o.cantidadMin,o.cantidadMax, o.idProducto, o.productImage" +
+                    ", o.estado, s.nombre as sucursal " +
+                    "FROM OFERTA O " +
+                    "INNER JOIN RUBRO r ON r.idRubro = o.IdRubro " +
+                    "INNER JOIN PRODUCTO p ON p.idProducto = o.idProducto " +
+                    "INNER JOIN SUCURSAL s ON o.idSucursal = s.idSucursal", conn);
 
 
-             while (dr.Read())
-             {
+                OracleDataAdapter da = new OracleDataAdapter();
+                da.SelectCommand = cmd;
+                OracleDataReader dr = cmd.ExecuteReader();
 
-                Oferta oferta = new Oferta();
-                oferta.IdOferta = dr.GetInt32(0);
-                oferta.rubro.Nombre = String.Format("{0}", dr[1]);
-                oferta.Nombre = String.Format("{0}", dr[2]);
-                 oferta.Descripcion = String.Format("{0}", dr[3]);
-                 oferta.PrecioNormal = dr.GetInt32(4);
-                 oferta.PrecioOfeta = dr.GetInt32(5);
-                 oferta.CantidadMin = dr.GetInt32(6);
-                 oferta.CantidadMax = dr.GetInt32(7);
-                oferta.Producto.IdProducto = dr.GetInt32(8);
-                OracleBlob blob = dr.GetOracleBlob(9);
-                 Byte[] Buffer = (Byte[])(dr.GetOracleBlob(9)).Value;
-                 oferta.Imagen = Buffer;
-                 oferta.Estado = String.Format("{0}", dr[10]);   
-                oferta.sucursal.Nombre = String.Format("{0}", dr[11]);
 
-                list.Add(oferta);
-             }
+                while (dr.Read())
+                {
 
-            conn.Close();
+                    Oferta oferta = new Oferta();
+                    oferta.IdOferta = dr.GetInt32(0);
+                    oferta.rubro.Nombre = String.Format("{0}", dr[1]);
+                    oferta.Nombre = String.Format("{0}", dr[2]);
+                    oferta.Descripcion = String.Format("{0}", dr[3]);
+                    oferta.PrecioNormal = dr.GetInt32(4);
+                    oferta.PrecioOfeta = dr.GetInt32(5);
+                    oferta.CantidadMin = dr.GetInt32(6);
+                    oferta.CantidadMax = dr.GetInt32(7);
+                    oferta.Producto.IdProducto = dr.GetInt32(8);
+                    OracleBlob blob = dr.GetOracleBlob(9);
+                    Byte[] Buffer = (Byte[])(dr.GetOracleBlob(9)).Value;
+                    oferta.Imagen = Buffer;
+                    oferta.Estado = String.Format("{0}", dr[10]);
+                    oferta.sucursal.Nombre = String.Format("{0}", dr[11]);
+
+                    list.Add(oferta);
+                }
+
+                conn.Close();
             }
             catch (Exception ex)
             {
@@ -430,24 +435,25 @@ namespace CapaNegocio
             return list;
         }
 
-        public bool actualizarOfertaEstado(string estado,int id)
+        public bool actualizarOfertaEstado(string estado, int id)
         {
             bool resultado = false;
             try
             {
 
-                
-                OracleCommand cmd = new OracleCommand(" update_estado_oferta", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("idOferta_o", OracleDbType.Int32, ParameterDirection.Input).Value = id;
-                cmd.Parameters.Add("estado_o", OracleDbType.Int32, ParameterDirection.Input).Value = estado;
                 conn.Open();
+                OracleCommand cmd = new OracleCommand("UPDATE oferta SET  estado = :estado WHERE idOferta =:idOferta", conn);
+
+
+                cmd.Parameters.Add(new OracleParameter(":estado", estado));
+                cmd.Parameters.Add(new OracleParameter(":idOferta", id));
+
                 int a = cmd.ExecuteNonQuery();
                 conn.Close();
-                if (a == -1)
+                if (a > 0)
                 {
-                resultado = true;
-            }
+                    resultado = true;
+                }
             }
             catch (Exception ex)
             {
@@ -464,25 +470,34 @@ namespace CapaNegocio
             try
             {
 
-                OracleCommand cmd = new OracleCommand("update_oferta", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("idOferta_o", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.IdOferta;
-                cmd.Parameters.Add("nombre_o", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.Nombre;
-                cmd.Parameters.Add("descripcion_o", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.Descripcion;
-                cmd.Parameters.Add("precioNormal_o", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.PrecioNormal;
-                cmd.Parameters.Add("precioOferta_o", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.PrecioOfeta;
-                cmd.Parameters.Add("cantidadMin_o", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.CantidadMin;
-                cmd.Parameters.Add("cantidadMax_o", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.CantidadMax;
-                cmd.Parameters.Add("idProducto_p", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.Producto.IdProducto;
-                cmd.Parameters.Add("idRubro_o", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.rubro.IdRubro;
-                cmd.Parameters.Add("idSucursal_o", OracleDbType.Int32, ParameterDirection.Input).Value = oferta.sucursal.IdSucursal;
                 conn.Open();
+                //Arreglar consulta para actualizar con los campos
+                OracleCommand cmd = new OracleCommand("UPDATE oferta SET  nombre = :nombre, " +
+                                                      "descripcion = :descripcion," +
+                                                      "cantidadMin = :cantidadMin," +
+                                                      "cantidadMax = :cantidadMax" +                                                      
+                                                       " WHERE idOferta =:idOferta", conn);
+
+
+                cmd.Parameters.Add(new OracleParameter(":nombre", oferta.Nombre));
+                cmd.Parameters.Add(new OracleParameter(":descripcion", oferta.Descripcion));
+               /* cmd.Parameters.Add(new OracleParameter(":precioNormal", oferta.PrecioNormal));
+                cmd.Parameters.Add(new OracleParameter(":precioOferta", oferta.PrecioOfeta));*/
+                cmd.Parameters.Add(new OracleParameter(":cantidadMin", oferta.CantidadMin));
+                cmd.Parameters.Add(new OracleParameter(":cantidadMax", oferta.CantidadMax));
+                cmd.Parameters.Add(new OracleParameter(":idOferta", oferta.IdOferta));                
+
+                // estado y imagen nose si se deberia actualizar pero queda a criterio tuyo 
+
+                //cmd.Parameters.Add(new OracleParameter(":productImage", productImage));
+                //cmd.Parameters.Add(new OracleParameter(":estado", oferta.Estado));
+
                 int a = cmd.ExecuteNonQuery();
                 conn.Close();
-                if (a == -1)
+                if (a > 0)
                 {
-                resultado = true;
-            }
+                    resultado = true;
+                }
             }
             catch (Exception ex)
             {
