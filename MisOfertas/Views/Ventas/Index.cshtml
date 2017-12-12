@@ -31,136 +31,138 @@
 
 }
 
-<br />
-<br />
-<br />
 <div id="asdf">
-@using (Html.BeginForm(Html.BeginForm("Index", "Ventas", FormMethod.Post, new { enctype = "multipart/form-data" })))
-{
-    @Html.AntiForgeryToken()
+    <br />
+    <br />
+    <br />
 
-    <style>
-        #mdialTamanio {
-            width: 80% !important;
-        }
-    </style>
+    @using (Html.BeginForm(Html.BeginForm("Index", "Ventas", FormMethod.Post, new { enctype = "multipart/form-data" })))
+    {
+        @Html.AntiForgeryToken()
 
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-1"></div>
-            <div class="col-lg-9 col-md-10">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h2>Crear Oferta</h2>
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="asdf">
-                                @Html.ValidationSummary(true, "", new { @class = Session["class"] })
-                                <!--ID Producto-->
-                                <div class="form-group col-lg-12 col-md-12">
-                                    @Html.Label("Id Producto", htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
-                                    <!--  <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">                                            Launch demo modal</button>-->
-                                    <div class="col-lg-5 col-md-4">
-                                        @Html.Editor("idProducto", new { htmlAttributes = new { @class = "form-control", required = "", id = "idProducto", disabled = "true" } })
-                                        @Html.ValidationMessageFor(model => model.Producto.IdProducto, "", new { @class = "text-danger" })
+        <style>
+            #mdialTamanio {
+                width: 80% !important;
+            }
+        </style>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-9 col-md-10">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2>Crear Oferta</h2>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="asdf">
+                                    @Html.ValidationSummary(true, "", new { @class = Session["class"] })
+                                    <!--ID Producto-->
+                                    <div class="form-group col-lg-12 col-md-12">
+                                        @Html.Label("Id Producto", htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
+                                        <!--  <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">                                            Launch demo modal</button>-->
+                                        <div class="col-lg-5 col-md-4">
+                                            @Html.Editor("idProducto", new { htmlAttributes = new { @class = "form-control", required = "", id = "idProducto", disabled = "true" } })
+                                            @Html.ValidationMessageFor(model => model.Producto.IdProducto, "", new { @class = "text-danger" })
+                                        </div>
+                                        <a class="btn-link col-md-0" data-toggle="modal" data-target="#myModal">Seleccionar Producto</a>
                                     </div>
-                                    <a class="btn-link col-md-0" data-toggle="modal" data-target="#myModal">Seleccionar Producto</a>
-                                </div>
-                                <br />
-                                <!--Rubro-->
-                                <div class="form-group col-lg-12 col-md-12">
-                                    @Html.Label("Rubro", htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
-                                    <div class="col-lg-6 col-md-4">
-                                        @Html.DropDownList("idRubro", lista, "Seleccione", new { @class = "form-control", onmousedown = "this.value='';", onchange = "jsFunction(this.value);", id = "idRubro", required = "" })
-                                        @Html.ValidationMessageFor(model => model.rubro.Nombre, "", new { @class = "text-danger" })
+                                    <br />
+                                    <!--Rubro-->
+                                    <div class="form-group col-lg-12 col-md-12">
+                                        @Html.Label("Rubro", htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
+                                        <div class="col-lg-6 col-md-4">
+                                            @Html.DropDownList("idRubro", lista, "Seleccione", new { @class = "form-control", onmousedown = "this.value='';", onchange = "jsFunction(this.value);", id = "idRubro", required = "" })
+                                            @Html.ValidationMessageFor(model => model.rubro.Nombre, "", new { @class = "text-danger" })
+                                        </div>
                                     </div>
-                                </div>
-                                <br />
-                                <br />
-                                <!--Descuento-->
-                                <div class="form-group col-lg-12 col-md-12">
-                                    @Html.Label("Descuento", htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
-                                    <div class="col-lg-6 col-md-4">
-                                        @Html.DropDownList("idDescuento", (List<SelectListItem>)ViewBag.listaDescuento, "Seleccione", new { @class = "form-control", required = "" })
-                                        @Html.ValidationMessageFor(model => model.descuento.cantidad, "", new { @class = "text-danger" })
+                                    <br />
+                                    <br />
+                                    <!--Descuento-->
+                                    <div class="form-group col-lg-12 col-md-12">
+                                        @Html.Label("Descuento", htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
+                                        <div class="col-lg-6 col-md-4">
+                                            @Html.DropDownList("idDescuento", (List<SelectListItem>)ViewBag.listaDescuento, "Seleccione", new { @class = "form-control", required = "" })
+                                            @Html.ValidationMessageFor(model => model.descuento.cantidad, "", new { @class = "text-danger" })
+                                        </div>
                                     </div>
-                                </div>
-                                <br />
-                                <br />
-                                <!--Nombre-->
-                                <div class="form-group col-lg-12 col-md-12">
-                                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
-                                    <div class="col-lg-6 col-md-4">
-                                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", required = "" } })
-                                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                                    <br />
+                                    <br />
+                                    <!--Nombre-->
+                                    <div class="form-group col-lg-12 col-md-12">
+                                        @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
+                                        <div class="col-lg-6 col-md-4">
+                                            @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", required = "" } })
+                                            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                                        </div>
                                     </div>
-                                </div>
-                                <br />
-                                <br />
-                                <!--Descripcion-->
-                                <div class="form-group col-lg-12 col-md-12">
-                                    @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
-                                    <div class="col-lg-9 col-md-10">
-                                        @Html.TextAreaFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", required = "" } })
-                                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                                    <br />
+                                    <br />
+                                    <!--Descripcion-->
+                                    <div class="form-group col-lg-12 col-md-12">
+                                        @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
+                                        <div class="col-lg-9 col-md-10">
+                                            @Html.TextAreaFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", required = "" } })
+                                            @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                                        </div>
                                     </div>
-                                </div>
-                                <br />
-                                <br />
-                                <!--Precio Normal-->
-                                <div class="form-group col-lg-12 col-md-12">
-                                    @Html.LabelFor(model => model.PrecioNormal, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
-                                    <div class="col-lg-9 col-md-4">
-                                        @Html.EditorFor(model => model.PrecioNormal, new { htmlAttributes = new { @class = "form-control", required = "", id = "precio", disabled = "true" } })
-                                        @Html.ValidationMessageFor(model => model.PrecioNormal, "", new { @class = "text-danger" })
+                                    <br />
+                                    <br />
+                                    <!--Precio Normal-->
+                                    <div class="form-group col-lg-12 col-md-12">
+                                        @Html.LabelFor(model => model.PrecioNormal, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
+                                        <div class="col-lg-9 col-md-4">
+                                            @Html.EditorFor(model => model.PrecioNormal, new { htmlAttributes = new { @class = "form-control", required = "", id = "precio", disabled = "true" } })
+                                            @Html.ValidationMessageFor(model => model.PrecioNormal, "", new { @class = "text-danger" })
+                                        </div>
                                     </div>
-                                </div>
-                                <br />
-                                <br />
-                                <!--Cantidad Minima-->
-                                <div class="form-group col-lg-12 col-md-12">
-                                    @Html.LabelFor(model => model.CantidadMin, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
-                                    <div class="col-lg-9 col-md-4">
-                                        @Html.EditorFor(model => model.CantidadMin, new { htmlAttributes = new { @class = "form-control", required = "", min = "0" } })
-                                        @Html.ValidationMessageFor(model => model.CantidadMin, "", new { @class = "text-danger" })
+                                    <br />
+                                    <br />
+                                    <!--Cantidad Minima-->
+                                    <div class="form-group col-lg-12 col-md-12">
+                                        @Html.LabelFor(model => model.CantidadMin, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
+                                        <div class="col-lg-9 col-md-4">
+                                            @Html.EditorFor(model => model.CantidadMin, new { htmlAttributes = new { @class = "form-control", required = "", min = "0" } })
+                                            @Html.ValidationMessageFor(model => model.CantidadMin, "", new { @class = "text-danger" })
+                                        </div>
                                     </div>
-                                </div>
-                                <br />
-                                <br />
-                                <!--Cantidad Maxima-->
-                                <div class="form-group col-lg-12 col-md-12">
-                                    @Html.LabelFor(model => model.CantidadMax, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
-                                    <div class="col-lg-9 col-md-4">
-                                        @Html.EditorFor(model => model.CantidadMax, new { htmlAttributes = new { @class = "form-control", required = "", min="0" } })
-                                        @Html.ValidationMessageFor(model => model.CantidadMax, "", new { @class = "text-danger" })
+                                    <br />
+                                    <br />
+                                    <!--Cantidad Maxima-->
+                                    <div class="form-group col-lg-12 col-md-12">
+                                        @Html.LabelFor(model => model.CantidadMax, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
+                                        <div class="col-lg-9 col-md-4">
+                                            @Html.EditorFor(model => model.CantidadMax, new { htmlAttributes = new { @class = "form-control", required = "", min = "0" } })
+                                            @Html.ValidationMessageFor(model => model.CantidadMax, "", new { @class = "text-danger" })
+                                        </div>
                                     </div>
-                                </div>
-                                <br />
-                                <br />
-                                <!--Surcusal-->
-                                <div class="form-group col-lg-12 col-md-12">
-                                    @Html.Label("Sucursal", new { @class = "control-label col-lg-3 col-md-2" })
-                                    <div class="col-lg-9 col-md-4">
-                                        @Html.DropDownList("idSucursal", (List<SelectListItem>)ViewBag.listaSucursal, "Seleccione", new { @class = "form-control", required = "" })
-                                        @Html.ValidationMessageFor(model => model.sucursal.IdSucursal, "", new { @class = "text-danger" })
+                                    <br />
+                                    <br />
+                                    <!--Surcusal-->
+                                    <div class="form-group col-lg-12 col-md-12">
+                                        @Html.Label("Sucursal", new { @class = "control-label col-lg-3 col-md-2" })
+                                        <div class="col-lg-9 col-md-4">
+                                            @Html.DropDownList("idSucursal", (List<SelectListItem>)ViewBag.listaSucursal, "Seleccione", new { @class = "form-control", required = "" })
+                                            @Html.ValidationMessageFor(model => model.sucursal.IdSucursal, "", new { @class = "text-danger" })
+                                        </div>
                                     </div>
-                                </div>
-                                <br />
-                                <br />
-                                <!--Imagen Producto-->
-                                <div class="form-group col-lg-12 col-md-12">
-                                    @Html.LabelFor(model => model.Imagen, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
-                                    <div class="col-lg-9 col-md-4">
-                                        <input type="file" name="file" class="form-control" required="" />
+                                    <br />
+                                    <br />
+                                    <!--Imagen Producto-->
+                                    <div class="form-group col-lg-12 col-md-12">
+                                        @Html.LabelFor(model => model.Imagen, htmlAttributes: new { @class = "control-label col-lg-3 col-md-2" })
+                                        <div class="col-lg-9 col-md-4">
+                                            <input type="file" name="file" class="form-control" required="" />
+                                        </div>
                                     </div>
-                                </div>
-                                <br />
-                                <br />
-                                <!--Boton Crear Oferta-->
-                                <div class="form-group col-lg-12 col-md-12">
-                                    <div class="col-lg-offset-3 col-md-offset-2 col-md-10">
-                                        <input type="submit" value="Crear Oferta" class="btn btn-primary" />
+                                    <br />
+                                    <br />
+                                    <!--Boton Crear Oferta-->
+                                    <div class="form-group col-lg-12 col-md-12">
+                                        <div class="col-lg-offset-3 col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Crear Oferta" class="btn btn-primary" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -169,89 +171,88 @@
                 </div>
             </div>
         </div>
-    </div>
-               
+
 
             <!-- Modal PRODUCTO-->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="vertical-alignment-helper">
-                    <div class="modal-dialog vertical-align-center" style="width:50%">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">
-                                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="vertical-alignment-helper">
+                <div class="modal-dialog vertical-align-center" style="width:50%">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 
-                                </button>
-                                <h4 class="modal-title" id="myModalLabel">Producto</h4>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Producto</h4>
 
-                            </div>
-                            <div class="modal-body">
+                        </div>
+                        <div class="modal-body">
 
-                                <table id="mytabla" class="display hover order-column" cellspacing="0" style="width:auto">
-                                    <thead>
+                            <table id="mytabla" class="display hover order-column" cellspacing="0" style="width:auto">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayName("Id")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Nombre)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Descripcion)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Precio")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Tipo Producto")
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in (List<CapaDTO.Producto>)ViewBag.lista)
+                                    {
                                         <tr>
-                                            <th>
-                                                @Html.DisplayName("Id")
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.Nombre)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.Descripcion)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayName("Precio")
-                                            </th>
-                                            <th>
-                                                @Html.DisplayName("Tipo Producto")
-                                            </th>
-                                            <th></th>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.IdProducto)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Nombre)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Descripcion)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Precio)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TipoProducto.IdTipoProducto)
+                                            </td>
+                                            <td>
+                                                <a href="@Url.Action("Index", "Ventas", new { id = item.IdProducto, nom = item.Nombre, precio = item.Precio})">Seleccionar</a>
+
+                                            </td>
+
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in (List<CapaDTO.Producto>)ViewBag.lista)
-                                        {
-                                            <tr>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.IdProducto)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Nombre)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Descripcion)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Precio)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.TipoProducto.IdTipoProducto)
-                                                </td>
-                                                <td>
-                                                    <a href="@Url.Action("Index", "Ventas", new { id = item.IdProducto, nom = item.Nombre, precio = item.Precio})">Seleccionar</a>
 
-                                                </td>
+                                    }
+                                </tbody>
 
-                                            </tr>
+                            </table>
 
-                                        }
-                                    </tbody>
-
-                                </table>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
             <!--fin modal-->
 
-}
+    }
 
-<script>
+    <script>
 
     $("#idProducto").val(@Session["idProducto"]);
 
@@ -273,4 +274,4 @@
         }
 
 
-</script>
+    </script>
