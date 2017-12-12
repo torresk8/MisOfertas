@@ -149,9 +149,10 @@ namespace CapaNegocio
             DataSet ds = new DataSet();
             OracleCommand cmd = new OracleCommand();
             cmd = new OracleCommand("SELECT v.idValoracion,v.boleta,v.fecha,o.nombre,u.nombreUsuario,v.calificacion,v.comentario,v.idOferta, u.nombre "+
-                                    "FROM valoracion v INNER JOIN oferta o ON v.idOferta = o.idOferta "+
+                                    "FROM valoracion v " +                                    
                                     "INNER JOIN usuario u ON u.idUsuario = v.idUsuario " +
-                                    "WHERE v.Idoferta = :idOferta", conn);
+                                    " INNER JOIN oferta o ON v.idOferta = o.idOferta " +
+                                    "WHERE v.IdOferta = :idOferta", conn);
 
             cmd.Parameters.Add(":idOferta", id);
 

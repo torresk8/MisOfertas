@@ -464,13 +464,13 @@ namespace MisOfertas.Controllers
 
             // Registramos el seguimiento del usuario
 
-            NegocioLog negocioLog = new NegocioLog();
+          /*  NegocioLog negocioLog = new NegocioLog();
             LogUsuario logUsuario = new LogUsuario();
 
             logUsuario.rubro.IdRubro = Convert.ToInt32(oferta.rubro.IdRubro);
             logUsuario.usuario.IdUsuario = Convert.ToInt32(Session["idUsuario"]);
 
-            negocioLog.insertarLog(logUsuario);        
+            negocioLog.insertarLog(logUsuario);        */
             
             
             return View(valoracion);
@@ -515,15 +515,14 @@ namespace MisOfertas.Controllers
             }
             ViewBag.listaCalificacion = obtenerCalificacion();
             return View();
-        }
-        [Authorize]
+        }        
         public ActionResult VerValoracion(string id)
         {
             Session["idOferta"] = id;
 
             NegocioValoracion auxValoracion = new NegocioValoracion();
             List<Valoracion> listaValoracion = auxValoracion.retornaValoracionList(Convert.ToInt32(id));
-            
+           
             return View(listaValoracion);            
         }
 
