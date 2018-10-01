@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="generarArchivo">
+        <s:complexType />
+      </s:element>
+      <s:element name="generarArchivoResponse">
+        <s:complexType />
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="generarArchivoSoapIn">
+    <wsdl:part name="parameters" element="tns:generarArchivo" />
+  </wsdl:message>
+  <wsdl:message name="generarArchivoSoapOut">
+    <wsdl:part name="parameters" element="tns:generarArchivoResponse" />
+  </wsdl:message>
+  <wsdl:portType name="WebServiceReporteSoap">
+    <wsdl:operation name="generarArchivo">
+      <wsdl:input message="tns:generarArchivoSoapIn" />
+      <wsdl:output message="tns:generarArchivoSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WebServiceReporteSoap" type="tns:WebServiceReporteSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="generarArchivo">
+      <soap:operation soapAction="http://tempuri.org/generarArchivo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WebServiceReporteSoap12" type="tns:WebServiceReporteSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="generarArchivo">
+      <soap12:operation soapAction="http://tempuri.org/generarArchivo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WebServiceReporte">
+    <wsdl:port name="WebServiceReporteSoap" binding="tns:WebServiceReporteSoap">
+      <soap:address location="http://localhost:54263/WebServiceReporte.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WebServiceReporteSoap12" binding="tns:WebServiceReporteSoap12">
+      <soap12:address location="http://localhost:54263/WebServiceReporte.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

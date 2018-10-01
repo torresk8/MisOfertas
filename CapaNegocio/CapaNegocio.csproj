@@ -41,9 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NegocioCupon.cs" />
+    <Compile Include="NegocioDescuento.cs" />
+    <Compile Include="NegocioEmail.cs" />
+    <Compile Include="NegocioLog.cs" />
     <Compile Include="NegocioOferta.cs" />
     <Compile Include="NegocioProducto.cs" />
+    <Compile Include="NegocioReporte.cs" />
+    <Compile Include="NegocioTienda.cs" />
     <Compile Include="NegocioUsuario.cs" />
+    <Compile Include="NegocioValoracion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Roles\NegocioRol.cs" />
     <Compile Include="Utilidades\SeguridadUtilidades.cs" />

@@ -1,0 +1,74 @@
+﻿@{ 
+    string rol = "2";
+}
+
+
+
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm())
+    {
+
+
+        <ul class="nav navbar-nav">          
+                
+                
+                 @if (Roles.IsUserInRole("gerenteAsociacion"))
+                 {
+
+                    <li>@Html.ActionLink("Resumen valoracion", "Index", "Tienda")</li>
+                    <li>@Html.ActionLink("Reporte BI", "reporteBi", "Tienda")</li>
+                    <li>@Html.ActionLink("Reporte tienda", "ReporteTienda", "Tienda")</li>
+                   
+                 }
+                 else
+                 {                    
+
+                         if (Roles.IsUserInRole("encargadoTienda"))
+                         {
+                            <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Crear Oferta", "Index", "Ventas")</li>
+                            <li>@Html.ActionLink("Ver Oferta", "VerOferta", "Ventas")</li>
+                            <li>@Html.ActionLink("Crear Producto", "Producto", "Ventas")</li>
+                            <li>@Html.ActionLink("Crear Descuento", "crearDescuento", "Ventas")</li>
+                            <li>@Html.ActionLink("Ver descuentos", "VerDescuento", "Ventas")</li>
+                            <li>@Html.ActionLink("Enviar correo", "Index", "Mail")</li>
+                            
+                         }
+                         else
+                         {
+                            <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                            <li>@Html.ActionLink("Cupon", "Cupon", "Home")</li>
+                        }
+
+                    
+                 }
+                                                                          
+
+
+
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("Hola "+Session["nombre"]+ "!", "actualizarUsuario", "Login")
+            </li>
+            <li>@Html.ActionLink("Cerrar sesion", "cerrarSession", "Login")</li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+        <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+        <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>        
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Registrar", "RegistrarUsuario", "Login")</li>
+        <li>@Html.ActionLink("Iniciar sesión", "Index", "Login")</li>
+    </ul>
+}

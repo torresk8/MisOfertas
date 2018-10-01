@@ -1,0 +1,287 @@
+﻿@model IEnumerable<CapaDTO.ResumenTienda>
+
+@{
+    ViewBag.Title = "Valoraciones Por tienda";
+}
+
+
+<div id="asdf">
+    <br />
+    <br />
+    <br />
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2>Valoraciones por Tienda</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                @Html.Label("Sucursal", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("idSucursal", (List<SelectListItem>)ViewBag.listaSucursal, "Seleccione", new { @class = "form-control", onmousedown = "this.value='';", onchange = "sucursal(this.value);", id = "sucursal", required = "" })                                    
+                                </div>                                
+                            </div>
+                        </div>                        
+                    </div>
+                    <hr />
+                    <table id="mytabla" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.IdValoracion)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Fecha)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.oferta.Nombre)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.usuario.NombreUsuario)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Calificacion)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.comentario)
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.IdValoracion)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Fecha)
+                                    </td>
+                                    <td>
+                                        <a class="btn-link col-md-0" data-toggle="modal" data-target="#myModal" href="#" onclick="modal1(@item.oferta.IdOferta)">@item.oferta.Nombre</a>
+                                    </td>
+                                    <td>
+                                        <a class="btn-link col-md-0" data-toggle="modal" data-target="#myModalUsuario" href="#" onclick="modalUsuario(@item.usuario.IdUsuario)">@item.usuario.NombreUsuario</a>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Calificacion)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.comentario)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+
+
+
+    <!-- Modal Oferta-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                        </button>
+                        <h3 class="modal-title" id="myModalLabel"> <bold>Oferta</bold></h3>
+
+                    </div>
+                    <div class="modal-body">
+                        
+                        <table class="table table-hover">
+                            <tr>
+                                <th>id</th>
+                                <td id="idOferta"></td>
+                            </tr>
+                            <tr>
+                                <th>Nombre</th>
+                                <td id="nombre"></td>
+                            </tr>
+                            <tr>
+                                <th>Descripcion</th>
+                                <td id="descripcion"></td>
+                            </tr>
+                            <tr>
+                                <th>Precio Normal</th>
+                                <td id="precioNormal"></td>
+                            </tr>
+                            <tr>
+                                <th>Precio Oferta</th>
+                                <td id="precioOferta"></td>
+                            </tr>
+                            <tr>
+                                <th>Cantidad Min</th>
+                                <td id="CantidadMin"></td>
+                            </tr>
+                            <tr>
+                                <th>Cantidad Max</th>
+                                <td id="cantidadMax"></td>
+                            </tr>
+                            <tr>
+                                <th>Producto</th>
+                                <td id="idProducto"></td>                                
+                            </tr>
+                            <tr>
+                                <th>Estado</th>
+                                <td id="estado"></td>
+                            </tr>
+                           
+                            <tr>
+                                <th>Rubro</th>
+                                <td id="rubro"></td>
+                            </tr>
+                            <tr>
+                                <th>Sucursal</th>
+                                <td id="sucursalModal"></td>
+                            </tr>                                                 
+                      </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Usuario-->
+    <div class="modal fade" id="myModalUsuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+
+                        </button>
+                        <h3 class="modal-title" id="myModalLabel"><bold>Usuario</bold></h3>
+
+                    </div>
+                    <div class="modal-body">
+
+                        <table class="table table-hover">
+                            <tr>
+                                <th>id</th>
+                                <td id="idUsuario"></td>
+                            </tr>
+                            <tr>
+                                <th>Nombre</th>
+                                <td id="nombreU"></td>
+                            </tr>
+                            <tr>
+                                <th>Rut</th>
+                                <td id="rut"></td>
+                            </tr>
+                            <tr>
+                                <th>Nombre Usuario</th>
+                                <td id="nombreUsuario"></td>
+                            </tr>                            
+                            <tr>
+                                <th>Direccion</th>
+                                <td id="direccion"></td>
+                            </tr>
+                            <tr>
+                                <th>Telefono</th>
+                                <td id="telefono"></td>
+                            </tr>                     
+                            <tr>
+                                <th>Recibir correo</th>
+                                <td id="recibirCorreo"></td>
+                            </tr>                            
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+<script>
+
+    function modal1(id) {
+        $.ajax({
+        url: "@Url.Action("oferta", "Tienda")",
+        type: "POST",
+        data: {
+               id: id
+        },
+        success: function(data) {
+            //If you have a response, it will be in the 'data' object
+            console.log(data);
+
+            $('#myModal').modal("show");
+            $("#idOferta").text(data[0].id);
+            $("#nombre").text(data[0].nombre);
+            $("#descripcion").text(data[0].descripcion);
+            $("#precioNormal").text(data[0].precioNormal);
+            $("#precioOferta").text(data[0].precioOferta);
+            $("#CantidadMin").text(data[0].cantidadMin);
+            $("#cantidadMax").text(data[0].cantidadMax);
+            $("#idProducto").text(data[0].idProducto);
+            $("#estado").text(data[0].estado);
+            $("#rubro").text(data[0].rubro);
+            $("#sucursalModal").text(data[0].sucursal);
+
+        }
+      });
+    }
+    function modalUsuario(id)
+    {
+         $.ajax({
+        url: "@Url.Action("usuarioJson", "Tienda")",
+        type: "POST",
+        data: {
+               id: id
+        },
+        success: function(data) {
+            //If you have a response, it will be in the 'data' object
+            console.log(data);
+
+            $('#myModalUsuario').modal("show");
+            $("#idUsuario").text(data[0].id);
+            $("#nombreU").text(data[0].nombre);
+            $("#nombreUsuario").text(data[0].nombreUsuario);
+            $("#rut").text(data[0].rut);
+            $("#direccion").text(data[0].direccion);
+            $("#telefono").text(data[0].telefono);
+            $("#recibirCorreo").text(data[0].recibirCorreo);  
+
+        }
+      });
+    }
+     function sucursal(idSucursal) {
+
+        $.ajax({
+        url: "@Url.Action("Index", "Tienda")",
+            type: "POST",
+            data: {
+                idSucursal: idSucursal
+            },
+            success: function (data) {
+                //If you have a response, it will be in the 'data' object
+
+                $('#asdf').html(data);
+            }
+        });
+    }
+
+
+</script>

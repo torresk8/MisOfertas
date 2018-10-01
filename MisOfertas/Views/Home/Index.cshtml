@@ -1,31 +1,252 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model IEnumerable<CapaDTO.Oferta>
+
+@{
+    ViewBag.Title = "OfertasPublicadas";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+
+@{
+    var lista = new List<SelectListItem>(){
+        new SelectListItem()
+        {
+            Text = "Alimentos",
+            Value = "1",
+            Selected = true 
+        },
+        new SelectListItem()
+        {
+            Text = "Electronica",
+            Value = "2"
+        },
+        new SelectListItem()
+        {
+            Text = "Linea blanca",
+            Value = "3"
+        },
+        new SelectListItem()
+        {
+            Text = "Ropa",
+            Value = "4"
+        }
+    };
+
+}
+
+<style>
+    #map {
+        height: 400px;
+        width: 100%;
+    }
+
+    
+</style>
+<br />
+<div id="asdf">
+    <div class="container">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <!-- Indicadores -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img src="~/Content/Upload/pri.jpg" alt="Notebook" style="width:100%">
+                    <div class="carousel-caption" style="color:#f1f1f1">
+                        <h2>JumMarc</h2>
+                        <p>Las Mejores Ofertas Junto a ti!</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/Content/Upload/sec.jpg" alt="Bolso" style="width:100%">
+                    <div class="carousel-caption" style="color:#f1f1f1">
+                        <h2>JumMarc</h2>
+                        <p>Las Mejores Marcas y Ofertas</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/Content/Upload/ter.jpg" alt="Ahorrar" style="width:100%">
+                    <div class="carousel-caption" style="color:#f1f1f1">
+                        <h2>JumMarc</h2>
+                        <p>Ahorra con Nosotros!</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    <!--Fin carousel-->
+    <div class="container">
+        <div class="row">
+
+            <div class="container">
+                <!--Filtros-->
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <h3>Filtros de Busqueda:</h3>
+                                <hr />
+                                <!-- <div class="form-group">
+                                    @Html.Label("Rubro", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        <select id="idRubro" class="form-control" onmousedown="this.value='';" onchange="jsFunction(this.value);">
+                                        <option value="@Session["idRubro"]">@Session["NombreRubro"]</option>
+                                        @foreach (var item in lista)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                         }
+                                        </select>
+                                    </div>
+                                </div>
+                                -->
+                                <div class="col-lg-push-3 col-lg-8 col-md-push-3 col-md-8 col-sm-push-3 col-sm-8">
+                                    <div class="form-horizontal">
+                                        <!--Filtro Rubro-->
+                                        <div class="form-group">
+                                            @Html.Label("Rubro", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DropDownList("idRubro", (List<SelectListItem>)ViewBag.listarRubro, "Seleccione", new { @class = "form-control", onmousedown = "this.value='';", onchange = "jsFunction(this.value);", id = "idRubro", required = "" })
+                                            </div>
+                                        </div>
+                                        <!--Filtro Precio-->
+                                        <div class="form-group">
+                                            @Html.Label("Precio", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DropDownList("precio", (List<SelectListItem>)ViewBag.listaRangoPrecio, "Seleccione", new { @class = "form-control", onmousedown = "this.value='';", onchange = "precio(this.value);", id = "precio", required = "" })
+                                            </div>
+                                        </div>
+                                        <!--Filtro Sucursal-->
+                                        <div class="form-group">
+                                            @Html.Label("Sucursal", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DropDownList("sucursal", (List<SelectListItem>)ViewBag.listaSucursal, "Seleccione", new { @class = "form-control", onmousedown = "this.value='';", onchange = "sucursal(this.value);", id = "sucursal", required = "" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Fin Filtros-->
+            <!--Productos-->
+            <div class="container">
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="panel panel-default text-center">
+                                <img class="card-img-top" src="@Url.Action("convertirImagen", "Home", new { id = item.IdOferta })" style="width:200px; height:150px">
+                                <h3 class="card-title">
+                                    <a href="#">@Html.DisplayFor(modelItem => item.Nombre)</a>
+                                </h3>
+                                <h4 class="card-text">Precio oferta</h4>
+                                <h5>$@Html.DisplayFor(modelItem => item.PrecioOfeta)</h5>
+                                <h4 class="card-text">Precio normal</h4>
+                                <h5>$@Html.DisplayFor(modelItem => item.PrecioNormal)</h5>               
+                                <p class="card-text">@Html.DisplayFor(modelItem => item.Descripcion)</p>
+                                <p>Sucursal: <a class="btn-link col-md-0" data-toggle="modal" data-target="#myModal">@Html.DisplayFor(modelItem => item.sucursal.Nombre)</a></p>
+
+
+                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="vertical-alignment-helper">
+                                        <div class="modal-dialog vertical-align-center" style="width:680px">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">
+                                                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+
+                                                    </button>
+                                                    <h3 class="modal-title" id="myModalLabel">Ubicacion</h3>
+
+                                                </div>
+                                                <div class="modal-body">
+                                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d53261.50902683422!2d-70.71421293380529!3d-33.45336242779481!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662d0069af23abb%3A0x879d59f409ed4897!2sSantiago%2C+Regi%C3%B3n+Metropolitana!5e0!3m2!1ses!2scl!4v1510893438096" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-footer">
+                                    <a href="@Url.Action("VerValoracion", "Home", new { id = item.IdOferta })"><small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small></a>                                  
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+            <!--Fin Productos-->
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+
+
+
+
+<script>
+
+        function jsFunction(value) {
+
+            $.ajax({
+                url: "@Url.Action("Index", "Home")",
+        type: "POST",
+        data: {
+            idRubro: value
+        },
+        success: function(data) {
+            //If you have a response, it will be in the 'data' object
+            $('#asdf').html(data);
+        }
+        });
+    }
+
+
+    function precio(precio) {
+
+        $.ajax({
+            url: "@Url.Action("Index", "Home")",
+        type: "POST",
+        data: {
+            precio: precio
+        },
+        success: function(data) {
+            //If you have a response, it will be in the 'data' object
+            $('#asdf').html(data);
+        }
+        });
+    }
+
+        function sucursal(sucursal) {
+
+        $.ajax({
+            url: "@Url.Action("Index", "Home")",
+        type: "POST",
+        data: {
+            sucursal: sucursal
+        },
+        success: function(data) {
+            //If you have a response, it will be in the 'data' object
+            $('#asdf').html(data);
+        }
+        });
+    }
+                            </script>

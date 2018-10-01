@@ -23,6 +23,8 @@ namespace CapaDTO
         [Required]
         private string direccion;
         private int telefono;
+        private string correo;
+        public string RecibirCorreo { get; set; }
 
         public Usuario()
         {
@@ -37,5 +39,6 @@ namespace CapaDTO
         public string Direccion { get => direccion; set => direccion = value; }
         public int Telefono { get => telefono; set => telefono = value; }
         public int IdUsuario { get => idUsuario; set => idUsuario = value; }
+        public string Correo { get => correo; set => correo = value; }
     }
 }

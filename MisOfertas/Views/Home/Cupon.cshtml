@@ -1,0 +1,79 @@
+﻿@model CapaDTO.Puntaje
+
+@{
+    ViewBag.Title = "Cupon";
+}
+<br />
+<br />
+<br />
+<div class="container">
+    <div class="row">        
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2>Descuentos Exclusivos</h2>
+            </div>
+            <div class="panel-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="col-lg-3 col-md-3">
+                    <h4>Sus Puntos:</h4>
+
+                    @Html.Label("Puntos acumulados: " + Model.Cantidad)
+                                        
+                </div>
+                <div class="col-lg-6 col-md-8">                    
+                    <table class="table">
+                        <thead><tr><td colspan="4"><h3>Descuentos Obtenibles</h3></td></tr></thead>
+                        <tbody>
+                            <tr>
+                                <th>Puntos</th>
+                                <th>Descuento</th>
+                                <th>Tope</th>
+                                <th>Rubro</th>
+                            </tr>
+                            <tr>
+                                <td>0-100 </td>
+                                <td>5%</td>
+                                <td>100000</td>
+                                <td>Alimentos</td>
+                            </tr>
+                            <tr>
+                                <td>101-500</td>
+                                <td>10%</td>
+                                <td>150000</td>
+                                <td>Alimentos, Electrónica y Línea Blanca</td>
+                            </tr>
+                            <tr>
+                                <td>500-1000</td>
+                                <td>15%</td>
+                                <td>300000</td>
+                                <td>Alimentos, Electrónica, Línea Blanca, Ropa</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <div id="viewContent">
+                        <!--Boton que llama al controlador CREATEPDFCONTROLLER desde el index-->
+                        <a href="@Url.Action("GenerarCupon", "Home",new { puntaje = Model.Cantidad })" class="btn btn-primary" onclick="refesh()">Generar Cupon</a>
+
+                    </div>
+                </div>               
+            </div>
+                
+            </div>
+        </div>        
+    </div>
+
+
+
+<script>
+   
+    function refesh()
+    {
+        setTimeout(function () {            
+        window.location.href='@Url.Action("Cupon", "Home")';
+        }, 2500, "JavaScript");
+        //alert();
+        //window.location.href='@Url.Action("Index", "Home")';
+    }
+
+</script>

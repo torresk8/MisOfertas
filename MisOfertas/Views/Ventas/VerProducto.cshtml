@@ -1,0 +1,96 @@
+﻿@model IEnumerable<CapaDTO.Producto>
+
+@{
+    ViewBag.Title = "VerProducto";
+}
+
+<br />
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2>Lista de Productos</h2>
+            </div>
+            <div class="panel-body">
+                <h4>
+                    @Html.ActionLink("Nuevo Producto", "Producto")
+                </h4>
+                <table id="mytabla" class="display hover order-column text-center" cellspacing="0" style="width:100%">
+                    <thead>
+                        <tr>
+                            
+                            <th>
+                                @Html.DisplayNameFor(model => model.IdProducto)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Descripcion)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Precio)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                               
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IdProducto)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Descripcion)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Precio)
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("actualizarProducto", "Ventas", new { id = item.IdProducto })">editar</a>
+                                    <a href="" onclick="eliminar('@item.IdProducto')">Eliminar</a>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    function eliminar(id)
+    {
+        $.ajax({
+        url: "@Url.Action("eliminarProducto", "Ventas")",
+                                type: "POST",
+                                data: {
+                                    id: id
+  
+                                },
+
+                                success: function (data) {
+                                    //If you have a response, it will be in the 'data' object
+                                }
+                            });
+
+                            location.reload(true);
+                        }
+
+
+
+
+</script>

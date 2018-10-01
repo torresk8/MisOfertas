@@ -1,0 +1,54 @@
+﻿@model IEnumerable<CapaDTO.Valoracion>
+
+<br />
+<br />
+<br />
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2>Valoraciones:</h2>
+                </div>
+                <div class="panel-body">
+                    <p>Con su opinion podemos mejorar, haga click abajo y de su valoración</p>
+                    <h4><a href="@Url.Action("Valoracion", "Home")">Valore la oferta Aquí</a></h4>
+                    <hr />
+                    <h3>Valoraciones de nuestros usuarios:</h3>
+                <!--Lista de valoraciones-->
+                    <div class="row">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                <div class="panel panel-default text-center">
+                                    <img class="card-img-top" src="data:image / png; base64,@Convert.ToBase64String(item.Boleta)" style="width:200px; height:150px">
+                                    <div class="card-body">
+                                        <h4 class="card-title">
+                                            @Html.DisplayFor(modelItem => item.oferta.Nombre)
+                                        </h4>
+                                        <h4>
+                                            Usuario: @Html.DisplayFor(modelItem => item.usuario.NombreUsuario)
+                                        </h4>
+                                        <h4>Fecha: @Html.DisplayFor(modelItem =>  item.fecha)</h4>
+                                        <h4>Comentario: @Html.DisplayFor(modelItem => item.Comentario)</h4>
+                                        <h4></h4>
+                                        <h4>Calificacion: @Html.DisplayFor(modelItem => item.Calificacion)</h4>
+                                    </div>
+                                    <div class="card-footer">
+                                        <br />
+                                        <!--<a href=""><small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small></a>-->
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                <!--Fin lista-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

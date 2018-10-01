@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using CapaNegocio.Roles;
 
 namespace MisOfertas.Controllers
 {
@@ -25,11 +26,17 @@ namespace MisOfertas.Controllers
             if (Membership.ValidateUser(usuario.NombreUsuario, usuario.Password))
             {
                 FormsAuthentication.RedirectFromLoginPage(usuario.NombreUsuario, false);
-                return null;
+                NegocioUsuario auxNegocio = new NegocioUsuario();
+                Usuario u = auxNegocio.login(usuario);
+                Session["idUsuario"] = u.IdUsuario;
+                Session["usuario"] = u.Nombre;
+                Session["nombreUsuario"] = u.NombreUsuario;
+                Session["nombre"] = u.Nombre;                                              
             }
             else
             {
                 ModelState.AddModelError("", "Error datos invalidos");
+                Session["class"] = "text-danger";
             }
             return View(usuario);
         }
@@ -47,42 +54,35 @@ namespace MisOfertas.Controllers
 
         }
 
-        public ActionResult eliminarUsuario()
+        public ActionResult eliminarUsuario(string id)
         {
-            return View();
+
+            NegocioUsuario auxUsuario = new NegocioUsuario();
+            bool resultado = auxUsuario.eliminarUsuario(Convert.ToInt32(id));
+
+            NegocioUsuario negocioUsuario = new NegocioUsuario();
+            List<Usuario> listaUsuario = negocioUsuario.retornTodosLosaUsuario();
+            return View("verUsuario", listaUsuario) ;
         }
-
-        [HttpPost]
-        public ActionResult eliminarUsuario(Usuario usuario)
-        {
-            if (ModelState.IsValid)
-            {
-                NegocioUsuario auxUsuario = new NegocioUsuario();
-                bool resultado = auxUsuario.eliminarUsuario(usuario);
-
-                if (resultado == true)
-                {                    
-                    ModelState.AddModelError("", "Usuario eliminado" + usuario.Nombre);
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Error datos invalidos" + usuario.Nombre + "" + usuario.Password);
-                }
-                // 
-            }
-            return View();
-        }
-
+        
         public ActionResult RegistrarUsuario()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult RegistrarUsuario(Usuario usuario)
+        public ActionResult RegistrarUsuario(Usuario usuario,bool recibirCorreo)
         {
             if (ModelState.IsValid)
             {
+                if(recibirCorreo == true)
+                {
+                    usuario.RecibirCorreo = "Si";
+                }else
+                {
+                    usuario.RecibirCorreo = "No";
+                }
+
                 bool resultado = false;
                 NegocioUsuario auxUsuario = new NegocioUsuario();
                 if(usuario.Password == usuario.ConfirmarPassword && usuario.Password!="" && usuario.ConfirmarPassword!="")
@@ -93,17 +93,22 @@ namespace MisOfertas.Controllers
 
                 if (resultado == true)
                 {
+                    ModelState.Clear();
+                    ModelState.AddModelError("", "Registro exitoso");
                     Session["idUsuario"] = usuario.IdUsuario;
                     Session["usuario"] = usuario.Nombre;
                     Session["password"] = usuario.Password;
-                    ModelState.AddModelError("", "Bienvendio" + usuario.Nombre);
+                    Session["class"] = "text-success";
+
+
                 }                 
             }
             else
             {
                 usuario.NombreUsuario = "";
                 ModelState.AddModelError("", "Error datos invalidos");
-                
+                Session["class"] = "text-danger";
+
             }
             return View();
         }
@@ -123,27 +128,9 @@ namespace MisOfertas.Controllers
             }
             else
             {
+                Session["class"] = "text-danger";
                 ModelState.AddModelError("", "Error datos invalidos");
-            }
-            /*
-            if (ModelState.IsValid)
-            {
-                NegocioUsuario auxUsuario = new NegocioUsuario();
-                auxUsuario.login(usuario);
-                
-                if (usuario !=null)
-                {
-                    Session["idUsuario"] = usuario.IdUsuario;
-                    Session["usuario"] = usuario.Nombre;
-                    Session["password"] = usuario.Password;
-                    return RedirectToAction("LoginIn");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Error datos invalidos" + usuario.Nombre + "" + usuario.Password);
-                }
-                // 
-            }*/
+            }         
 
             return View(usuario);
         }
@@ -153,5 +140,72 @@ namespace MisOfertas.Controllers
             FormsAuthentication.SignOut();
             return RedirectToAction("Index");
         }
+
+
+        public ActionResult actualizarUsuario()
+        {
+            //Usuario usu = (Usuario)Session["loginUsuario"];
+            NegocioUsuario auxNegocioUsuario = new NegocioUsuario();
+            Usuario auxUSuario = new Usuario();
+            int id = Convert.ToInt32(Session["idUsuario"]);
+            Usuario usuario = auxNegocioUsuario.retornaUsuario(id);
+
+            //Session["idUsuario"] = usuario.IdUsuario;
+            auxUSuario.IdUsuario = usuario.IdUsuario;
+            auxUSuario.Nombre = usuario.Nombre;
+            auxUSuario.NombreUsuario = usuario.NombreUsuario;
+            auxUSuario.Rut = usuario.Rut;
+            auxUSuario.Direccion = usuario.Direccion;
+            auxUSuario.Telefono = usuario.Telefono;
+            auxUSuario.NombreUsuario = usuario.NombreUsuario;
+            return View(auxUSuario);
+        }
+
+        [HttpPost]
+        public ActionResult actualizarUsuario(Usuario usuario)
+        {
+
+            NegocioUsuario auxNegocioUsuario = new NegocioUsuario();
+
+            Usuario auxUSuario = new Usuario();
+
+
+            bool resultado = auxNegocioUsuario.actualizarUsuario(usuario);
+
+
+
+            auxUSuario.IdUsuario = usuario.IdUsuario;
+            auxUSuario.Nombre = usuario.Nombre;
+            auxUSuario.NombreUsuario = usuario.NombreUsuario;
+            auxUSuario.Rut = usuario.Rut;
+            auxUSuario.Direccion = usuario.Direccion;
+            auxUSuario.Telefono = usuario.Telefono;
+            auxUSuario.Correo = usuario.Correo;
+
+            if (resultado == true)
+            {
+                ModelState.AddModelError("", "Datos Correctos");
+                Session["class"] = "text-success";
+            }
+            else
+            {
+                ModelState.AddModelError("", "Error datos invalidos");
+                Session["class"] = "text-danger";
+            }
+
+            return View(auxUSuario);
+        }
+
+        [Authorize(Roles = "gerenteAsociacion")]
+        public ActionResult verUsuario()
+        {
+
+            NegocioUsuario negocioUsuario = new NegocioUsuario();
+            List<Usuario> listaUsuario = negocioUsuario.retornTodosLosaUsuario();
+
+            return View(listaUsuario);
+        }
+
+
     }
 }

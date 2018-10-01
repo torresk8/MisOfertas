@@ -1,0 +1,74 @@
+﻿@model IEnumerable<CapaDTO.Reporte>
+
+@{
+    ViewBag.Title = "ReporteTienda";
+}
+
+
+<br />
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2>Reporte Tiendas</h2>
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-12">
+
+                    <table id="mytabla" class="display hover order-column text-center" cellspacing="0" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.sucursal.Nombre)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CantidadUsuario)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CantidadCorreo)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CantidadValoracion)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CantidadDescuento)
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.sucursal.Nombre)
+                                    </td>
+                                    <td>
+                                        <a href="#">@Html.ActionLink("" + item.CantidadUsuario, "verUsuario", "Login")</a>                                        
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CantidadCorreo)
+                                    </td>
+                                    <td>
+                                        <a href="#">@Html.ActionLink("" + item.CantidadValoracion, "index", "Tienda")</a>
+                                    </td>
+                                    <td>
+                                        <a href="#">@Html.ActionLink("" + item.CantidadDescuento, "verDescuento", "ventas")</a>
+                                    </td>
+                                </tr>
+
+
+                            }
+                        </tbody>
+
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

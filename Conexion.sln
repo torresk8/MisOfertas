@@ -1,9 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MisOfertas", "MisOfertas\MisOfertas.csproj", "{5355A2E6-3C1B-42BE-A5E6-6E563C0E7CD2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1E54114C-0D5B-4B8A-913D-E66335BAD942} = {1E54114C-0D5B-4B8A-913D-E66335BAD942}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaConexion", "CapaConexion\CapaConexion.csproj", "{FC8E6AB3-D986-45B7-8658-DA105342C40C}"
 EndProject
@@ -13,7 +16,28 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaDTO", "CapaDTO\CapaDTO.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebMisOferta", "WebMisOferta\WebMisOferta.csproj", "{753DEE39-34EF-4779-8A49-FB0147B511B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{AAF778C9-ACF8-49B9-8DA0-384987EE5747}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebService(1)", "WebService\", "{1E54114C-0D5B-4B8A-913D-E66335BAD942}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
+		ProjectReferences = "{1bc3a76f-103d-47ac-9d2a-18da26a9ded4}|CapaNegocio.dll;{FC8E6AB3-D986-45B7-8658-DA105342C40C}|CapaConexion.dll;{DEDBC3C9-54BA-4DFD-974F-9960DEDCFBFF}|CapaDTO.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_59077"
+		Debug.AspNetCompiler.PhysicalPath = "WebService\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_59077\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_59077"
+		Release.AspNetCompiler.PhysicalPath = "WebService\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_59077\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "59077"
+		SlnRelativePath = "WebService\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +65,10 @@ Global
 		{753DEE39-34EF-4779-8A49-FB0147B511B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{753DEE39-34EF-4779-8A49-FB0147B511B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{753DEE39-34EF-4779-8A49-FB0147B511B3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AAF778C9-ACF8-49B9-8DA0-384987EE5747}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AAF778C9-ACF8-49B9-8DA0-384987EE5747}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AAF778C9-ACF8-49B9-8DA0-384987EE5747}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AAF778C9-ACF8-49B9-8DA0-384987EE5747}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E54114C-0D5B-4B8A-913D-E66335BAD942}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E54114C-0D5B-4B8A-913D-E66335BAD942}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E54114C-0D5B-4B8A-913D-E66335BAD942}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E54114C-0D5B-4B8A-913D-E66335BAD942}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
